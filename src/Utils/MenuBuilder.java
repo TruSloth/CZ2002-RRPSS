@@ -17,13 +17,30 @@ public class MenuBuilder {
         return String.format("|%d. %-" + longestWidth + "s|", optionNumber, option);
     }
 
-    public static String buildMenu(int longestWidth, String title, String[] options) {
+    public static String buildMenu(String title, String[] options) {
         StringBuilder menu = new StringBuilder();
+        int longestWidth = calculateLongestWidth(title, options);
+
         menu.append(formatMenuTitle(longestWidth, title));
         for (int i = 0; i < options.length; i++) {
             menu.append(formatMenuOption(longestWidth, i + 1, options[i]) + '\n');
         }
         menu.append("=".repeat(longestWidth + 5));
         return menu.toString();
+    }
+
+    private static int calculateLongestWidth(String title, String[] options) {
+        int longestWidth = 0;
+        for (String option : options) {
+            if (option.length() > longestWidth) {
+                longestWidth = option.length();
+            }
+        }
+
+        if (title.length() > longestWidth) {
+            longestWidth = title.length();
+        }
+
+        return longestWidth;
     }
 }

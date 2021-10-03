@@ -1,5 +1,5 @@
-public class App {
+public class RRPSSApp {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
+        RRPSS system = new RRPSS();
     }
 }
