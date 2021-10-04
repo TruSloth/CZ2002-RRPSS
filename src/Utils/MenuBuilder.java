@@ -41,6 +41,6 @@ public class MenuBuilder {
             longestWidth = title.length();
         }
 
-        return longestWidth;
+        return longestWidth + 1;
     }
 }

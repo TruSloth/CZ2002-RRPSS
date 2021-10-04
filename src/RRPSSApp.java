@@ -16,12 +16,25 @@ public class RRPSSApp {
                     do {
                         view = system.handleMenuItemsOptions(sc, system.displayMenuItemsOptions());
                     } while (view != RRPSS.menuView.PREVIOUS_MENU);
+
                     break;
                 case PROMOTIONS:
+                    do {
+                        view = system.handlePromotionsOptions(sc, system.displayPromotionsOptions());
+                    } while (view != RRPSS.menuView.PREVIOUS_MENU);
+
                     break;
                 case ORDERS:
+                    do {
+                        view = system.handleOrdersOptions(sc, system.displayOrdersOptions());
+                    } while (view != RRPSS.menuView.PREVIOUS_MENU);
+                        
                     break;
                 case RESERVATIONS:
+                    do {
+                        view = system.handleReservationsOptions(sc, system.displayReservationsOptions());
+                    } while (view != RRPSS.menuView.PREVIOUS_MENU);
+
                     break;
                 default:
             }

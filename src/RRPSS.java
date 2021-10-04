@@ -106,11 +106,128 @@ public class RRPSS {
                 // Remove Menu Item
                 break;
             case 4:
-                // Reservations
+                // Back
                 view = menuView.PREVIOUS_MENU;
                 break;
         }
 
         return view;
     }
+
+    public int displayPromotionsOptions() {
+        String[] options = {
+            "Create Promotion",
+            "Edit Promotion",
+            "Remove Promotion",
+            "Back"
+        };
+
+        final String title = "Promotions";
+
+        System.out.println(MenuBuilder.buildMenu(title, options));
+
+        return options.length;
+    }
+
+    public menuView handlePromotionsOptions(Scanner sc, int optionsLength) {
+        int choice = sc.nextInt();
+        menuView view = menuView.PROMOTIONS;
+
+        switch (choice) {
+            case 1:
+                // Create Promotion
+                break;
+            case 2:
+                // Edit Promotion
+                break;
+            case 3:
+                // Remove Promotion
+                break;
+            case 4:
+                // Back
+                view = menuView.PREVIOUS_MENU;
+                break;
+        }
+
+        return view;
+    }
+
+    public int displayOrdersOptions() {
+        String[] options = {
+            "Create Order",
+            "View Order",
+            "Edit Order",
+            "Back"
+        };
+
+        final String title = "Orders";
+
+        System.out.println(MenuBuilder.buildMenu(title, options));
+
+        return options.length;
+    }
+
+    public menuView handleOrdersOptions(Scanner sc, int optionsLength) {
+        int choice = sc.nextInt();
+        menuView view = menuView.ORDERS;
+
+        switch (choice) {
+            case 1:
+                // Create Order
+                break;
+            case 2:
+                // View Order
+                break;
+            case 3:
+                // Edit Order
+                break;
+            case 4:
+                // Back
+                view = menuView.PREVIOUS_MENU;
+                break;
+        }
+
+        return view;
+    }
+
+    public int displayReservationsOptions() {
+        String[] options = {
+            "Create Reservation Booking",
+            "Check Reservation Booking",
+            "Remove Reservation Booking",
+            "Back"
+        };
+
+        final String title = "Reservations";
+
+        System.out.println(MenuBuilder.buildMenu(title, options));
+
+        return options.length;
+    }
+
+    public menuView handleReservationsOptions(Scanner sc, int optionsLength) {
+        int choice = sc.nextInt();
+        menuView view = menuView.RESERVATIONS;
+
+        switch (choice) {
+            case 1:
+                // Create Reservation
+                break;
+            case 2:
+                // Check Reservation
+                break;
+            case 3:
+                // Remove Reservation
+                break;
+            case 4:
+                // Back
+                view = menuView.PREVIOUS_MENU;
+                break;
+        }
+
+        return view;
+    }
+
 }
+
+
