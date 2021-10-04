@@ -1,8 +1,15 @@
+import java.util.Arrays;
 import java.util.Scanner;
+
+import Utils.MenuBuilder;
 
 public class RRPSSApp {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
+
+        String text = "The quick brown fox jumped over the scaly rock into the ocean";
+
+        System.out.println(MenuBuilder.fullJustify(text.split(" "), 10));
         
         RRPSS system = new RRPSS();
 

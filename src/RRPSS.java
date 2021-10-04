@@ -284,9 +284,19 @@ public class RRPSS {
     }
 
     public menuView editMenuItem(Scanner sc) {
-        displayMenuItems();
+        int back = displayMenuItemsOptions();
+        System.out.println("Which item would you like to edit?");
+        int choice = sc.nextInt();
+        if (choice == back) {
+            return menuView.MENU_ITEMS;
+        }
+
         return menuView.MENU_ITEMS;
     }
+
+    // private menuView displayEditMenuItemOptions(Scanner sc) {
+
+    // }
 
     public menuView removeMenuItem(Scanner sc) {
         int back = displayMenuItemsOptions();
@@ -301,7 +311,7 @@ public class RRPSS {
         if (menu.size() == 0) {
             return menuView.MENU_ITEMS;
         }
-        
+
         return menuView.CURRENT_MENU;
     }
 }
