@@ -14,7 +14,7 @@ public class RRPSSApp {
             switch (view) {
                 case MENU_ITEMS:
                     do {
-                        view = system.handleMenuItemsOptions(sc, system.displayMenuItemsOptions());
+                        view = system.handleMenuItemsOptions(sc, system.displayMenuOptions());
                     } while (view != RRPSS.menuView.PREVIOUS_MENU);
 
                     break;

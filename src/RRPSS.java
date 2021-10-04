@@ -76,7 +76,9 @@ public class RRPSS {
         return view;
     }
 
-    public int displayMenuItemsOptions() {
+    public int displayMenuOptions() {
+        displayMenuItems();
+
         String[] options = {
             "Create Menu Item",
             "Edit Menu Item",
@@ -95,15 +97,22 @@ public class RRPSS {
         int choice = sc.nextInt();
         menuView view = menuView.MENU_ITEMS;
 
+        System.out.println("What would you like to do?");
         switch (choice) {
             case 1:
                 // Create Menu Item
+                view = createMenuItem(sc);
                 break;
             case 2:
                 // Edit Menu Item
+                view = editMenuItem(sc);
                 break;
             case 3:
                 // Remove Menu Item
+                do {
+                    view = removeMenuItem(sc);
+                } while (view == menuView.CURRENT_MENU);
+
                 break;
             case 4:
                 // Back
@@ -228,6 +237,73 @@ public class RRPSS {
         return view;
     }
 
+    public menuView createMenuItem(Scanner sc) {
+        System.out.println("Creating a new Menu Item");
+        sc.nextLine(); // Throw away \n in buffer
+        System.out.printf("Item Name: ");
+        String name = sc.nextLine();
+        System.out.printf("Item description: ");
+        String description = sc.nextLine();
+        System.out.printf("Price: ");
+        double price = sc.nextDouble();
+
+        menu.add(new MenuItem(name, description, price));
+
+        return menuView.MENU_ITEMS;
+    }
+
+    private void displayMenuItems() {
+        if (menu.size() == 0) {
+            System.out.println("The menu is currently empty");
+            return;
+        }
+
+        String[] options = new String[menu.size()];
+        for (int i = 0; i < options.length; i++) {
+            options[i] = String.format("%s ($%.2f)", menu.get(i).getName(), menu.get(i).getPrice());
+        }
+
+        final String title = "Menu";
+
+        System.out.println(MenuBuilder.buildMenu(title, options));
+    }
+
+    private int displayMenuItemsOptions() {
+        String[] options = new String[menu.size() + 1];
+        for (int i = 0; i < menu.size(); i++) {
+            options[i] = String.format("%s ($%.2f)", menu.get(i).getName(), menu.get(i).getPrice());
+        }
+
+        options[options.length - 1] = "Back";
+
+        final String title = "Menu";
+
+        System.out.println(MenuBuilder.buildMenu(title, options));
+
+        return options.length;
+    }
+
+    public menuView editMenuItem(Scanner sc) {
+        displayMenuItems();
+        return menuView.MENU_ITEMS;
+    }
+
+    public menuView removeMenuItem(Scanner sc) {
+        int back = displayMenuItemsOptions();
+        System.out.println("Which item would you like to remove?");
+        int choice = sc.nextInt();
+        if (choice == back) {
+            return menuView.MENU_ITEMS;
+        }
+
+        menu.remove(choice - 1);
+
+        if (menu.size() == 0) {
+            return menuView.MENU_ITEMS;
+        }
+        
+        return menuView.CURRENT_MENU;
+    }
 }
 
 
