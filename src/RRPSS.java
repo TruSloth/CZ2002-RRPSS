@@ -288,15 +288,29 @@ public class RRPSS {
         System.out.println("Which item would you like to edit?");
         int choice = sc.nextInt();
         if (choice == back) {
+            System.out.println("here");
             return menuView.MENU_ITEMS;
         }
+
+        displayMenuItemDetails(menu.get(choice - 1));
+
+        System.out.println("What would you like to edit?");
+        choice = sc.nextInt();
 
         return menuView.MENU_ITEMS;
     }
 
-    // private menuView displayEditMenuItemOptions(Scanner sc) {
+    // TODO: Add DisplayEditMenutItem Code
 
-    // }
+    // TODO: Add HandleEditMenuItem Code
+
+    public void displayMenuItemDetails(MenuItem item) {
+        final int LONGEST_WIDTH = 20;
+        String title = item.getName();
+        String[] optionHeaders = {"Price", "Description"};
+        String[] options = {String.format("$%.2f", item.getPrice()), item.getDescription()};
+        System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, LONGEST_WIDTH));
+    }
 
     public menuView removeMenuItem(Scanner sc) {
         int back = displayMenuItemsOptions();

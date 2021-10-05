@@ -7,10 +7,19 @@ public class RRPSSApp {
     public static void main(String[] args) throws Exception {
         Scanner sc = new Scanner(System.in);
 
-        String text = "The quick brown fox jumped over the scaly rock into the ocean";
+        //String text = "The quick brown fox jumped over the scaly rock into the ocean";
 
-        System.out.println(MenuBuilder.fullJustify(text.split(" "), 10));
+        //System.out.println(MenuBuilder.fullJustify(text.split(" "), 10));
+
+        // String name = "Steak";
+        // double price = 10.99;
+        // String description = "A steak is a meat generally sliced across the muscle fibers, potentially including a bone. It is normally grilled, though can also be pan-fried. ...For some meats, such as pork, lamb and mutton, chevon, and veal, these cuts are often referred to as chops. Some cured meat, such as gammon, is commonly served as steak.";
         
+        // String[] optionHeaders = {"Name", "Price", "Description"};
+        // String[] options = {name, String.valueOf(price), description};
+
+        // System.out.println(MenuBuilder.buildMenu("Menu", optionHeaders, options, 15));
+
         RRPSS system = new RRPSS();
 
         RRPSS.menuView view;

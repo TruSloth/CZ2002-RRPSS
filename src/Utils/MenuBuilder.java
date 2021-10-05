@@ -16,13 +16,21 @@ public class MenuBuilder {
         return output.toString();
     }
 
-
     private static String formatMenuOption(int longestWidth, int optionNumber, String option) {
         return String.format("|%d. %-" + longestWidth + "s|", optionNumber, option);
     }
 
+    private static String formatMenuOption(int longestWidth, String optionHeader, String option) {
+        if (optionHeader.length() + option.length() >= longestWidth) {
+            option = fullJustify(option.split(" "), longestWidth);
+            return String.format("| %-" + (longestWidth + 1) + "s |\n" + menuLineSpace(longestWidth + 4, ' ') + "%s", optionHeader, option);
+        }
+        return String.format("| %s%" + (longestWidth - optionHeader.length() + 1) + "s |", optionHeader, option);
+    }
+
     public static String fullJustify(String[] words, int maxWidth) {
         int n = words.length;
+        maxWidth += 1;
         List<String> justifiedText = new ArrayList<>();
         int currLineIndex = 0;
         int nextLineIndex = getNextLineIndex(currLineIndex, maxWidth, words);
@@ -35,14 +43,16 @@ public class MenuBuilder {
             nextLineIndex = getNextLineIndex(currLineIndex, maxWidth, words);
             justifiedText.add(line.toString());
         }
+
         for (int i = 0; i < justifiedText.size() - 1; i++) {
             String fullJustifiedLine = getFullJustifiedString(justifiedText.get(i).trim(), maxWidth);
             justifiedText.remove(i);
-            justifiedText.add(i, fullJustifiedLine);
+            justifiedText.add(i, String.format("| %s |",fullJustifiedLine));
         }
+
         String leftJustifiedLine = getLeftJustifiedLine(justifiedText.get(justifiedText.size() - 1).trim(), maxWidth);
         justifiedText.remove(justifiedText.size() - 1);
-        justifiedText.add(leftJustifiedLine);
+        justifiedText.add(String.format("| %s |", leftJustifiedLine));
         return String.join("\n", justifiedText);
     }
     
@@ -76,6 +86,7 @@ public class MenuBuilder {
                 extraSpace--;
             }
         }
+
         justifiedLine.append(words[words.length - 1]);
         for (int i = 0; i < extraSpace; i++)
             justifiedLine.append(" ");
@@ -100,6 +111,24 @@ public class MenuBuilder {
         }
         menu.append("=".repeat(longestWidth + 5));
         return menu.toString();
+    }
+
+    public static String buildMenu(String title, String[] optionHeaders, String[] options, int longestWidth) {
+        StringBuilder menu = new StringBuilder();
+
+        menu.append(formatMenuTitle(longestWidth, title));
+        for (int i = 0; i < options.length - 1; i++) {
+            menu.append(formatMenuOption(longestWidth, optionHeaders[i], options[i]) + "\n");
+            menu.append(menuLineSpace(longestWidth + 4, '-'));
+            //menu.append(String.format("| %" + (longestWidth + 3) + "s\n", "|"));
+        }
+        menu.append(formatMenuOption(longestWidth, optionHeaders[optionHeaders.length - 1], options[options.length - 1]) + "\n");
+        menu.append("=".repeat(longestWidth + 5));
+        return menu.toString();
+    }
+
+    private static String menuLineSpace(int width, char spaceCharacter) {
+        return String.format("|%" + width + "s\n", "|").replace(' ', spaceCharacter);
     }
 
     private static int calculateLongestWidth(String title, String[] options) {
