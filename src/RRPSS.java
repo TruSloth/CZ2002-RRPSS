@@ -1,7 +1,13 @@
+import java.io.CharArrayReader;
+import java.io.CharArrayWriter;
+import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import RestaurantClasses.MenuItem;
 import Utils.MenuBuilder;
+import Display.*;
 
 public class RRPSS {
     private ArrayList<MenuItem> menu;
@@ -26,22 +32,22 @@ public class RRPSS {
         tables = new Table[10];
     }
 
-    public int displayMainMenuOptions() {
-        String[] options = {
-            "Menu Items",
-            "Promotions",
-            "Orders",
-            "Reservations",
-            "Sales Revenue Report",
-            "Quit"
-        };
+    // public int displayMainMenuOptions() {
+    //     String[] options = {
+    //         "Menu Items",
+    //         "Promotions",
+    //         "Orders",
+    //         "Reservations",
+    //         "Sales Revenue Report",
+    //         "Quit"
+    //     };
 
-        final String title = "Restaurant Reservation & Point of Sale System";
+    //     final String title = "Restaurant Reservation & Point of Sale System";
 
-        System.out.println(MenuBuilder.buildMenu(title, options));
+    //     System.out.println(MenuBuilder.buildMenu(title, options));
 
-        return options.length;
-    }
+    //     return options.length;
+    // }
 
     public menuView handleMainMenuOptions(Scanner sc, int optionsLength) {
         int choice = sc.nextInt();
@@ -76,22 +82,22 @@ public class RRPSS {
         return view;
     }
 
-    public int displayMenuOptions() {
-        displayMenuItems();
+    // public int displayMenuOptions() {
+    //     displayMenuItems();
 
-        String[] options = {
-            "Create Menu Item",
-            "Edit Menu Item",
-            "Remove Menu Item",
-            "Back"
-        };
+    //     String[] options = {
+    //         "Create Menu Item",
+    //         "Edit Menu Item",
+    //         "Remove Menu Item",
+    //         "Back"
+    //     };
 
-        final String title = "Menu Items";
+    //     final String title = "Menu Items";
 
-        System.out.println(MenuBuilder.buildMenu(title, options));
+    //     System.out.println(MenuBuilder.buildMenu(title, options));
 
-        return options.length;
-    }
+    //     return options.length;
+    // }
 
     public menuView handleMenuItemsOptions(Scanner sc, int optionsLength) {
         int choice = sc.nextInt();
@@ -123,20 +129,20 @@ public class RRPSS {
         return view;
     }
 
-    public int displayPromotionsOptions() {
-        String[] options = {
-            "Create Promotion",
-            "Edit Promotion",
-            "Remove Promotion",
-            "Back"
-        };
+    // public int displayPromotionsOptions() {
+    //     String[] options = {
+    //         "Create Promotion",
+    //         "Edit Promotion",
+    //         "Remove Promotion",
+    //         "Back"
+    //     };
 
-        final String title = "Promotions";
+    //     final String title = "Promotions";
 
-        System.out.println(MenuBuilder.buildMenu(title, options));
+    //     System.out.println(MenuBuilder.buildMenu(title, options));
 
-        return options.length;
-    }
+    //     return options.length;
+    // }
 
     public menuView handlePromotionsOptions(Scanner sc, int optionsLength) {
         int choice = sc.nextInt();
@@ -161,20 +167,20 @@ public class RRPSS {
         return view;
     }
 
-    public int displayOrdersOptions() {
-        String[] options = {
-            "Create Order",
-            "View Order",
-            "Edit Order",
-            "Back"
-        };
+    // public int displayOrdersOptions() {
+    //     String[] options = {
+    //         "Create Order",
+    //         "View Order",
+    //         "Edit Order",
+    //         "Back"
+    //     };
 
-        final String title = "Orders";
+    //     final String title = "Orders";
 
-        System.out.println(MenuBuilder.buildMenu(title, options));
+    //     System.out.println(MenuBuilder.buildMenu(title, options));
 
-        return options.length;
-    }
+    //     return options.length;
+    // }
 
     public menuView handleOrdersOptions(Scanner sc, int optionsLength) {
         int choice = sc.nextInt();
@@ -199,20 +205,20 @@ public class RRPSS {
         return view;
     }
 
-    public int displayReservationsOptions() {
-        String[] options = {
-            "Create Reservation Booking",
-            "Check Reservation Booking",
-            "Remove Reservation Booking",
-            "Back"
-        };
+    // public int displayReservationsOptions() {
+    //     String[] options = {
+    //         "Create Reservation Booking",
+    //         "Check Reservation Booking",
+    //         "Remove Reservation Booking",
+    //         "Back"
+    //     };
 
-        final String title = "Reservations";
+    //     final String title = "Reservations";
 
-        System.out.println(MenuBuilder.buildMenu(title, options));
+    //     System.out.println(MenuBuilder.buildMenu(title, options));
 
-        return options.length;
-    }
+    //     return options.length;
+    // }
 
     public menuView handleReservationsOptions(Scanner sc, int optionsLength) {
         int choice = sc.nextInt();
@@ -242,7 +248,7 @@ public class RRPSS {
         sc.nextLine(); // Throw away \n in buffer
         System.out.printf("Item Name: ");
         String name = sc.nextLine();
-        System.out.printf("Item description: ");
+        System.out.printf("Item Description: ");
         String description = sc.nextLine();
         System.out.printf("Price: ");
         double price = sc.nextDouble();
@@ -252,68 +258,101 @@ public class RRPSS {
         return menuView.MENU_ITEMS;
     }
 
-    private void displayMenuItems() {
-        if (menu.size() == 0) {
-            System.out.println("The menu is currently empty");
-            return;
-        }
+    // private void displayMenuItems() {
+    //     if (menu.size() == 0) {
+    //         System.out.println("The menu is currently empty");
+    //         return;
+    //     }
 
-        String[] options = new String[menu.size()];
-        for (int i = 0; i < options.length; i++) {
-            options[i] = String.format("%s ($%.2f)", menu.get(i).getName(), menu.get(i).getPrice());
-        }
+    //     String[] options = new String[menu.size()];
+    //     for (int i = 0; i < options.length; i++) {
+    //         options[i] = String.format("%s ($%.2f)", menu.get(i).getName(), menu.get(i).getPrice());
+    //     }
 
-        final String title = "Menu";
+    //     final String title = "Menu";
 
-        System.out.println(MenuBuilder.buildMenu(title, options));
-    }
+    //     System.out.println(MenuBuilder.buildMenu(title, options));
+    // }
 
-    private int displayMenuItemsOptions() {
-        String[] options = new String[menu.size() + 1];
-        for (int i = 0; i < menu.size(); i++) {
-            options[i] = String.format("%s ($%.2f)", menu.get(i).getName(), menu.get(i).getPrice());
-        }
+    // private int displayMenuItemsOptions() {
+    //     String[] options = new String[menu.size() + 1];
+    //     for (int i = 0; i < menu.size(); i++) {
+    //         options[i] = String.format("%s ($%.2f)", menu.get(i).getName(), menu.get(i).getPrice());
+    //     }
 
-        options[options.length - 1] = "Back";
+    //     options[options.length - 1] = "Back";
 
-        final String title = "Menu";
+    //     final String title = "Menu";
 
-        System.out.println(MenuBuilder.buildMenu(title, options));
+    //     System.out.println(MenuBuilder.buildMenu(title, options));
 
-        return options.length;
-    }
+    //     return options.length;
+    // }
 
     public menuView editMenuItem(Scanner sc) {
-        int back = displayMenuItemsOptions();
+        int back = new MenuItemsOptionsDisplay(menu).displayMenu();
+        menuView view = menuView.MENU_ITEMS;
+        
         System.out.println("Which item would you like to edit?");
+        
         int choice = sc.nextInt();
+
         if (choice == back) {
-            System.out.println("here");
-            return menuView.MENU_ITEMS;
+            return view;
         }
 
-        displayMenuItemDetails(menu.get(choice - 1));
+        MenuItem item = menu.get(choice - 1);
 
-        System.out.println("What would you like to edit?");
-        choice = sc.nextInt();
+        String[] options = {"Edit Name", "Edit Price", "Edit Description", "Back"};
 
-        return menuView.MENU_ITEMS;
+        do {
+            new MenuItemDetailsDisplay(item).displayMenu();
+            System.out.println(MenuBuilder.buildMenu(20, options));
+
+            System.out.println("What would you like to edit?");
+        
+            choice = sc.nextInt();
+            view = menuView.CURRENT_MENU;
+
+            switch(choice) {
+                case 1:
+                    System.out.printf("Item Name: ");
+                    sc.nextLine();
+                    item.setName(sc.nextLine());
+                    break;
+                case 2:
+                    System.out.printf("Item Description: ");
+                    sc.nextLine();
+                    item.setDescription(sc.nextLine());
+                    break;
+                case 3:
+                    System.out.printf("Price: ");
+                    sc.nextLine();
+                    item.setPrice(sc.nextDouble());
+                    break;
+                case 4:
+                    view = menuView.MENU_ITEMS;
+                    break;
+            }
+        } while (view == menuView.CURRENT_MENU);
+
+        return view;
     }
 
     // TODO: Add DisplayEditMenutItem Code
 
     // TODO: Add HandleEditMenuItem Code
 
-    public void displayMenuItemDetails(MenuItem item) {
-        final int LONGEST_WIDTH = 20;
-        String title = item.getName();
-        String[] optionHeaders = {"Price", "Description"};
-        String[] options = {String.format("$%.2f", item.getPrice()), item.getDescription()};
-        System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, LONGEST_WIDTH));
-    }
+    // public void displayMenuItemDetails(MenuItem item) {
+    //     final int LONGEST_WIDTH = 20;
+    //     String title = item.getName();
+    //     String[] optionHeaders = {"Price", "Description"};
+    //     String[] options = {String.format("$%.2f", item.getPrice()), item.getDescription()};
+    //     System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, LONGEST_WIDTH));
+    // }
 
     public menuView removeMenuItem(Scanner sc) {
-        int back = displayMenuItemsOptions();
+        int back = new MenuItemsOptionsDisplay(menu).displayMenu();
         System.out.println("Which item would you like to remove?");
         int choice = sc.nextInt();
         if (choice == back) {

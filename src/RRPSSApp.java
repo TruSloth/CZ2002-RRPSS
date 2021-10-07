@@ -1,7 +1,10 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
-import Utils.MenuBuilder;
+import Display.ConsoleMenuDisplay;
+import Display.MenuOptionsDisplay;
+import Display.OrderOptionsDisplay;
+import Display.PromotionOptionsDisplay;
+import Display.ReservationOptionsDisplay;
 
 public class RRPSSApp {
     public static void main(String[] args) throws Exception {
@@ -25,30 +28,31 @@ public class RRPSSApp {
         RRPSS.menuView view;
 
         do {
-            view = system.handleMainMenuOptions(sc, system.displayMainMenuOptions());
+            //view = system.handleMainMenuOptions(sc, system.displayMainMenuOptions());
+            view = system.handleMainMenuOptions(sc, new ConsoleMenuDisplay().displayMenu());
 
             switch (view) {
                 case MENU_ITEMS:
                     do {
-                        view = system.handleMenuItemsOptions(sc, system.displayMenuOptions());
+                        view = system.handleMenuItemsOptions(sc, new MenuOptionsDisplay().displayMenu());
                     } while (view != RRPSS.menuView.PREVIOUS_MENU);
 
                     break;
                 case PROMOTIONS:
                     do {
-                        view = system.handlePromotionsOptions(sc, system.displayPromotionsOptions());
+                        view = system.handlePromotionsOptions(sc, new PromotionOptionsDisplay().displayMenu());
                     } while (view != RRPSS.menuView.PREVIOUS_MENU);
 
                     break;
                 case ORDERS:
                     do {
-                        view = system.handleOrdersOptions(sc, system.displayOrdersOptions());
+                        view = system.handleOrdersOptions(sc, new OrderOptionsDisplay().displayMenu());
                     } while (view != RRPSS.menuView.PREVIOUS_MENU);
                         
                     break;
                 case RESERVATIONS:
                     do {
-                        view = system.handleReservationsOptions(sc, system.displayReservationsOptions());
+                        view = system.handleReservationsOptions(sc, new ReservationOptionsDisplay().displayMenu());
                     } while (view != RRPSS.menuView.PREVIOUS_MENU);
 
                     break;

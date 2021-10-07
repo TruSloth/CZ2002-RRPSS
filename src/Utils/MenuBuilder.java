@@ -113,6 +113,16 @@ public class MenuBuilder {
         return menu.toString();
     }
 
+    public static String buildMenu(int longestWidth, String[] options) {
+        StringBuilder menu = new StringBuilder();
+
+        for (int i = 0; i < options.length; i++) {
+            menu.append(formatMenuOption(longestWidth, i + 1, options[i]) + '\n');
+        }
+        menu.append("=".repeat(longestWidth + 5));
+        return menu.toString();
+    }
+
     public static String buildMenu(String title, String[] optionHeaders, String[] options, int longestWidth) {
         StringBuilder menu = new StringBuilder();
 
