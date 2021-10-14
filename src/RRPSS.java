@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import RestaurantClasses.MenuItem;
+import RestaurantClasses.Order;
+import RestaurantClasses.Reservation;
+import RestaurantClasses.Table;
 import Utils.MenuBuilder;
 import Display.*;
 
@@ -175,8 +178,10 @@ public class RRPSS {
         String description = sc.nextLine();
         System.out.printf("Price: ");
         double price = sc.nextDouble();
+        System.out.printf("Type: ");
+        String type = sc.nextLine();
 
-        menu.add(new MenuItem(name, description, price));
+        menu.add(new MenuItem(name, description, price, type));
 
         return menuView.MENU_ITEMS;
     }
