@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 
+import ManagerClasses.ReservationManager;
+import ManagerClasses.TableManager;
+
 public class Restaurant {
     private final int NUM_OF_TABLES = 1000;
-    private int maxCapacity; // Should be a final as well
     private String name;
+    private int maxCapacity; // Should be a final as well
     private int numStaff;
     private int numMenuItems; // Do we need this?
     private ArrayList<MenuItem> menu;
     private int occupancy;
-    private Table[] tables;
     private ArrayList<SalesRevenue> salesRevenueList;
+    private ReservationManager reservationManager;
+    private TableManager tableManager;
 
     public Restaurant(String name, int maxCapacity, int numStaff, int numMenuItems, ArrayList<MenuItem> menu) {
         this.name = name;
@@ -22,8 +26,9 @@ public class Restaurant {
         this.numMenuItems = numMenuItems;
         this.menu = menu;
         occupancy = 0;
-        tables = new Table[NUM_OF_TABLES];
         salesRevenueList = new ArrayList<SalesRevenue>(Arrays.asList(new SalesRevenue(new GregorianCalendar())));
+        reservationManager = new ReservationManager();
+        tableManager = new TableManager(NUM_OF_TABLES, 200, 400, 200, 100, 100);
     }
 
     // Default getters & setters
@@ -64,25 +69,54 @@ public class Restaurant {
         return salesRevenueList;
     }
 
-    // Methods
-    public Table[] getOccupiedTables() {
-        ArrayList<Table> tablesList = new ArrayList<Table>(Arrays.asList(tables.clone()));
-        return (Table[]) tablesList.stream().filter(table -> table.isOccupied() == true).toArray();
+    // Reservation Methods
+    public void addReservation(GregorianCalendar reservationPeriod, int pax, String name, String contact) {
+        int[] unavailableTableNos = reservationManager.getUnavailableTables(reservationPeriod);
+        int bookedTableNo = tableManager.bookTable(unavailableTableNos, pax);
+        reservationManager.createNewReservation(reservationPeriod, pax, name, contact, bookedTableNo);
     }
 
-    public Table[] getUnoccupiedTables() {
-        ArrayList<Table> tablesList = new ArrayList<Table>(Arrays.asList(tables.clone()));
-        return (Table[]) tablesList.stream().filter(table -> table.isOccupied() == false).toArray();
+    public Reservation getReservationDetails(String name, String contact, GregorianCalendar reservationPeriod) {
+        return reservationManager.findReservation(name, contact, reservationPeriod);
     }
 
-    public void occupyTable(int tableNumber) {
-        tables[tableNumber - 1].occupyTable();
+    public boolean removeReservation(String name, String contact, GregorianCalendar reservationPeriod) {
+        Reservation reservation = reservationManager.findReservation(name, contact, reservationPeriod);
+        if (reservation == null) {
+            return false;
+        }
+        tableManager.unbookTable(reservation.getTableNo());
+        reservationManager.deleteReservation(reservation);
+        return true;
     }
 
-    public void unoccupyTable(int tableNumber) {
-        tables[tableNumber - 1].unoccupyTable();
+    public boolean updateReservation(String name, String contact, GregorianCalendar oldReservationPeriod, int choice, String newField) {
+        switch (choice) {
+            case 1: // Name
+                return reservationManager.modifyReservationName(name, contact, oldReservationPeriod, newField);
+            case 2: // Contact
+                return reservationManager.modifyReservationContact(name, contact, oldReservationPeriod, newField);
+            default:
+                return false;
+        }
     }
 
+    public boolean updateReservation(String name, String contact, GregorianCalendar oldReservationPeriod, int choice, int newField) {
+        switch (choice) {
+            case 1: // Pax
+                return reservationManager.modifyReservationPax(name, contact, oldReservationPeriod, newField);
+            case 2: // TableNo
+                return reservationManager.modifyReservationTableNo(name, contact, oldReservationPeriod, newField);
+            default:
+                return false;
+        }
+    }
+
+    public boolean updateReservation(String name, String contact, GregorianCalendar oldReservationPeriod, GregorianCalendar newReservationPeriod) {
+        return reservationManager.modifyReservationPeriod(name, contact, oldReservationPeriod, newReservationPeriod);
+    }
+
+    
     public double getTotalSalesRevnue(GregorianCalendar startDate, GregorianCalendar endDate) {
         return salesRevenueList
         .stream()

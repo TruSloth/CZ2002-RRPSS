@@ -4,19 +4,25 @@ import java.util.GregorianCalendar;
 
 public class Reservation {
     private GregorianCalendar reservationPeriod;
-    private int tableSize;
     private int pax;
     private String name;
     private String contactNumber;
-    private int reservationID; // Might want to use a better datatype for hashing
+    private int tableNo; // Might want to use a better datatype for hashing
 
-    public Reservation(GregorianCalendar reservationPeriod, int tableSize, int pax, String name, String contactNumber) {
+    public Reservation(GregorianCalendar reservationPeriod, int pax, String name, String contactNumber, int tableNo) {
         this.reservationPeriod = reservationPeriod;
-        this.tableSize = tableSize;
         this.pax = pax;
         this.name = name;
         this.contactNumber = contactNumber;
-        // TODO: Implement reservationID auto generation
+        this.tableNo = tableNo;
+    }
+
+    public GregorianCalendar getReservationPeriod() {
+        return reservationPeriod;
+    }
+
+    public void setReservationPeriod(GregorianCalendar reservationPeriod) {
+        this.reservationPeriod = reservationPeriod;
     }
 
     public int getPax() {
@@ -35,14 +41,6 @@ public class Reservation {
         this.name = name;
     }
 
-    public int getTableSize() {
-        return tableSize;
-    }
-
-    public void setTableSize(int tableSize) {
-        this.tableSize = tableSize;
-    }
-
     public String getContactNumber() {
         return contactNumber;
     }
@@ -51,20 +49,11 @@ public class Reservation {
         this.contactNumber = contactNumber;
     }
 
-    public int getReservationID() {
-        return reservationID;
+    public int getTableNo() {
+        return tableNo;
     }
 
-    public void setReservationID(int reservationID) {
-        this.reservationID = reservationID;
-    }
-
-    // These 2 methods need to be moved to another class
-    public void addReservation(GregorianCalendar reservationPeriod, int tableSize, String name, String contactNumber) {
-        // Do we need this?
-    }
-    
-    public void deleteReservation(int reservationID) {
-        // Do we need this?
+    public void setTableNo(int tableNo) {
+        this.tableNo = tableNo;
     }
 }

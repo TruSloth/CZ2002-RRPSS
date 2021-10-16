@@ -3,8 +3,8 @@ package Display;
 import Utils.MenuBuilder;
 
 public abstract class ConsoleDisplay {
-    String[] options;
-    String title;
+    protected String[] options;
+    protected String title;
     
     public int displayMenu() {
         System.out.println(MenuBuilder.buildMenu(title, options));

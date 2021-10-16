@@ -11,6 +11,7 @@ public class Table {
         this.size = size;
         this.tableNumber = tableNo;
         this.booked = false;
+        this.tableNumber = tableNo;
     }
 
     // Default getters & setters
