@@ -90,30 +90,31 @@ public class Restaurant {
         return true;
     }
 
-    public boolean updateReservation(String name, String contact, GregorianCalendar oldReservationPeriod, int choice, String newField) {
+    // Better way to handle updating of reservation? 
+    public boolean updateReservation(Reservation reservation, int choice, String newField) {
         switch (choice) {
             case 1: // Name
-                return reservationManager.modifyReservationName(name, contact, oldReservationPeriod, newField);
+                return reservationManager.modifyReservationName(reservation, newField);
             case 2: // Contact
-                return reservationManager.modifyReservationContact(name, contact, oldReservationPeriod, newField);
+                return reservationManager.modifyReservationContact(reservation, newField);
             default:
                 return false;
         }
     }
 
-    public boolean updateReservation(String name, String contact, GregorianCalendar oldReservationPeriod, int choice, int newField) {
+    public boolean updateReservation(Reservation reservation, int choice, int newField) {
         switch (choice) {
             case 1: // Pax
-                return reservationManager.modifyReservationPax(name, contact, oldReservationPeriod, newField);
+                return reservationManager.modifyReservationPax(reservation, newField);
             case 2: // TableNo
-                return reservationManager.modifyReservationTableNo(name, contact, oldReservationPeriod, newField);
+                return reservationManager.modifyReservationTableNo(reservation, newField);
             default:
                 return false;
         }
     }
 
-    public boolean updateReservation(String name, String contact, GregorianCalendar oldReservationPeriod, GregorianCalendar newReservationPeriod) {
-        return reservationManager.modifyReservationPeriod(name, contact, oldReservationPeriod, newReservationPeriod);
+    public boolean updateReservation(Reservation reservation, GregorianCalendar newReservationPeriod) {
+        return reservationManager.modifyReservationPeriod(reservation, newReservationPeriod);
     }
 
     

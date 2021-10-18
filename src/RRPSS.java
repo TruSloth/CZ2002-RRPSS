@@ -19,6 +19,7 @@ import RestaurantClasses.Table;
 import Utils.MenuBuilder;
 import Display.*;
 import Display.Reservations.ReservationDetailsDisplay;
+import Display.Reservations.ReservationUpdateOptionsDisplay;
 
 public class RRPSS {
     private ArrayList<MenuItem> menu;
@@ -168,10 +169,14 @@ public class RRPSS {
                 view = checkReservation(sc);
                 break;
             case 3:
+                // Update Reservation
+                view = updateReservation(sc);
+                break;
+            case 4:
                 // Remove Reservation
                 view = removeReservation(sc);
                 break;
-            case 4:
+            case 5:
                 // Back
                 view = menuView.PREVIOUS_MENU;
                 break;
@@ -345,6 +350,78 @@ public class RRPSS {
         } else {
             System.out.println("The requested reservation does not exist!");
         }
+
+        return menuView.MENU_ITEMS;
+    }
+
+    public menuView updateReservation(Scanner sc) {
+        // Similar to checkReservation (Can refactor)
+        menuView view = menuView.CURRENT_MENU;
+        System.out.println("Which Reservation would you like to update?");
+        sc.nextLine(); // Throw away \n in buffer
+        System.out.printf("Name: ");
+        String name = sc.nextLine();
+        System.out.printf("Contact: ");
+        String contact = sc.nextLine();
+        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
+        String reservationPeriodString = sc.nextLine();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+        LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
+        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
+
+        Reservation reservation = restaurant.getReservationDetails(name, contact, reservationPeriod);
+
+        if (reservation == null) {
+            System.out.println("The requested reservation does not exist!");
+            return menuView.MENU_ITEMS;
+        } else {
+            do {
+                new ReservationDetailsDisplay(reservation).displayMenu();
+                System.out.println("What would you like to update?");
+                new ReservationUpdateOptionsDisplay().displayMenu();
+                int choice = sc.nextInt();
+                switch (choice) {
+                    case 1:
+                        System.out.printf("Name: ");
+                        sc.nextLine(); // Throw away \n in buffer
+                        String newName = sc.nextLine();
+                        restaurant.updateReservation(reservation, 1, newName);
+                        break;
+                    case 2: 
+                        System.out.printf("Contact: ");
+                        sc.nextLine(); // Throw away \n in buffer
+                        String newContact = sc.nextLine();
+                        restaurant.updateReservation(reservation, 2, newContact);
+                        break;
+                    case 3:
+                        System.out.printf("Pax: ");
+                        int newPax = sc.nextInt();
+                        restaurant.updateReservation(reservation, 1, newPax);
+                        break;
+                    case 4:
+                        System.out.printf("Table No: ");
+                        int newTableNo = sc.nextInt();
+                        restaurant.updateReservation(reservation, 2, newTableNo);
+                        break;
+                    case 5:
+                        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
+                        sc.nextLine(); // Throw away \n in buffer
+                        String newReservationPeriodString = sc.nextLine();
+                
+                        LocalDateTime newLocalDateTime = LocalDateTime.parse(newReservationPeriodString, formatter);
+                        ZonedDateTime newZonedDateTime = newLocalDateTime.atZone(ZoneId.of("Asia/Singapore"));
+                        GregorianCalendar newReservationPeriod = GregorianCalendar.from(newZonedDateTime);
+                        
+                        restaurant.updateReservation(reservation, newReservationPeriod);
+                        break;
+                    case 6:
+                        view = menuView.PREVIOUS_MENU;
+                        break;
+                }
+            } while (view != menuView.PREVIOUS_MENU);
+        } 
 
         return menuView.MENU_ITEMS;
     }

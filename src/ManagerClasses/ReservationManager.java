@@ -57,58 +57,29 @@ public class ReservationManager {
         reservations.remove(reservation);
     }
 
-    public boolean modifyReservationName(String name, String contact, GregorianCalendar oldReservationPeriod, String newName) {
-        Reservation reservation = findReservation(name, contact, oldReservationPeriod);
-
-        if (reservation == null) {
-            return false;
-        }
-
+    public boolean modifyReservationName(Reservation reservation, String newName) {
         reservation.setName(newName);
         return true;
     }
 
-    public boolean modifyReservationContact(String name, String contact, GregorianCalendar oldReservationPeriod, String newContact) {
-        Reservation reservation = findReservation(name, contact, oldReservationPeriod);
-
-        if (reservation == null) {
-            return false;
-        }
-
+    public boolean modifyReservationContact(Reservation reservation, String newContact) {
         reservation.setContactNumber(newContact);
         return true;
     }
 
-    public boolean modifyReservationPeriod(String name, String contact, GregorianCalendar oldReservationPeriod, GregorianCalendar newReservationPeriod) {
-        Reservation reservation = findReservation(name, contact, oldReservationPeriod);
-
-        if (reservation == null) {
-            return false;
-        }
-
+    public boolean modifyReservationPeriod(Reservation reservation, GregorianCalendar newReservationPeriod) {
         reservation.setReservationPeriod(newReservationPeriod);
         return true;
     }
 
-    public boolean modifyReservationTableNo(String name, String contact, GregorianCalendar oldReservationPeriod, int tableNo) {
-        Reservation reservation = findReservation(name, contact, oldReservationPeriod);
-
-        if (reservation == null) {
-            return false;
-        }
-
+    public boolean modifyReservationTableNo(Reservation reservation, int tableNo) {
         // TODO: Handle unbooking of old table no. and booking of new one
+        // The method should throw an exception if the new tableNo refers to a table that cannot satisfy the reservation requirements
         reservation.setTableNo(tableNo);
         return true;
     }
 
-    public boolean modifyReservationPax(String name, String contact, GregorianCalendar oldReservationPeriod, int pax) {
-        Reservation reservation = findReservation(name, contact, oldReservationPeriod);
-
-        if (reservation == null) {
-            return false;
-        }
-
+    public boolean modifyReservationPax(Reservation reservation, int pax) {
         reservation.setPax(pax);
         return true;
     }
