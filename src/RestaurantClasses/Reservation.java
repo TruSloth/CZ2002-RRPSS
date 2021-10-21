@@ -1,6 +1,7 @@
 package RestaurantClasses;
 
 import java.util.GregorianCalendar;
+import java.util.concurrent.ScheduledFuture;
 
 public class Reservation {
     private GregorianCalendar reservationPeriod;
@@ -8,6 +9,7 @@ public class Reservation {
     private String name;
     private String contactNumber;
     private int tableNo; // Might want to use a better datatype for hashing
+    ScheduledFuture<Void> expiry;
 
     public Reservation(GregorianCalendar reservationPeriod, int pax, String name, String contactNumber, int tableNo) {
         this.reservationPeriod = reservationPeriod;
@@ -15,6 +17,7 @@ public class Reservation {
         this.name = name;
         this.contactNumber = contactNumber;
         this.tableNo = tableNo;
+        expiry = null;
     }
 
     public GregorianCalendar getReservationPeriod() {
@@ -55,5 +58,13 @@ public class Reservation {
 
     public void setTableNo(int tableNo) {
         this.tableNo = tableNo;
+    }
+
+    public ScheduledFuture<Void> getExpiry() {
+        return expiry;
+    }
+
+    public void setExpiry(ScheduledFuture<Void> expiry) {
+        this.expiry = expiry;
     }
 }
