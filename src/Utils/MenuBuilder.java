@@ -1,11 +1,12 @@
 package Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MenuBuilder {
     private static String formatMenuTitle(int longestWidth, String title) {
+        // Returns a formatted menu title string
+        // Used by buildMenu methods
         int width = longestWidth + 3;
         StringBuilder output = new StringBuilder();
         output.append("=".repeat(longestWidth + 5));
@@ -17,10 +18,14 @@ public class MenuBuilder {
     }
 
     private static String formatMenuOption(int longestWidth, int optionNumber, String option) {
+        // Returns a formatted menu option string
+        // Used by buildMenu methods for building a menu for displaying menu options and their option numbers
         return String.format("|%d. %-" + longestWidth + "s|", optionNumber, option);
     }
 
     private static String formatMenuOption(int longestWidth, String optionHeader, String option) {
+        // Returns a formatted menu option string without option numbers
+        // Used by buildMenu methods for building a menu for displaying information only
         if (optionHeader.length() + option.length() >= longestWidth) {
             option = fullJustify(option.split(" "), longestWidth);
             return String.format("| %-" + (longestWidth + 1) + "s |\n" + menuLineSpace(longestWidth + 4, ' ') + "%s", optionHeader, option);
@@ -29,6 +34,7 @@ public class MenuBuilder {
     }
 
     public static String fullJustify(String[] words, int maxWidth) {
+        // Returns a formatted string that is fully justified according to maxWidth
         int n = words.length;
         maxWidth += 1;
         List<String> justifiedText = new ArrayList<>();
@@ -102,6 +108,22 @@ public class MenuBuilder {
     }
 
     public static String buildMenu(String title, String[] options) {
+        // Returns a formatted menu for displaying menu options as a string
+
+        /* Example Menu Output
+         *
+         * ================================
+         * |         Reservations         |
+         * |1. Create Reservation Booking |
+         * |2. Check Reservation Booking  |
+         * |3. Update Reservation Booking |
+         * |4. Remove Reservation Booking |
+         * |5. Back                       |
+         * ================================
+         * ================================
+         * 
+         */ 
+
         StringBuilder menu = new StringBuilder();
         int longestWidth = calculateLongestWidth(title, options);
 
@@ -114,6 +136,26 @@ public class MenuBuilder {
     }
 
     public static String buildMenu(int longestWidth, String[] options) {
+        // Returns a formatted menu for displaying menu options without a title as a string
+        // Used to append to a fully formatted menu to create a compound menu
+
+        /*  Example Menu Output
+         *
+         *  =========================
+         *  |         Steak         |
+         *  =========================
+         *  | Price          $10.99 |
+         *  |-----------------------|
+         *  | Description           |
+         *  |                       |
+         *  | test test             |
+         *  =========================
+         *  |1. Edit Name           | <--- Output from here
+         *  |2. Edit Price          | 
+         *  |3. Edit Description    |
+         *  |4. Back                | 
+         *  ========================= <--- to here
+         */
         StringBuilder menu = new StringBuilder();
 
         for (int i = 0; i < options.length; i++) {
@@ -124,13 +166,35 @@ public class MenuBuilder {
     }
 
     public static String buildMenu(String title, String[] optionHeaders, String[] options, int longestWidth) {
+        // Returns a formatted menu for displaying menu information. If a option length exceeds longestWidth,
+        // then it will be considered a multiline option and justified accordingly.
+        // Unlike BuildMenu above, this method does not automatically calculate the longestWidth and longestWidth
+        // has to be provided.
+
+        /* Example Menu Output
+         *
+         * =========================
+         * |         Steak         |
+         * =========================
+         * | Price          $30.50 |
+         * |-----------------------|
+         * | Description           |
+         * |                       |
+         * | Our   House   Classic |
+         * | Tenderloin      Steak |
+         * | since   1966.  Tender |
+         * | eye   fillet   topped |
+         * | with  white asparagus |
+         * | &    black   mushroom |
+         * | sauce                 |
+         * =========================
+         */
         StringBuilder menu = new StringBuilder();
 
         menu.append(formatMenuTitle(longestWidth, title));
         for (int i = 0; i < options.length - 1; i++) {
             menu.append(formatMenuOption(longestWidth, optionHeaders[i], options[i]) + "\n");
             menu.append(menuLineSpace(longestWidth + 4, '-'));
-            //menu.append(String.format("| %" + (longestWidth + 3) + "s\n", "|"));
         }
         menu.append(formatMenuOption(longestWidth, optionHeaders[optionHeaders.length - 1], options[options.length - 1]) + "\n");
         menu.append("=".repeat(longestWidth + 5));
@@ -138,10 +202,14 @@ public class MenuBuilder {
     }
 
     private static String menuLineSpace(int width, char spaceCharacter) {
+        // Returns a formatted string to function as a line space. The spaceCharacter can be specified.
+        // Used by BuildMenu when creating a compound menu
         return String.format("|%" + width + "s\n", "|").replace(' ', spaceCharacter);
     }
 
     private static int calculateLongestWidth(String title, String[] options) {
+        // Returns the length of the string (amongst the options and title)
+        // Used by buildMenu to automatically calculate the longestWidth
         int longestWidth = 0;
         for (String option : options) {
             if (option.length() > longestWidth) {
