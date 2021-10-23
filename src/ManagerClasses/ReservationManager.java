@@ -9,6 +9,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import RestaurantClasses.Reservation;
@@ -47,7 +48,8 @@ public class ReservationManager {
 
     private void setReservationExpiry(Reservation reservation) {
         // Use a ScheduledThreadPool to remove reservation at expiryTimeMS time after start of reservation (Reservation Expires)
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+        ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
+        executor.setRemoveOnCancelPolicy(true); // Set to true to allow tasks to be immediately removed from the work queue upon cancellation
         executors.add(reservations.indexOf(reservation), executor);
 
         long timeDifference = reservation.getReservationPeriod().getTimeInMillis() - System.currentTimeMillis() + expiryTimeMS;

@@ -7,11 +7,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import ManagerClasses.RestaurantManager;
 import RestaurantClasses.Reservation;
 import Utils.MenuBuilder;
 import Utils.MenuView;
 
 public class ReservationConsole {
+    private RestaurantManager restaurantManager;
+
+    public ReservationConsole(RestaurantManager restaurantManager) {
+        this.restaurantManager = restaurantManager;
+    }
+
     public int displayReservationDetails(Reservation reservation) {
         final int LONGEST_WIDTH = 20;
         String[] optionHeaders = {"Name", "Contact", "Pax", "Table No.", "Reservation Period"};
@@ -59,6 +66,36 @@ public class ReservationConsole {
         return options.length;
     }
 
+    public MenuView handleReservationMenuOptions(Scanner sc) {
+        int choice = sc.nextInt();
+        MenuView view = MenuView.RESERVATIONS;
+
+        switch (choice) {
+            case 1:
+                // Create Reservation
+                view = createReservation(sc);
+                break;
+            case 2:
+                // Check Reservation
+                view = checkReservation(sc);
+                break;
+            case 3:
+                // Update Reservation
+                view = updateReservation(sc);
+                break;
+            case 4:
+                // Remove Reservation
+                view = removeReservation(sc);
+                break;
+            case 5:
+                // Back
+                view = MenuView.PREVIOUS_MENU;
+                break;
+        }
+
+        return view;
+    }
+
     public MenuView createReservation(Scanner sc) {
         System.out.println("Creating a new Reservation");
         sc.nextLine(); // Throw away \n in buffer
@@ -77,7 +114,7 @@ public class ReservationConsole {
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
         GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
 
-        restaurant.addReservation(reservationPeriod, pax, name, contact);
+        restaurantManager.addReservation(reservationPeriod, pax, name, contact);
 
         return MenuView.MENU_ITEMS;
     }
@@ -97,7 +134,7 @@ public class ReservationConsole {
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
         GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
 
-        Reservation reservation = restaurant.getReservationDetails(name, contact, reservationPeriod);
+        Reservation reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
 
         if (reservation == null) {
             System.out.println("The requested reservation does not exist!");
@@ -123,7 +160,7 @@ public class ReservationConsole {
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
         GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
 
-        if (restaurant.removeReservation(name, contact, reservationPeriod)) {
+        if (restaurantManager.removeReservation(name, contact, reservationPeriod)) {
             System.out.println("Reservation successfully removed!");
         } else {
             System.out.println("The requested reservation does not exist!");
@@ -149,7 +186,7 @@ public class ReservationConsole {
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
         GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
 
-        Reservation reservation = restaurant.getReservationDetails(name, contact, reservationPeriod);
+        Reservation reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
 
         if (reservation == null) {
             System.out.println("The requested reservation does not exist!");
@@ -165,23 +202,23 @@ public class ReservationConsole {
                         System.out.printf("Name: ");
                         sc.nextLine(); // Throw away \n in buffer
                         String newName = sc.nextLine();
-                        restaurant.updateReservation(reservation, 1, newName);
+                        restaurantManager.updateReservation(reservation, 1, newName);
                         break;
                     case 2: 
                         System.out.printf("Contact: ");
                         sc.nextLine(); // Throw away \n in buffer
                         String newContact = sc.nextLine();
-                        restaurant.updateReservation(reservation, 2, newContact);
+                        restaurantManager.updateReservation(reservation, 2, newContact);
                         break;
                     case 3:
                         System.out.printf("Pax: ");
                         int newPax = sc.nextInt();
-                        restaurant.updateReservation(reservation, 1, newPax);
+                        restaurantManager.updateReservation(reservation, 1, newPax);
                         break;
                     case 4:
                         System.out.printf("Table No: ");
                         int newTableNo = sc.nextInt();
-                        restaurant.updateReservation(reservation, 2, newTableNo);
+                        restaurantManager.updateReservation(reservation, 2, newTableNo);
                         break;
                     case 5:
                         System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
@@ -192,7 +229,7 @@ public class ReservationConsole {
                         ZonedDateTime newZonedDateTime = newLocalDateTime.atZone(ZoneId.of("Asia/Singapore"));
                         GregorianCalendar newReservationPeriod = GregorianCalendar.from(newZonedDateTime);
                         
-                        restaurant.updateReservation(reservation, newReservationPeriod);
+                        restaurantManager.updateReservation(reservation, newReservationPeriod);
                         break;
                     case 6:
                         view = MenuView.PREVIOUS_MENU;

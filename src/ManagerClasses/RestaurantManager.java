@@ -12,7 +12,9 @@ public class RestaurantManager {
 
     private Restaurant restaurant;
 
-    public RestaurantManager() {
+    public RestaurantManager(Restaurant restaurant) {
+        this.restaurant = restaurant;
+
         reservationManager = new ReservationManager();
         tableManager = new TableManager(restaurant.getNumOfTables(), 200, 400, 200, 100, 100); // (2,4,6,8,10-seater proportions in 20%, 40%, 20%, 10%, 10%)
     }

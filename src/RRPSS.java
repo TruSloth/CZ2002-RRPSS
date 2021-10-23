@@ -156,26 +156,26 @@ public class RRPSS {
         menuView view = menuView.RESERVATIONS;
 
         switch (choice) {
-            case 1:
-                // Create Reservation
-                view = createReservation(sc);
-                break;
-            case 2:
-                // Check Reservation
-                view = checkReservation(sc);
-                break;
-            case 3:
-                // Update Reservation
-                view = updateReservation(sc);
-                break;
-            case 4:
-                // Remove Reservation
-                view = removeReservation(sc);
-                break;
-            case 5:
-                // Back
-                view = menuView.PREVIOUS_MENU;
-                break;
+                case 1:
+                    // Create Reservation
+                    view = createReservation(sc);
+                    break;
+                case 2:
+                    // Check Reservation
+                    view = checkReservation(sc);
+                    break;
+                case 3:
+                    // Update Reservation
+                    view = updateReservation(sc);
+                    break;
+                case 4:
+                    // Remove Reservation
+                    view = removeReservation(sc);
+                    break;
+                case 5:
+                    // Back
+                    view = menuView.PREVIOUS_MENU;
+                    break;
         }
 
         return view;
