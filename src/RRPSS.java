@@ -1,8 +1,3 @@
-import java.io.CharArrayReader;
-import java.io.CharArrayWriter;
-import java.io.Console;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -11,15 +6,16 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import Display.MenuItemDetailsDisplay;
+import Display.MenuItemsOptionsDisplay;
+import Display.Reservations.ReservationDetailsDisplay;
+import Display.Reservations.ReservationUpdateOptionsDisplay;
 import RestaurantClasses.MenuItem;
 import RestaurantClasses.Order;
 import RestaurantClasses.Reservation;
 import RestaurantClasses.Restaurant;
 import RestaurantClasses.Table;
 import Utils.MenuBuilder;
-import Display.*;
-import Display.Reservations.ReservationDetailsDisplay;
-import Display.Reservations.ReservationUpdateOptionsDisplay;
 
 public class RRPSS {
     private ArrayList<MenuItem> menu;

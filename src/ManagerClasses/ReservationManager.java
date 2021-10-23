@@ -18,7 +18,7 @@ public class ReservationManager {
 
     private ArrayList<ScheduledExecutorService> executors;
 
-    final private long expiryTimeMS = 60000;
+    final private long expiryTimeMS = 60000; // Time after the start of a reservation upon which reservation will expire
 
     public ReservationManager() {
         reservations = new ArrayList<Reservation>();
