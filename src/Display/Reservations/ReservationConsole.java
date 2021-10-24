@@ -223,7 +223,12 @@ public class ReservationConsole {
                     case 3:
                         System.out.printf("Pax: ");
                         int newPax = sc.nextInt();
-                        restaurantManager.updateReservation(reservation, 1, newPax);
+                        try {
+                            restaurantManager.updateReservation(reservation, 1, newPax);
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                        }
+                        
                         break;
                     case 4:
                         System.out.printf("Table No: ");
@@ -231,6 +236,8 @@ public class ReservationConsole {
                         try {
                             restaurantManager.updateReservation(reservation, 2, newTableNo);
                         } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        } catch (ReservationsFullException e) {
                             System.out.println(e.getMessage());
                         }
                         

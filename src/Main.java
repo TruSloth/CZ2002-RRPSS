@@ -19,5 +19,7 @@ public class Main {
             mainMenuConsole.displayMainMenuOptions();
             view = mainMenuConsole.handleMainMenuOptions(sc);
         } while (view != MenuView.PROGRAM_END);
+
+        restaurantManager.shutdown();
     }
 }

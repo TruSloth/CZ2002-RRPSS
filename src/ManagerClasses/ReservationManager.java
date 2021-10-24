@@ -150,4 +150,13 @@ public class ReservationManager {
         reservation.setPax(pax);
         return true;
     }
+
+    public void cancelAllReservationFutures() {
+        // Called on shutting down to kill all live threads, otherwise JVM will not shutdown.
+        for (Reservation reservation : reservations) {
+            reservation.getExpiry().cancel(true);
+            reservation.setExpiry(null);
+            executors.remove(reservations.indexOf(reservation));
+        }
+    }
 }
