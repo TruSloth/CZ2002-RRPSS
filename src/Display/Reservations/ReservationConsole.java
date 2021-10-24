@@ -4,9 +4,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.GregorianCalendar;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import Exceptions.InvalidReservationException;
+import Exceptions.ReservationsFullException;
 import ManagerClasses.RestaurantManager;
 import RestaurantClasses.Reservation;
 import Utils.MenuBuilder;
@@ -17,6 +21,30 @@ public class ReservationConsole {
 
     public ReservationConsole(RestaurantManager restaurantManager) {
         this.restaurantManager = restaurantManager;
+    }
+
+    private GregorianCalendar formatReservationPeriod(Scanner sc) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+        boolean done = false; // Exit loop only if no exception is caught
+        LocalDateTime localDateTime = LocalDateTime.now();
+        do {
+            System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
+            String reservationPeriodString = sc.nextLine();
+            try {
+                localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
+                if (localDateTime.isBefore(LocalDateTime.now())) {
+
+                }
+                done = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date-time format!");
+                done = false;
+            }
+        } while (!done);
+        
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
+        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
+        return reservationPeriod;
     }
 
     public int displayReservationDetails(Reservation reservation) {
@@ -105,16 +133,15 @@ public class ReservationConsole {
         String contact = sc.nextLine();
         System.out.printf("Pax: ");
         int pax = sc.nextInt();
-        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
         sc.nextLine(); // Throw away \n in buffer
-        String reservationPeriodString = sc.nextLine();
+        
+        GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
-        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
-
-        restaurantManager.addReservation(reservationPeriod, pax, name, contact);
+        try {
+            restaurantManager.addReservation(reservationPeriod, pax, name, contact);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } 
 
         return MenuView.MENU_ITEMS;
     }
@@ -126,20 +153,16 @@ public class ReservationConsole {
         String name = sc.nextLine();
         System.out.printf("Contact: ");
         String contact = sc.nextLine();
-        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-        String reservationPeriodString = sc.nextLine();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
-        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
+        GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
 
-        Reservation reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
+        Reservation reservation;
 
-        if (reservation == null) {
-            System.out.println("The requested reservation does not exist!");
-        } else {
+        try {
+            reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
             displayReservationDetails(reservation);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         return MenuView.MENU_ITEMS;
@@ -152,18 +175,14 @@ public class ReservationConsole {
         String name = sc.nextLine();
         System.out.printf("Contact: ");
         String contact = sc.nextLine();
-        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-        String reservationPeriodString = sc.nextLine();
+        
+        GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
-        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
-
-        if (restaurantManager.removeReservation(name, contact, reservationPeriod)) {
+        try {
+            restaurantManager.removeReservation(name, contact, reservationPeriod);
             System.out.println("Reservation successfully removed!");
-        } else {
-            System.out.println("The requested reservation does not exist!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         return MenuView.MENU_ITEMS;
@@ -178,20 +197,11 @@ public class ReservationConsole {
         String name = sc.nextLine();
         System.out.printf("Contact: ");
         String contact = sc.nextLine();
-        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-        String reservationPeriodString = sc.nextLine();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
-        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
+        GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
 
-        Reservation reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
-
-        if (reservation == null) {
-            System.out.println("The requested reservation does not exist!");
-            return MenuView.MENU_ITEMS;
-        } else {
+        try {
+            Reservation reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
             do {
                 displayReservationDetails(reservation);
                 System.out.println("What would you like to update?");
@@ -218,25 +228,30 @@ public class ReservationConsole {
                     case 4:
                         System.out.printf("Table No: ");
                         int newTableNo = sc.nextInt();
-                        restaurantManager.updateReservation(reservation, 2, newTableNo);
+                        try {
+                            restaurantManager.updateReservation(reservation, 2, newTableNo);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        
                         break;
                     case 5:
-                        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-                        sc.nextLine(); // Throw away \n in buffer
-                        String newReservationPeriodString = sc.nextLine();
-                
-                        LocalDateTime newLocalDateTime = LocalDateTime.parse(newReservationPeriodString, formatter);
-                        ZonedDateTime newZonedDateTime = newLocalDateTime.atZone(ZoneId.of("Asia/Singapore"));
-                        GregorianCalendar newReservationPeriod = GregorianCalendar.from(newZonedDateTime);
+                        GregorianCalendar newReservationPeriod = formatReservationPeriod(sc);
+                        try {
+                            restaurantManager.updateReservation(reservation, newReservationPeriod);
+                        } catch (InvalidReservationException e) {
+                            System.out.println(e.getMessage());
+                        }
                         
-                        restaurantManager.updateReservation(reservation, newReservationPeriod);
                         break;
                     case 6:
                         view = MenuView.PREVIOUS_MENU;
                         break;
                 }
             } while (view != MenuView.PREVIOUS_MENU);
-        } 
+        } catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
+        }
 
         return MenuView.MENU_ITEMS;
     }

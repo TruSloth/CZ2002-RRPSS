@@ -8,7 +8,7 @@ import ManagerClasses.ReservationManager;
 import ManagerClasses.TableManager;
 
 public class Restaurant {
-    private final int NUM_OF_TABLES = 1000;
+    private final int NUM_OF_TABLES = 40;
     private String name;
     private int maxCapacity; // Should be a final as well
     private int numStaff;
@@ -27,8 +27,6 @@ public class Restaurant {
         //this.menu = menu;
         occupancy = 0;
         salesRevenueList = new ArrayList<SalesRevenue>(Arrays.asList(new SalesRevenue(new GregorianCalendar())));
-        // reservationManager = new ReservationManager();
-        // tableManager = new TableManager(NUM_OF_TABLES, 200, 400, 200, 100, 100);
     }
 
     public Restaurant(String name, int maxCapacity, int numStaff, int numMenuItems) {
@@ -39,8 +37,6 @@ public class Restaurant {
         //this.menu = menu;
         occupancy = 0;
         salesRevenueList = new ArrayList<SalesRevenue>(Arrays.asList(new SalesRevenue(new GregorianCalendar())));
-        // reservationManager = new ReservationManager();
-        // tableManager = new TableManager(NUM_OF_TABLES, 200, 400, 200, 100, 100);
     }
 
     // Default getters & setters

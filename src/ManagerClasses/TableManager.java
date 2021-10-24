@@ -85,39 +85,34 @@ public class TableManager {
         tables[tableNumber - 1].unoccupyTable();
     }
 
-    public int getAvailableTable(int[] unavailableTableNos, int pax) {
+    public int getAvailableTable(int[] unavailableTableNos, int pax) throws IllegalArgumentException, NullPointerException {
         // Search for the first suitable table and return its table no. A suitable table is one that has at least pax number of seats 
         // and whose tableNo is not found in unavailableTableNos.
         int startIndex;
         
-        try {
-            switch (pax) {
-                case 1:
-                case 2:
-                    startIndex = index2Seater;
-                    break;
-                case 3:
-                case 4:
-                    startIndex = index4Seater;
-                    break;
-                case 5:
-                case 6:
-                    startIndex = index6Seater;
-                    break;
-                case 7:
-                case 8:
-                    startIndex = index8Seater;
-                    break;
-                case 9:
-                case 10:
-                    startIndex = index10Seater;
-                    break;
-                default:
-                    throw new Exception();
-            }
-        } catch (Exception e) {
-            //TODO: handle exception
-            return 0;
+        switch (pax) {
+            case 1:
+            case 2:
+                startIndex = index2Seater;
+                break;
+            case 3:
+            case 4:
+                startIndex = index4Seater;
+                break;
+            case 5:
+            case 6:
+                startIndex = index6Seater;
+                break;
+            case 7:
+            case 8:
+                startIndex = index8Seater;
+                break;
+            case 9:
+            case 10:
+                startIndex = index10Seater;
+                break;
+            default:
+                throw new IllegalArgumentException(String.format("Unable to accommodate %d pax", pax));
         }
 
         Set<Integer> set = Arrays.stream(unavailableTableNos).boxed().collect(Collectors.toSet());
@@ -125,12 +120,18 @@ public class TableManager {
         return Arrays
             .stream(Arrays.copyOfRange(tables, startIndex, tables.length))
             .filter(table -> (set.contains(table.getTableNumber()) == false))
-            .findFirst()
+            .findFirst() 
             .get()
             .getTableNumber();
     }
 
-    public int bookTable(int[] unavailableTableNos, int pax) {
+    public void checkTableSuitability(int tableNo, int pax) throws IllegalArgumentException {
+        if (tables[tableNo - 1].getSize() < pax) {
+            throw new IllegalArgumentException("This table is not suitable.");
+        }
+    }
+
+    public int bookTable(int[] unavailableTableNos, int pax) throws IllegalArgumentException, NullPointerException {
         int bookedTableNo = getAvailableTable(unavailableTableNos, pax);
         tables[bookedTableNo - 1].bookTable();
         return bookedTableNo;

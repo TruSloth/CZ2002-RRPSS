@@ -25,7 +25,6 @@ public class Table {
     }
 
     // Methods
-
     public void bookTable() {
         booked = true;
     }
