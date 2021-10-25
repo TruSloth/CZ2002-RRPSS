@@ -7,9 +7,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +19,7 @@ public class ReservationManager {
 
     private ArrayList<ScheduledExecutorService> executors;
 
-    final private long expiryTimeMS = 60000; // Time after the start of a reservation upon which reservation will expire
+    final private long EXPIRYTIME_MS = 60000; // Time after the start of a reservation upon which reservation will expire
 
     public ReservationManager() {
         reservations = new ArrayList<Reservation>();
@@ -34,9 +32,9 @@ public class ReservationManager {
         executor.setRemoveOnCancelPolicy(true); // Set to true to allow tasks to be immediately removed from the work queue upon cancellation
         executors.add(reservations.indexOf(reservation), executor);
 
-        long timeDifference = reservation.getReservationPeriod().getTimeInMillis() - System.currentTimeMillis() + expiryTimeMS;
+        long timeDifference = reservation.getReservationPeriod().getTimeInMillis() - System.currentTimeMillis() + EXPIRYTIME_MS;
 
-        Callable<Void> c = () -> {
+        Callable<Void> removeExpiredReservation = () -> {
             System.out.println("Removing reservation at " + new Date());
             executors.remove(reservations.indexOf(reservation));
             reservations.remove(reservation);
@@ -44,7 +42,7 @@ public class ReservationManager {
         };
 
         try {
-            reservation.setExpiry(executor.schedule(c, timeDifference, TimeUnit.MILLISECONDS));
+            reservation.setExpiry(executor.schedule(removeExpiredReservation, timeDifference, TimeUnit.MILLISECONDS));
         } catch (Exception e) {
             e.printStackTrace();
         } 

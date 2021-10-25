@@ -2,8 +2,6 @@ package ManagerClasses;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -86,6 +84,7 @@ public class TableManager {
     }
 
     public int getAvailableTable(int[] unavailableTableNos, int pax) throws IllegalArgumentException, NullPointerException {
+        // Used to find an available table for reservation.
         // Search for the first suitable table and return its table no. A suitable table is one that has at least pax number of seats 
         // and whose tableNo is not found in unavailableTableNos.
         int startIndex;
@@ -129,15 +128,5 @@ public class TableManager {
         if (tables[tableNo - 1].getSize() < pax) {
             throw new IllegalArgumentException("This table is not suitable.");
         }
-    }
-
-    public int bookTable(int[] unavailableTableNos, int pax) throws IllegalArgumentException, NullPointerException {
-        int bookedTableNo = getAvailableTable(unavailableTableNos, pax);
-        tables[bookedTableNo - 1].bookTable();
-        return bookedTableNo;
-    }
-
-    public void unbookTable(int tableNo) {
-        tables[tableNo - 1].unbookTable();
     }
 }

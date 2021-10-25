@@ -11,7 +11,7 @@ import RestaurantClasses.Restaurant;
 public class RestaurantManager {
     private ReservationManager reservationManager;
     private TableManager tableManager;
-    // TODO: Add other manager classes
+    // TODO: Add other manager classesvoid
 
     private Restaurant restaurant;
 
@@ -33,7 +33,7 @@ public class RestaurantManager {
         }
 
         try {
-            int bookedTableNo = tableManager.bookTable(unavailableTableNos, pax);
+            int bookedTableNo = tableManager.getAvailableTable(unavailableTableNos, pax);
             reservationManager.createNewReservation(reservationPeriod, pax, name, contact, bookedTableNo);
         } catch (NullPointerException e) {
             throw new NullPointerException("There are no suitable tables available at this time");
@@ -46,7 +46,6 @@ public class RestaurantManager {
 
     public boolean removeReservation(String name, String contact, GregorianCalendar reservationPeriod) throws NoSuchElementException {
         Reservation reservation = reservationManager.findReservation(name, contact, reservationPeriod);
-        tableManager.unbookTable(reservation.getTableNo());
         reservationManager.deleteReservation(reservation);
         return true;
     }
@@ -72,8 +71,7 @@ public class RestaurantManager {
                     throw new ReservationsFullException("No reservations available for this number of guests at this time.");
                 }
                 
-                int bookedTableNo = tableManager.bookTable(unavailableTableNos, reservation.getPax());
-                tableManager.unbookTable(reservation.getTableNo());
+                int bookedTableNo = tableManager.getAvailableTable(unavailableTableNos, reservation.getPax());
                 reservationManager.modifyReservationTableNo(reservation, bookedTableNo);
                 return reservationManager.modifyReservationPax(reservation, newField);
             case 2: // TableNo
