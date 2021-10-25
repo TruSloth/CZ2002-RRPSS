@@ -27,6 +27,13 @@ public class ReservationManager {
     }
 
     private void setReservationExpiry(Reservation reservation) {
+        /* 
+         * Used internally whenever a new reservation is made or changes to a reservation's reservationPeriod is made.
+         * Schedules the Callable removeExpiredReservation, which removes a Reservation from the list of active reservations
+         * as well as its corresponding ScheduledExecutorService, when the reservationExpires, as defined by EXPIRYTIME_MS.
+         * The method also sets the ScheduledFuture as the expiry value of that Reservation, to hold a reference to the ScheduledFuture
+         * to allow a way to cancel it when necessary. 
+         */ 
         // Use a ScheduledThreadPool to remove reservation at expiryTimeMS time after start of reservation (Reservation Expires)
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
         executor.setRemoveOnCancelPolicy(true); // Set to true to allow tasks to be immediately removed from the work queue upon cancellation
@@ -51,6 +58,11 @@ public class ReservationManager {
     }
 
     private void isAdvancedReservation(GregorianCalendar reservationPeriod) throws InvalidReservationException {
+        /*
+         * Checks to see if reservationPeriod is before the current time + some buffer time.
+         * If reservationPeriod is within current time + the buffer time, then an exception is thrown
+         */ 
+
         Calendar advancedReservationPeriod = Calendar.getInstance();
         advancedReservationPeriod.add(Calendar.MINUTE, 1); // Must make reservation 1 hour in advance
 
