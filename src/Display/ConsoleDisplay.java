@@ -1,14 +1,14 @@
 package Display;
 
-import Utils.MenuBuilder;
+import java.util.Scanner;
+
+import ManagerClasses.RestaurantManager;
+import Utils.MenuView;
 
 public abstract class ConsoleDisplay {
-    protected String[] options;
-    protected String title;
-    
-    public int displayMenu() {
-        System.out.println(MenuBuilder.buildMenu(title, options));
+    protected RestaurantManager restaurantManager;
 
-        return options.length;
-    }
+    public abstract int displayConsoleOptions();
+
+    public abstract MenuView handleConsoleOptions(Scanner sc);
 }

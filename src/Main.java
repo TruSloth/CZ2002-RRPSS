@@ -16,8 +16,8 @@ public class Main {
         MenuView view = MenuView.CURRENT_MENU;
         
         do {
-            mainMenuConsole.displayMainMenuOptions();
-            view = mainMenuConsole.handleMainMenuOptions(sc);
+            mainMenuConsole.displayConsoleOptions();
+            view = mainMenuConsole.handleConsoleOptions(sc);
         } while (view != MenuView.PROGRAM_END);
 
         restaurantManager.shutdown();

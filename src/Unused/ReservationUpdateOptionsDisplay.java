@@ -1,6 +1,4 @@
-package Display.Reservations;
-
-import Display.ConsoleDisplay;
+package Unused;
 
 public class ReservationUpdateOptionsDisplay extends ConsoleDisplay {
     public ReservationUpdateOptionsDisplay() {

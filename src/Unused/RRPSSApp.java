@@ -1,10 +1,5 @@
+package Unused;
 import java.util.Scanner;
-
-import Display.ConsoleMenuDisplay;
-import Display.MenuOptionsDisplay;
-import Display.OrderOptionsDisplay;
-import Display.PromotionOptionsDisplay;
-import Display.Reservations.ReservationOptionsDisplay;
 
 public class RRPSSApp {
     public static void main(String[] args) throws Exception {

@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import Display.ConsoleDisplay;
 import Exceptions.InvalidReservationException;
 import Exceptions.ReservationsFullException;
 import ManagerClasses.RestaurantManager;
@@ -16,12 +17,8 @@ import RestaurantClasses.Reservation;
 import Utils.MenuBuilder;
 import Utils.MenuView;
 
-public class ReservationConsole {
+public class ReservationConsole extends ConsoleDisplay {
     private RestaurantManager restaurantManager;
-
-    public ReservationConsole(RestaurantManager restaurantManager) {
-        this.restaurantManager = restaurantManager;
-    }
 
     private GregorianCalendar formatReservationPeriod(Scanner sc) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
@@ -61,7 +58,7 @@ public class ReservationConsole {
         return options.length;
     }
 
-    public int displayReservationMenuOptions() {
+    public int displayConsoleOptions() {
         String[] options = new String[] {
             "Create Reservation Booking",
             "Check Reservation Booking",
@@ -94,7 +91,7 @@ public class ReservationConsole {
         return options.length;
     }
 
-    public MenuView handleReservationMenuOptions(Scanner sc) {
+    public MenuView handleConsoleOptions(Scanner sc) {
         int choice = sc.nextInt();
         MenuView view = MenuView.RESERVATIONS;
 

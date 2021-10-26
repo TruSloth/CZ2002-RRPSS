@@ -1,3 +1,4 @@
+package Unused;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -6,10 +7,6 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-import Display.MenuItemDetailsDisplay;
-import Display.MenuItemsOptionsDisplay;
-import Display.Reservations.ReservationDetailsDisplay;
-import Display.Reservations.ReservationUpdateOptionsDisplay;
 import RestaurantClasses.MenuItem;
 import RestaurantClasses.Order;
 import RestaurantClasses.Reservation;
@@ -37,7 +34,7 @@ public class RRPSS {
         menu = new ArrayList<MenuItem>();
         orders = new ArrayList<Order>();
         tables = new Table[10];
-        restaurant = new Restaurant("Koufu", 2000, 100, 10, menu);
+        //restaurant = new Restaurant("Koufu", 2000, 100, 10, menu);
     }
 
     public menuView handleMainMenuOptions(Scanner sc, int optionsLength) {
@@ -162,15 +159,15 @@ public class RRPSS {
                     break;
                 case 2:
                     // Check Reservation
-                    view = checkReservation(sc);
+                    //view = checkReservation(sc);
                     break;
                 case 3:
                     // Update Reservation
-                    view = updateReservation(sc);
+                    //view = updateReservation(sc);
                     break;
                 case 4:
                     // Remove Reservation
-                    view = removeReservation(sc);
+                    //view = removeReservation(sc);
                     break;
                 case 5:
                     // Back
@@ -235,7 +232,8 @@ public class RRPSS {
     public menuView editMenuItem(Scanner sc) {
         menuView view = menuView.CURRENT_MENU;
             
-        int back = new MenuItemsOptionsDisplay(menu).displayMenu();
+        //int back = new MenuItemsOptionsDisplay(menu).displayMenu();
+        int back = 1;
             
         System.out.println("Which item would you like to edit?");
             
@@ -295,132 +293,132 @@ public class RRPSS {
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
         GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
 
-        restaurant.addReservation(reservationPeriod, pax, name, contact);
+        //restaurant.addReservation(reservationPeriod, pax, name, contact);
 
         return menuView.MENU_ITEMS;
     }
 
-    public menuView checkReservation(Scanner sc) {
-        System.out.println("Which Reservation are you looking for?");
-        sc.nextLine(); // Throw away \n in buffer
-        System.out.printf("Name: ");
-        String name = sc.nextLine();
-        System.out.printf("Contact: ");
-        String contact = sc.nextLine();
-        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-        String reservationPeriodString = sc.nextLine();
+    // public menuView checkReservation(Scanner sc) {
+    //     System.out.println("Which Reservation are you looking for?");
+    //     sc.nextLine(); // Throw away \n in buffer
+    //     System.out.printf("Name: ");
+    //     String name = sc.nextLine();
+    //     System.out.printf("Contact: ");
+    //     String contact = sc.nextLine();
+    //     System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
+    //     String reservationPeriodString = sc.nextLine();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
-        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
+    //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+    //     LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
+    //     ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
+    //     GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
 
-        Reservation reservation = restaurant.getReservationDetails(name, contact, reservationPeriod);
+    //     Reservation reservation = restaurant.getReservationDetails(name, contact, reservationPeriod);
 
-        if (reservation == null) {
-            System.out.println("The requested reservation does not exist!");
-        } else {
-            new ReservationDetailsDisplay(reservation).displayMenu();
-        }
+    //     if (reservation == null) {
+    //         System.out.println("The requested reservation does not exist!");
+    //     } else {
+    //         new ReservationDetailsDisplay(reservation).displayMenu();
+    //     }
 
-        return menuView.MENU_ITEMS;
-    }
+    //     return menuView.MENU_ITEMS;
+    // }
 
-    public menuView removeReservation(Scanner sc) {
-        System.out.println("Which Reservation would you like to remove?");
-        sc.nextLine(); // Throw away \n in buffer
-        System.out.printf("Name: ");
-        String name = sc.nextLine();
-        System.out.printf("Contact: ");
-        String contact = sc.nextLine();
-        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-        String reservationPeriodString = sc.nextLine();
+    // public menuView removeReservation(Scanner sc) {
+    //     System.out.println("Which Reservation would you like to remove?");
+    //     sc.nextLine(); // Throw away \n in buffer
+    //     System.out.printf("Name: ");
+    //     String name = sc.nextLine();
+    //     System.out.printf("Contact: ");
+    //     String contact = sc.nextLine();
+    //     System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
+    //     String reservationPeriodString = sc.nextLine();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
-        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
+    //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+    //     LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
+    //     ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
+    //     GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
 
-        if (restaurant.removeReservation(name, contact, reservationPeriod)) {
-            System.out.println("Reservation successfully removed!");
-        } else {
-            System.out.println("The requested reservation does not exist!");
-        }
+    //     if (restaurant.removeReservation(name, contact, reservationPeriod)) {
+    //         System.out.println("Reservation successfully removed!");
+    //     } else {
+    //         System.out.println("The requested reservation does not exist!");
+    //     }
 
-        return menuView.MENU_ITEMS;
-    }
+    //     return menuView.MENU_ITEMS;
+    // }
 
-    public menuView updateReservation(Scanner sc) {
-        // Similar to checkReservation (Can refactor)
-        menuView view = menuView.CURRENT_MENU;
-        System.out.println("Which Reservation would you like to update?");
-        sc.nextLine(); // Throw away \n in buffer
-        System.out.printf("Name: ");
-        String name = sc.nextLine();
-        System.out.printf("Contact: ");
-        String contact = sc.nextLine();
-        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-        String reservationPeriodString = sc.nextLine();
+    // public menuView updateReservation(Scanner sc) {
+    //     // Similar to checkReservation (Can refactor)
+    //     menuView view = menuView.CURRENT_MENU;
+    //     System.out.println("Which Reservation would you like to update?");
+    //     sc.nextLine(); // Throw away \n in buffer
+    //     System.out.printf("Name: ");
+    //     String name = sc.nextLine();
+    //     System.out.printf("Contact: ");
+    //     String contact = sc.nextLine();
+    //     System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
+    //     String reservationPeriodString = sc.nextLine();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
-        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
+    //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+    //     LocalDateTime localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
+    //     ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
+    //     GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
 
-        Reservation reservation = restaurant.getReservationDetails(name, contact, reservationPeriod);
+    //     Reservation reservation = restaurant.getReservationDetails(name, contact, reservationPeriod);
 
-        if (reservation == null) {
-            System.out.println("The requested reservation does not exist!");
-            return menuView.MENU_ITEMS;
-        } else {
-            do {
-                new ReservationDetailsDisplay(reservation).displayMenu();
-                System.out.println("What would you like to update?");
-                new ReservationUpdateOptionsDisplay().displayMenu();
-                int choice = sc.nextInt();
-                switch (choice) {
-                    case 1:
-                        System.out.printf("Name: ");
-                        sc.nextLine(); // Throw away \n in buffer
-                        String newName = sc.nextLine();
-                        restaurant.updateReservation(reservation, 1, newName);
-                        break;
-                    case 2: 
-                        System.out.printf("Contact: ");
-                        sc.nextLine(); // Throw away \n in buffer
-                        String newContact = sc.nextLine();
-                        restaurant.updateReservation(reservation, 2, newContact);
-                        break;
-                    case 3:
-                        System.out.printf("Pax: ");
-                        int newPax = sc.nextInt();
-                        restaurant.updateReservation(reservation, 1, newPax);
-                        break;
-                    case 4:
-                        System.out.printf("Table No: ");
-                        int newTableNo = sc.nextInt();
-                        restaurant.updateReservation(reservation, 2, newTableNo);
-                        break;
-                    case 5:
-                        System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-                        sc.nextLine(); // Throw away \n in buffer
-                        String newReservationPeriodString = sc.nextLine();
+    //     if (reservation == null) {
+    //         System.out.println("The requested reservation does not exist!");
+    //         return menuView.MENU_ITEMS;
+    //     } else {
+    //         do {
+    //             new ReservationDetailsDisplay(reservation).displayMenu();
+    //             System.out.println("What would you like to update?");
+    //             new ReservationUpdateOptionsDisplay().displayMenu();
+    //             int choice = sc.nextInt();
+    //             switch (choice) {
+    //                 case 1:
+    //                     System.out.printf("Name: ");
+    //                     sc.nextLine(); // Throw away \n in buffer
+    //                     String newName = sc.nextLine();
+    //                     restaurant.updateReservation(reservation, 1, newName);
+    //                     break;
+    //                 case 2: 
+    //                     System.out.printf("Contact: ");
+    //                     sc.nextLine(); // Throw away \n in buffer
+    //                     String newContact = sc.nextLine();
+    //                     restaurant.updateReservation(reservation, 2, newContact);
+    //                     break;
+    //                 case 3:
+    //                     System.out.printf("Pax: ");
+    //                     int newPax = sc.nextInt();
+    //                     restaurant.updateReservation(reservation, 1, newPax);
+    //                     break;
+    //                 case 4:
+    //                     System.out.printf("Table No: ");
+    //                     int newTableNo = sc.nextInt();
+    //                     restaurant.updateReservation(reservation, 2, newTableNo);
+    //                     break;
+    //                 case 5:
+    //                     System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
+    //                     sc.nextLine(); // Throw away \n in buffer
+    //                     String newReservationPeriodString = sc.nextLine();
                 
-                        LocalDateTime newLocalDateTime = LocalDateTime.parse(newReservationPeriodString, formatter);
-                        ZonedDateTime newZonedDateTime = newLocalDateTime.atZone(ZoneId.of("Asia/Singapore"));
-                        GregorianCalendar newReservationPeriod = GregorianCalendar.from(newZonedDateTime);
+    //                     LocalDateTime newLocalDateTime = LocalDateTime.parse(newReservationPeriodString, formatter);
+    //                     ZonedDateTime newZonedDateTime = newLocalDateTime.atZone(ZoneId.of("Asia/Singapore"));
+    //                     GregorianCalendar newReservationPeriod = GregorianCalendar.from(newZonedDateTime);
                         
-                        restaurant.updateReservation(reservation, newReservationPeriod);
-                        break;
-                    case 6:
-                        view = menuView.PREVIOUS_MENU;
-                        break;
-                }
-            } while (view != menuView.PREVIOUS_MENU);
-        } 
+    //                     restaurant.updateReservation(reservation, newReservationPeriod);
+    //                     break;
+    //                 case 6:
+    //                     view = menuView.PREVIOUS_MENU;
+    //                     break;
+    //             }
+    //         } while (view != menuView.PREVIOUS_MENU);
+    //     } 
 
-        return menuView.MENU_ITEMS;
-    }
+    //     return menuView.MENU_ITEMS;
+    // }
 }
 
 

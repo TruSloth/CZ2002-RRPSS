@@ -2,22 +2,24 @@ package Display.MainMenu;
 
 import java.util.Scanner;
 
+import Display.ConsoleDisplay;
 import Display.Reservations.ReservationConsole;
 import ManagerClasses.RestaurantManager;
 import Utils.MenuBuilder;
 import Utils.MenuView;
 
-public class MainMenuConsole {
+public class MainMenuConsole extends ConsoleDisplay {
     private ReservationConsole reservationConsole;
     // TODO: Add other consoles
 
     public MainMenuConsole(RestaurantManager restaurantManager) {
         // Initialise consoles
+        super.restaurantManager = restaurantManager;
         
-        reservationConsole = new ReservationConsole(restaurantManager);
+        reservationConsole = new ReservationConsole();
     }
 
-    public MenuView handleMainMenuOptions(Scanner sc) {
+    public MenuView handleConsoleOptions(Scanner sc) {
         MenuView view = MenuView.CURRENT_MENU;
     
         int choice = sc.nextInt();
@@ -39,8 +41,8 @@ public class MainMenuConsole {
                 // Reservations
                 view = MenuView.RESERVATIONS;
                 do {
-                    reservationConsole.displayReservationMenuOptions();
-                    view = reservationConsole.handleReservationMenuOptions(sc);
+                    reservationConsole.displayConsoleOptions();
+                    view = reservationConsole.handleConsoleOptions(sc);
                 } while (view != MenuView.PREVIOUS_MENU);
             
                 break;
@@ -56,7 +58,7 @@ public class MainMenuConsole {
         return view;
     }
 
-    public int displayMainMenuOptions() {
+    public int displayConsoleOptions() {
         String[] options = new String[] {
             "Menu Items",
             "Promotions",

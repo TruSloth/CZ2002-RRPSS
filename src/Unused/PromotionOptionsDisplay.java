@@ -1,4 +1,4 @@
-package Display;
+package Unused;
 
 public class PromotionOptionsDisplay extends ConsoleDisplay {
     public PromotionOptionsDisplay() {
