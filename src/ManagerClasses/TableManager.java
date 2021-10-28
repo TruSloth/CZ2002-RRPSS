@@ -7,8 +7,7 @@ import java.util.stream.Collectors;
 
 import RestaurantClasses.Table;
 
-public class TableManager {
-    private Table[] tables;
+public class TableManager extends Manager<Table> {
     private int index2Seater;
     private int index4Seater;
     private int index6Seater;
@@ -16,7 +15,7 @@ public class TableManager {
     private int index10Seater;
 
     public TableManager(int maxNumOfTables, int numOf2Seater, int numOf4Seater, int numOf6Seater, int numOf8Seater, int numOf10Seater) {
-        tables = new Table[maxNumOfTables];
+        Table[] tables = new Table[maxNumOfTables];
 
         // Sanity Check
         try {
@@ -63,24 +62,29 @@ public class TableManager {
         for (int i = start; i < end; i++) {
             tables[i] = new Table(10, i + 1);
         }
+
+        entities = Arrays.asList(tables);
     }
 
     public Table[] getOccupiedTables() {
-        ArrayList<Table> tablesList = new ArrayList<Table>(Arrays.asList(tables.clone()));
-        return (Table[]) tablesList.stream().filter(table -> table.isOccupied() == true).toArray();
+        //ArrayList<Table> tablesList = new ArrayList<Table>(Arrays.asList(tables.clone()));
+        //return (Table[]) tablesList.stream().filter(table -> table.isOccupied() == true).toArray();
+        return (Table[]) entities.stream().filter(table -> table.isOccupied() == true).toArray();
     }
 
     public Table[] getUnoccupiedTables() {
-        ArrayList<Table> tablesList = new ArrayList<Table>(Arrays.asList(tables.clone()));
-        return (Table[]) tablesList.stream().filter(table -> table.isOccupied() == false).toArray();
+        //ArrayList<Table> tablesList = new ArrayList<Table>(Arrays.asList(tables.clone()));
+        return (Table[]) entities.stream().filter(table -> table.isOccupied() == false).toArray();
     }
 
     public void occupyTable(int tableNumber) {
-        tables[tableNumber - 1].occupyTable();
+        //tables[tableNumber - 1].occupyTable();
+        entities.get(tableNumber - 1).occupyTable();
     }
 
     public void unoccupyTable(int tableNumber) {
-        tables[tableNumber - 1].unoccupyTable();
+        //tables[tableNumber - 1].unoccupyTable();
+        entities.get(tableNumber - 1).unoccupyTable();
     }
 
     public int getAvailableTable(int[] unavailableTableNos, int pax) throws IllegalArgumentException, NullPointerException {
@@ -116,17 +120,32 @@ public class TableManager {
 
         Set<Integer> set = Arrays.stream(unavailableTableNos).boxed().collect(Collectors.toSet());
 
-        return Arrays
-            .stream(Arrays.copyOfRange(tables, startIndex, tables.length))
-            .filter(table -> (set.contains(table.getTableNumber()) == false))
-            .findFirst() 
-            .get()
-            .getTableNumber();
+        // return Arrays
+        //     .stream(Arrays.copyOfRange(tables, startIndex, tables.length))
+        //     .filter(table -> (set.contains(table.getTableNumber()) == false))
+        //     .findFirst() 
+        //     .get()
+        //     .getTableNumber();
+        return entities
+                .subList(startIndex, entities.size())
+                .stream()
+                .filter(table -> (set.contains(table.getTableNumber()) == false))
+                .findFirst()
+                .get()
+                .getTableNumber();
     }
 
     public void checkTableSuitability(int tableNo, int pax) throws IllegalArgumentException {
-        if (tables[tableNo - 1].getSize() < pax) {
+        // if (tables[tableNo - 1].getSize() < pax) {
+        //     throw new IllegalArgumentException("This table is not suitable.");
+        // }
+        if (entities.get(tableNo - 1).getSize() < pax) {
             throw new IllegalArgumentException("This table is not suitable.");
         }
+    }
+
+    public int getMaxTables() {
+        //return tables.length;
+        return entities.size();
     }
 }

@@ -12,14 +12,16 @@ public class MainMenuConsole extends ConsoleDisplay {
     private ReservationConsole reservationConsole;
     // TODO: Add other consoles
 
-    public MainMenuConsole(RestaurantManager restaurantManager) {
+    public MainMenuConsole(RestaurantManager restaurantManager, Scanner sc) {
         // Initialise consoles
         super.restaurantManager = restaurantManager;
-        
-        reservationConsole = new ReservationConsole();
+
+        super.sc = sc;
+        System.out.println("MainMenu constructor");
+        reservationConsole = new ReservationConsole(restaurantManager, sc);
     }
 
-    public MenuView handleConsoleOptions(Scanner sc) {
+    public MenuView handleConsoleOptions() {
         MenuView view = MenuView.CURRENT_MENU;
     
         int choice = sc.nextInt();
@@ -42,7 +44,7 @@ public class MainMenuConsole extends ConsoleDisplay {
                 view = MenuView.RESERVATIONS;
                 do {
                     reservationConsole.displayConsoleOptions();
-                    view = reservationConsole.handleConsoleOptions(sc);
+                    view = reservationConsole.handleConsoleOptions();
                 } while (view != MenuView.PREVIOUS_MENU);
             
                 break;

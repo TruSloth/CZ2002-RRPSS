@@ -3,7 +3,7 @@ package RestaurantClasses;
 import java.util.GregorianCalendar;
 import java.util.concurrent.ScheduledFuture;
 
-public class Reservation {
+public class Reservation extends RestaurantEntity {
     private GregorianCalendar reservationPeriod;
     private int pax;
     private String name;

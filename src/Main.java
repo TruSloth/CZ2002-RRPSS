@@ -11,13 +11,13 @@ public class Main {
         
         Restaurant restaurant = new Restaurant("RestaurantA", 40, 5, 10);
         RestaurantManager restaurantManager = new RestaurantManager(restaurant);
-        MainMenuConsole mainMenuConsole = new MainMenuConsole(restaurantManager);
+        MainMenuConsole mainMenuConsole = new MainMenuConsole(restaurantManager, sc);
 
         MenuView view = MenuView.CURRENT_MENU;
         
         do {
             mainMenuConsole.displayConsoleOptions();
-            view = mainMenuConsole.handleConsoleOptions(sc);
+            view = mainMenuConsole.handleConsoleOptions();
         } while (view != MenuView.PROGRAM_END);
 
         restaurantManager.shutdown();

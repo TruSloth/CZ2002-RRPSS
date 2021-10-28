@@ -9,40 +9,68 @@ import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+import Commands.AddReservationCommand;
+import Commands.FindReservationCommand;
+import Commands.RemoveReservationCommand;
+import Commands.UpdateReservationCommand;
+import Commands.iCommand;
 import Display.ConsoleDisplay;
 import Exceptions.InvalidReservationException;
 import Exceptions.ReservationsFullException;
+import ManagerClasses.ReservationManager;
 import ManagerClasses.RestaurantManager;
+import ManagerClasses.TableManager;
 import RestaurantClasses.Reservation;
 import Utils.MenuBuilder;
 import Utils.MenuView;
 
 public class ReservationConsole extends ConsoleDisplay {
-    private RestaurantManager restaurantManager;
+    // Declare all available commands here
+    private iCommand<Void> addReservationCommand;
 
-    private GregorianCalendar formatReservationPeriod(Scanner sc) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
-        boolean done = false; // Exit loop only if no exception is caught
-        LocalDateTime localDateTime = LocalDateTime.now();
-        do {
-            System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
-            String reservationPeriodString = sc.nextLine();
-            try {
-                localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
-                if (localDateTime.isBefore(LocalDateTime.now())) {
+    private iCommand<Reservation> findReservationCommand;
 
-                }
-                done = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Invalid date-time format!");
-                done = false;
-            }
-        } while (!done);
-        
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
-        GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
-        return reservationPeriod;
+    private iCommand<Boolean> removeReservationCommand;
+
+    public ReservationConsole(RestaurantManager restaurantManager, Scanner sc) {
+        System.out.println("here");
+        super.sc = sc;
+        super.restaurantManager = restaurantManager;
+        System.out.println("there");
+
+        addReservationCommand = new AddReservationCommand(
+                    restaurantManager.getSubManager("reservationManager", ReservationManager.class),
+                    restaurantManager.getSubManager("tableManager", TableManager.class), sc);
+
+        findReservationCommand = new FindReservationCommand(
+                    restaurantManager.getSubManager("reservationManager", ReservationManager.class), sc);
+    
+        removeReservationCommand = new RemoveReservationCommand(
+                    restaurantManager.getSubManager("reservationManager", ReservationManager.class), sc);
     }
+    // private GregorianCalendar formatReservationPeriod(Scanner sc) {
+    //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+    //     boolean done = false; // Exit loop only if no exception is caught
+    //     LocalDateTime localDateTime = LocalDateTime.now();
+    //     do {
+    //         System.out.printf("Reservation Period(DD/MM/YY HH:MM): ");
+    //         String reservationPeriodString = sc.nextLine();
+    //         try {
+    //             localDateTime = LocalDateTime.parse(reservationPeriodString, formatter);
+    //             if (localDateTime.isBefore(LocalDateTime.now())) {
+
+    //             }
+    //             done = true;
+    //         } catch (DateTimeParseException e) {
+    //             System.out.println("Invalid date-time format!");
+    //             done = false;
+    //         }
+    //     } while (!done);
+        
+    //     ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of("Asia/Singapore"));
+    //     GregorianCalendar reservationPeriod = GregorianCalendar.from(zonedDateTime);
+    //     return reservationPeriod;
+    // }
 
     public int displayReservationDetails(Reservation reservation) {
         final int LONGEST_WIDTH = 20;
@@ -91,26 +119,51 @@ public class ReservationConsole extends ConsoleDisplay {
         return options.length;
     }
 
-    public MenuView handleConsoleOptions(Scanner sc) {
+    public MenuView handleConsoleOptions() {
         int choice = sc.nextInt();
         MenuView view = MenuView.RESERVATIONS;
+        Reservation reservation;
 
         switch (choice) {
             case 1:
                 // Create Reservation
-                view = createReservation(sc);
+                addReservationCommand.execute();
+                view = MenuView.RESERVATIONS;
+                //view = createReservation(sc);
                 break;
             case 2:
                 // Check Reservation
-                view = checkReservation(sc);
+                reservation = findReservationCommand.execute();
+                if (reservation != null) {
+                    displayReservationDetails(reservation);
+                }
+                
+                view = MenuView.RESERVATIONS;
+                //view = checkReservation(sc);
                 break;
             case 3:
                 // Update Reservation
-                view = updateReservation(sc);
+                reservation = findReservationCommand.execute();
+
+                iCommand<MenuView> updateReservationCommand = new UpdateReservationCommand(
+                    restaurantManager.getSubManager("reservationManager", ReservationManager.class),
+                    restaurantManager.getSubManager("tableManager", TableManager.class), 
+                    reservation, sc);
+                
+                    view = MenuView.CURRENT_MENU;
+                do {
+                    displayReservationDetails(reservation);
+                    System.out.println("What would you like to update?");
+                    displayUpdateReservationOptions();
+                    view = updateReservationCommand.execute();
+                } while (view != MenuView.PREVIOUS_MENU);
+
+                view = MenuView.RESERVATIONS;
                 break;
             case 4:
                 // Remove Reservation
-                view = removeReservation(sc);
+                removeReservationCommand.execute();
+                view = MenuView.MENU_ITEMS;
                 break;
             case 5:
                 // Back
@@ -121,142 +174,142 @@ public class ReservationConsole extends ConsoleDisplay {
         return view;
     }
 
-    public MenuView createReservation(Scanner sc) {
-        System.out.println("Creating a new Reservation");
-        sc.nextLine(); // Throw away \n in buffer
-        System.out.printf("Name: ");
-        String name = sc.nextLine();
-        System.out.printf("Contact: ");
-        String contact = sc.nextLine();
-        System.out.printf("Pax: ");
-        int pax = sc.nextInt();
-        sc.nextLine(); // Throw away \n in buffer
+    // public MenuView createReservation(Scanner sc) {
+    //     System.out.println("Creating a new Reservation");
+    //     sc.nextLine(); // Throw away \n in buffer
+    //     System.out.printf("Name: ");
+    //     String name = sc.nextLine();
+    //     System.out.printf("Contact: ");
+    //     String contact = sc.nextLine();
+    //     System.out.printf("Pax: ");
+    //     int pax = sc.nextInt();
+    //     sc.nextLine(); // Throw away \n in buffer
         
-        GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
+    //     GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
 
-        try {
-            restaurantManager.addReservation(reservationPeriod, pax, name, contact);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        } 
+    //     try {
+    //         restaurantManager.addReservation(reservationPeriod, pax, name, contact);
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //     } 
 
-        return MenuView.MENU_ITEMS;
-    }
+    //     return MenuView.MENU_ITEMS;
+    // }
 
-    public MenuView checkReservation(Scanner sc) {
-        System.out.println("Which Reservation are you looking for?");
-        sc.nextLine(); // Throw away \n in buffer
-        System.out.printf("Name: ");
-        String name = sc.nextLine();
-        System.out.printf("Contact: ");
-        String contact = sc.nextLine();
+    // public MenuView checkReservation(Scanner sc) {
+    //     System.out.println("Which Reservation are you looking for?");
+    //     sc.nextLine(); // Throw away \n in buffer
+    //     System.out.printf("Name: ");
+    //     String name = sc.nextLine();
+    //     System.out.printf("Contact: ");
+    //     String contact = sc.nextLine();
 
-        GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
+    //     GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
 
-        Reservation reservation;
+    //     Reservation reservation;
 
-        try {
-            reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
-            displayReservationDetails(reservation);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    //     try {
+    //         reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
+    //         displayReservationDetails(reservation);
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //     }
 
-        return MenuView.MENU_ITEMS;
-    }
+    //     return MenuView.MENU_ITEMS;
+    // }
 
-    public MenuView removeReservation(Scanner sc) {
-        System.out.println("Which Reservation would you like to remove?");
-        sc.nextLine(); // Throw away \n in buffer
-        System.out.printf("Name: ");
-        String name = sc.nextLine();
-        System.out.printf("Contact: ");
-        String contact = sc.nextLine();
+    // public MenuView removeReservation(Scanner sc) {
+    //     System.out.println("Which Reservation would you like to remove?");
+    //     sc.nextLine(); // Throw away \n in buffer
+    //     System.out.printf("Name: ");
+    //     String name = sc.nextLine();
+    //     System.out.printf("Contact: ");
+    //     String contact = sc.nextLine();
         
-        GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
+    //     GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
 
-        try {
-            restaurantManager.removeReservation(name, contact, reservationPeriod);
-            System.out.println("Reservation successfully removed!");
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+    //     try {
+    //         restaurantManager.removeReservation(name, contact, reservationPeriod);
+    //         System.out.println("Reservation successfully removed!");
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //     }
 
-        return MenuView.MENU_ITEMS;
-    }
+    //     return MenuView.MENU_ITEMS;
+    // }
 
-    public MenuView updateReservation(Scanner sc) {
-        // Similar to checkReservation (Can refactor)
-        MenuView view = MenuView.CURRENT_MENU;
-        System.out.println("Which Reservation would you like to update?");
-        sc.nextLine(); // Throw away \n in buffer
-        System.out.printf("Name: ");
-        String name = sc.nextLine();
-        System.out.printf("Contact: ");
-        String contact = sc.nextLine();
+    // public MenuView updateReservation(Scanner sc) {
+    //     // Similar to checkReservation (Can refactor)
+    //     MenuView view = MenuView.CURRENT_MENU;
+    //     System.out.println("Which Reservation would you like to update?");
+    //     sc.nextLine(); // Throw away \n in buffer
+    //     System.out.printf("Name: ");
+    //     String name = sc.nextLine();
+    //     System.out.printf("Contact: ");
+    //     String contact = sc.nextLine();
 
-        GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
+    //     GregorianCalendar reservationPeriod = formatReservationPeriod(sc);
 
-        try {
-            Reservation reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
-            do {
-                displayReservationDetails(reservation);
-                System.out.println("What would you like to update?");
-                displayUpdateReservationOptions();
-                int choice = sc.nextInt();
-                switch (choice) {
-                    case 1:
-                        System.out.printf("Name: ");
-                        sc.nextLine(); // Throw away \n in buffer
-                        String newName = sc.nextLine();
-                        restaurantManager.updateReservation(reservation, 1, newName);
-                        break;
-                    case 2: 
-                        System.out.printf("Contact: ");
-                        sc.nextLine(); // Throw away \n in buffer
-                        String newContact = sc.nextLine();
-                        restaurantManager.updateReservation(reservation, 2, newContact);
-                        break;
-                    case 3:
-                        System.out.printf("Pax: ");
-                        int newPax = sc.nextInt();
-                        try {
-                            restaurantManager.updateReservation(reservation, 1, newPax);
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                        }
+    //     try {
+    //         Reservation reservation = restaurantManager.getReservationDetails(name, contact, reservationPeriod);
+    //         do {
+    //             displayReservationDetails(reservation);
+    //             System.out.println("What would you like to update?");
+    //             displayUpdateReservationOptions();
+    //             int choice = sc.nextInt();
+    //             switch (choice) {
+    //                 case 1:
+    //                     System.out.printf("Name: ");
+    //                     sc.nextLine(); // Throw away \n in buffer
+    //                     String newName = sc.nextLine();
+    //                     restaurantManager.updateReservation(reservation, 1, newName);
+    //                     break;
+    //                 case 2: 
+    //                     System.out.printf("Contact: ");
+    //                     sc.nextLine(); // Throw away \n in buffer
+    //                     String newContact = sc.nextLine();
+    //                     restaurantManager.updateReservation(reservation, 2, newContact);
+    //                     break;
+    //                 case 3:
+    //                     System.out.printf("Pax: ");
+    //                     int newPax = sc.nextInt();
+    //                     try {
+    //                         restaurantManager.updateReservation(reservation, 1, newPax);
+    //                     } catch (Exception e) {
+    //                         System.out.println(e.getMessage());
+    //                     }
                         
-                        break;
-                    case 4:
-                        System.out.printf("Table No: ");
-                        int newTableNo = sc.nextInt();
-                        try {
-                            restaurantManager.updateReservation(reservation, 2, newTableNo);
-                        } catch (IllegalArgumentException e) {
-                            System.out.println(e.getMessage());
-                        } catch (ReservationsFullException e) {
-                            System.out.println(e.getMessage());
-                        }
+    //                     break;
+    //                 case 4:
+    //                     System.out.printf("Table No: ");
+    //                     int newTableNo = sc.nextInt();
+    //                     try {
+    //                         restaurantManager.updateReservation(reservation, 2, newTableNo);
+    //                     } catch (IllegalArgumentException e) {
+    //                         System.out.println(e.getMessage());
+    //                     } catch (ReservationsFullException e) {
+    //                         System.out.println(e.getMessage());
+    //                     }
                         
-                        break;
-                    case 5:
-                        GregorianCalendar newReservationPeriod = formatReservationPeriod(sc);
-                        try {
-                            restaurantManager.updateReservation(reservation, newReservationPeriod);
-                        } catch (InvalidReservationException e) {
-                            System.out.println(e.getMessage());
-                        }
+    //                     break;
+    //                 case 5:
+    //                     GregorianCalendar newReservationPeriod = formatReservationPeriod(sc);
+    //                     try {
+    //                         restaurantManager.updateReservation(reservation, newReservationPeriod);
+    //                     } catch (InvalidReservationException e) {
+    //                         System.out.println(e.getMessage());
+    //                     }
                         
-                        break;
-                    case 6:
-                        view = MenuView.PREVIOUS_MENU;
-                        break;
-                }
-            } while (view != MenuView.PREVIOUS_MENU);
-        } catch (NoSuchElementException e) {
-            System.out.println(e.getMessage());
-        }
+    //                     break;
+    //                 case 6:
+    //                     view = MenuView.PREVIOUS_MENU;
+    //                     break;
+    //             }
+    //         } while (view != MenuView.PREVIOUS_MENU);
+    //     } catch (NoSuchElementException e) {
+    //         System.out.println(e.getMessage());
+    //     }
 
-        return MenuView.MENU_ITEMS;
-    }
+    //     return MenuView.MENU_ITEMS;
+    // }
 }

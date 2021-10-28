@@ -14,15 +14,16 @@ import java.util.concurrent.TimeUnit;
 import Exceptions.InvalidReservationException;
 import RestaurantClasses.Reservation;
 
-public class ReservationManager {
-    private ArrayList<Reservation> reservations;
+public class ReservationManager extends Manager<Reservation> {
+    //private ArrayList<Reservation> reservations;
 
     private ArrayList<ScheduledExecutorService> executors;
 
     final private long EXPIRYTIME_MS = 60000; // Time after the start of a reservation upon which reservation will expire
 
     public ReservationManager() {
-        reservations = new ArrayList<Reservation>();
+        //reservations = new ArrayList<Reservation>();
+        entities = new ArrayList<Reservation>();
         executors = new ArrayList<ScheduledExecutorService>();
     }
 
@@ -37,14 +38,15 @@ public class ReservationManager {
         // Use a ScheduledThreadPool to remove reservation at expiryTimeMS time after start of reservation (Reservation Expires)
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
         executor.setRemoveOnCancelPolicy(true); // Set to true to allow tasks to be immediately removed from the work queue upon cancellation
-        executors.add(reservations.indexOf(reservation), executor);
+        //executors.add(reservations.indexOf(reservation), executor);
+        executors.add(entities.indexOf(reservation), executor);
 
         long timeDifference = reservation.getReservationPeriod().getTimeInMillis() - System.currentTimeMillis() + EXPIRYTIME_MS;
 
         Callable<Void> removeExpiredReservation = () -> {
             System.out.println("Removing reservation at " + new Date());
-            executors.remove(reservations.indexOf(reservation));
-            reservations.remove(reservation);
+            executors.remove(entities.indexOf(reservation));
+            entities.remove(reservation);
             return null;
         };
 
@@ -86,7 +88,7 @@ public class ReservationManager {
             }
         }
 
-        return reservations.stream()
+        return entities.stream()
                     .filter(reservation -> (new ReservationPeriod().clash(reservation.getReservationPeriod(), reservationPeriod)) == true)
                     .mapToInt(reservation -> reservation.getTableNo())
                     .toArray();
@@ -97,14 +99,14 @@ public class ReservationManager {
         
         final Reservation reservation = new Reservation(reservationPeriod, pax, name, contact, tableNo);
 
-        reservations.add(reservation);
+        entities.add(reservation);
 
         setReservationExpiry(reservation);
     }
 
     public Reservation findReservation(String name, String contact, GregorianCalendar reservationPeriod) throws NoSuchElementException {
         try {
-            return reservations
+            return entities
             .stream()
             .filter(reservation -> reservation.getName().equals(name) && reservation.getContactNumber().equals(contact) && reservation.getReservationPeriod().equals(reservationPeriod))
             .findFirst()
@@ -117,8 +119,8 @@ public class ReservationManager {
     public void deleteReservation(Reservation reservation) {
         reservation.getExpiry().cancel(true);
         reservation.setExpiry(null);
-        executors.remove(reservations.indexOf(reservation));  
-        reservations.remove(reservation);
+        executors.remove(entities.indexOf(reservation));  
+        entities.remove(reservation);
     }
 
     public boolean modifyReservationName(Reservation reservation, String newName) {
@@ -135,7 +137,7 @@ public class ReservationManager {
         isAdvancedReservation(newReservationPeriod);
         
         reservation.getExpiry().cancel(true);
-        executors.remove(reservations.indexOf(reservation));
+        executors.remove(entities.indexOf(reservation));
         reservation.setReservationPeriod(newReservationPeriod);
 
         setReservationExpiry(reservation);
@@ -163,10 +165,10 @@ public class ReservationManager {
 
     public void cancelAllReservationFutures() {
         // Called on shutting down to kill all live threads, otherwise JVM will not shutdown.
-        for (Reservation reservation : reservations) {
+        for (Reservation reservation : entities) {
             reservation.getExpiry().cancel(true);
             reservation.setExpiry(null);
-            executors.remove(reservations.indexOf(reservation));
+            executors.remove(entities.indexOf(reservation));
         }
     }
 }

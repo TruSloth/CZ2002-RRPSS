@@ -1,5 +1,5 @@
 package RestaurantClasses;
-public class Table {
+public class Table extends RestaurantEntity {
     private final int MAX_PAX = 10;
     private final int MIN_PAX = 2;
     private final int size;
