@@ -3,7 +3,7 @@ package ManagerClasses;
 import RestaurantClasses.Restaurant;
 
 public class RestaurantManager implements iMainManager {
-    // TODO: Add other manager classesvoid
+    // TODO: Add other manager classes
 
     private Restaurant restaurant;
 

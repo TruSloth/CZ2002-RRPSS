@@ -142,7 +142,9 @@ public class ReservationConsole extends ConsoleDisplay implements iGregorianCale
                 } catch (InvalidReservationException e) {
                     System.out.println(e.getMessage());
                 }
-                
+                                
+                // Console -> General Manager (command.execute) -> Managers -> Entities Taking 1 action
+
                 view = MenuView.RESERVATIONS;
                 //view = checkReservation(sc);
                 break;
