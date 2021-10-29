@@ -7,9 +7,4 @@ public class MenuConsole implements IConsole {
     public void printConsole() {
 
     }
-
-    @Override
-    public int readChoice() {
-        return 0;
-    }
 }
