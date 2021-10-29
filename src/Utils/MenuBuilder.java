@@ -120,7 +120,7 @@ public class MenuBuilder {
          * |4. Remove Reservation Booking |
          * |5. Back                       |
          * ================================
-         * ================================
+         * 
          * 
          */ 
 
