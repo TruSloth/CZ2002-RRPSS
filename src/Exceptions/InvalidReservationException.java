@@ -1,6 +1,6 @@
 package Exceptions;
 
-public class InvalidReservationException extends IllegalArgumentException {
+public class InvalidReservationException extends Exception {
     public InvalidReservationException() {
         super();
     }

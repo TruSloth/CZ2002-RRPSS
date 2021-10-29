@@ -16,12 +16,10 @@ public class RestaurantManager implements iMainManager {
     public RestaurantManager(Restaurant restaurant) {
         this.restaurant = restaurant;
 
-        System.out.println("Add reservation Manager");
         subManagers.putIfAbsent("reservationManager", new ReservationManager());
 
         int numOfTables = restaurant.getNumOfTables();
 
-        System.out.println("Add table Manager");
         subManagers.putIfAbsent("tableManager", new TableManager(numOfTables, numOfTables / 5, numOfTables / 5 * 2 , numOfTables / 5, numOfTables / 10, numOfTables / 10)); // (2,4,6,8,10-seater proportions in 20%, 40%, 20%, 10%, 10%)
     }
 
@@ -97,7 +95,6 @@ public class RestaurantManager implements iMainManager {
 
     @Override
     public <T> T getSubManager(String manager, Class<? extends T> type) {
-        System.out.println("Testing : " + subManagers.containsKey(manager));
         return type.cast(subManagers.get(manager));
     }
 }
