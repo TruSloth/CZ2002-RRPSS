@@ -17,7 +17,6 @@ public class PackageItem extends MenuItem {
         this.itemsServed = itemsServed;
     }
 
-
     // Accessors
     public ArrayList<AlaCarteItem> getItemsServed() {
         return this.itemsServed;
@@ -30,5 +29,13 @@ public class PackageItem extends MenuItem {
 
     public void removeItem(AlaCarteItem item){
         itemsServed.remove(item);
+    }
+
+    public void printItems() {
+        System.out.print("Package Includes: ");
+        for (int i=0; i<this.itemsServed.size(); i++) {
+            AlaCarteItem item = this.itemsServed.get(i);
+            System.out.print(item.getName() + ", ");
+        }
     }
 }

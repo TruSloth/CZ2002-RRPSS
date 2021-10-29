@@ -5,11 +5,10 @@ import com.CZ2002.project_entities.PackageItem;
 import com.CZ2002.project_enums.Type;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class MenuMgr {
     // Attributes
-    private ArrayList<MenuItem> menu; // TODO: Can we have a AlaCarteItem Menu and PackageItem Menu? Single menu seems a bit confusing.......
+    private ArrayList<MenuItem> menu;
 
     // Constructor
     public MenuMgr(){};
@@ -29,7 +28,7 @@ public class MenuMgr {
         for (int i=0; i<this.menu.size(); i++){
             MenuItem item = this.menu.get(i);
             String itemName = item.getName();
-            if (itemName.toLowerCase().equals(name.toLowerCase())){
+            if (itemName.equalsIgnoreCase(name)){
                 return item;
             }
         }
@@ -50,7 +49,7 @@ public class MenuMgr {
         for (int i=0; i<this.menu.size(); i++){
             MenuItem item = this.menu.get(i);
             String itemName = item.getName();
-            if (itemName.toLowerCase().equals(name.toLowerCase())){
+            if (itemName.equalsIgnoreCase(name)){
                 item.setName(newName);
                 item.setDescription(description);
                 item.setPrice(price);
@@ -62,7 +61,7 @@ public class MenuMgr {
         for (int i=0; i<this.menu.size(); i++){
             MenuItem item = this.menu.get(i);
             String itemName = item.getName();
-            if (itemName.toLowerCase().equals(name.toLowerCase())){
+            if (itemName.equalsIgnoreCase(name)){
                 this.menu.remove(item);
                 break;
             }
@@ -70,21 +69,68 @@ public class MenuMgr {
     }
 
     public void addItemToPackage(String packageName, String alaCartItemName){
-        // TODO: HOW DOES THIS WORK?
-    }
-
-    public void removeItemFromPackage(String packageName, String alaCartItemName){
-        // TODO: HOW DOES THIS WORK?
-    }
-
-    public void printMenu(){
+        AlaCarteItem newItem = new AlaCarteItem("Placeholder", "Placeholder", 0.00, Type.MAINS);
         for (int i=0; i<this.menu.size(); i++){
             MenuItem item = this.menu.get(i);
             String itemName = item.getName();
-            String itemDescription = item.getDescription();
-            double itemPrice = item.getPrice();
-            System.out.println(itemName + "\t" + itemDescription + "\t$" + itemPrice);
-            // TODO: Huh?
+            if (itemName.equalsIgnoreCase(alaCartItemName)){
+                newItem = (AlaCarteItem) item;
+                break;
+            }
+        }
+        for (int i=0; i<this.menu.size(); i++){
+            MenuItem item = this.menu.get(i);
+            String itemName = item.getName();
+            if (packageName.equalsIgnoreCase(itemName)){
+                PackageItem newPackage = (PackageItem) item;
+                newPackage.addItem(newItem);
+                this.menu.set(i, newPackage);
+                break;
+            }
+        }
+    }
+
+    public void removeItemFromPackage(String packageName, String alaCartItemName){
+        AlaCarteItem newItem = new AlaCarteItem("Placeholder", "Placeholder", 0.00, Type.MAINS);
+        for (int i=0; i<this.menu.size(); i++){
+            MenuItem item = this.menu.get(i);
+            String itemName = item.getName();
+            if (itemName.equalsIgnoreCase(alaCartItemName)){
+                newItem = (AlaCarteItem) item;
+                break;
+            }
+        }
+        for (int i=0; i<this.menu.size(); i++){
+            MenuItem item = this.menu.get(i);
+            String itemName = item.getName();
+            if (packageName.equalsIgnoreCase(itemName)){
+                PackageItem newPackage = (PackageItem) item;
+                newPackage.removeItem(newItem);
+                this.menu.set(i, newPackage);
+                break;
+            }
+
+        }
+    }
+
+    public void printMenu(){  // TODO: DECISION TO MOVE TO CONSOLE?
+        for (int i=0; i<this.menu.size(); i++){
+            MenuItem item = this.menu.get(i);
+            System.out.println("Name: " + item.getName());
+            System.out.println("Description: " + item.getDescription());
+            try {
+                AlaCarteItem dummyAla = (AlaCarteItem)item;
+                System.out.println("Type: " + dummyAla.getType());
+            }
+            catch (Exception e){
+                PackageItem dummyPack = (PackageItem)item;
+                dummyPack.printItems();
+                System.out.println("");
+            }
+            finally {
+                System.out.println("Price: " + item.getPrice());
+                System.out.println("");
+            }
         }
     }
 }
