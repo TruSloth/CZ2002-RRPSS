@@ -2,8 +2,6 @@ package Commands;
 
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 import Exceptions.InvalidReservationException;
 import ManagerClasses.ReservationManager;
 import RestaurantClasses.Reservation;
@@ -15,20 +13,15 @@ public class FindReservationCommand implements iCommand<Reservation, InvalidRese
     private String contact;
     private GregorianCalendar reservationPeriod;
 
-    private Scanner sc;
-
     public FindReservationCommand(
         ReservationManager reservationManager, 
-        String name, String contact, GregorianCalendar reservationPeriod,
-        Scanner sc) {
+        String name, String contact, GregorianCalendar reservationPeriod) {
 
         this.reservationManager = reservationManager;
 
         this.name = name;
         this.contact = contact;
         this.reservationPeriod = reservationPeriod;
-
-        this.sc = sc;
     }
 
     @Override

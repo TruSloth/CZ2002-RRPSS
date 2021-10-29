@@ -1,10 +1,7 @@
 package Commands;
 
 import java.util.GregorianCalendar;
-import java.util.Scanner;
-
 import Exceptions.InvalidReservationException;
-import Exceptions.ReservationsFullException;
 import ManagerClasses.ReservationManager;
 import ManagerClasses.TableManager;
 
@@ -13,8 +10,6 @@ public class AddReservationCommand implements iCommand<Void, InvalidReservationE
     private ReservationManager reservationManager;
     private TableManager tableManager;
 
-    private Scanner sc;
-
     private GregorianCalendar reservationPeriod;
     private int pax;
     private String name;
@@ -22,8 +17,7 @@ public class AddReservationCommand implements iCommand<Void, InvalidReservationE
 
     public AddReservationCommand(
         ReservationManager reservationManager, TableManager tableManager, 
-        String name, String contact, int pax, GregorianCalendar reservationPeriod,
-        Scanner sc) {
+        String name, String contact, int pax, GregorianCalendar reservationPeriod) {
         this.reservationManager = reservationManager;
         this.tableManager = tableManager;
 
@@ -31,8 +25,6 @@ public class AddReservationCommand implements iCommand<Void, InvalidReservationE
         this.contact = contact;
         this.pax = pax;
         this.reservationPeriod = reservationPeriod;
-
-        this.sc = sc;
     }
 
     @Override

@@ -2,8 +2,6 @@ package Commands;
 
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
-
 import Exceptions.InvalidReservationException;
 import ManagerClasses.ReservationManager;
 import RestaurantClasses.Reservation;
@@ -11,24 +9,19 @@ import RestaurantClasses.Reservation;
 public class RemoveReservationCommand implements iCommand<Boolean, InvalidReservationException>, iGregorianCalendarFormatter {
     private ReservationManager reservationManager;
 
-    private Scanner sc;
-
     private GregorianCalendar reservationPeriod;
     private String name;
     private String contact;
 
     public RemoveReservationCommand(
         ReservationManager reservationManager,
-        String name, String contact, GregorianCalendar reservationPeriod,
-        Scanner sc) {
+        String name, String contact, GregorianCalendar reservationPeriod) {
 
         this.reservationManager = reservationManager;
 
         this.name = name;
         this.contact = contact;
         this.reservationPeriod = reservationPeriod;
-
-        this.sc = sc;
     }
 
     @Override
@@ -44,16 +37,4 @@ public class RemoveReservationCommand implements iCommand<Boolean, InvalidReserv
         
         return true;
     }
-    
-
-    // private void getInput() {
-    //     System.out.println("Which Reservation would you like to remove?");
-    //     sc.nextLine(); // Throw away \n in buffer
-    //     System.out.printf("Name: ");
-    //     name = sc.nextLine();
-    //     System.out.printf("Contact: ");
-    //     contact = sc.nextLine();
-        
-    //     reservationPeriod = format(sc, "Reservation Period");
-    // }
 }

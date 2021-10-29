@@ -2,11 +2,8 @@ package Display.Reservations;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.GregorianCalendar;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import Commands.AddReservationCommand;
@@ -17,7 +14,6 @@ import Commands.iCommand;
 import Commands.iGregorianCalendarFormatter;
 import Display.ConsoleDisplay;
 import Exceptions.InvalidReservationException;
-import Exceptions.ReservationsFullException;
 import ManagerClasses.ReservationManager;
 import ManagerClasses.RestaurantManager;
 import ManagerClasses.TableManager;
@@ -31,6 +27,8 @@ public class ReservationConsole extends ConsoleDisplay implements iGregorianCale
     private iCommand<Void, InvalidReservationException> addReservationCommand;
 
     private iCommand<Reservation, InvalidReservationException> findReservationCommand;
+
+    private iCommand<MenuView, InvalidReservationException> updateReservationCommand;
 
     private iCommand<Boolean, InvalidReservationException> removeReservationCommand;
 
@@ -113,8 +111,7 @@ public class ReservationConsole extends ConsoleDisplay implements iGregorianCale
                 addReservationCommand = new AddReservationCommand(
                     restaurantManager.getSubManager("reservationManager", ReservationManager.class),
                     restaurantManager.getSubManager("tableManager", TableManager.class),
-                    name, contact, pax, reservationPeriod, 
-                    sc);
+                    name, contact, pax, reservationPeriod);
                 try {
                     addReservationCommand.execute();
                 } catch (InvalidReservationException e) {
@@ -137,8 +134,7 @@ public class ReservationConsole extends ConsoleDisplay implements iGregorianCale
 
                 findReservationCommand = new FindReservationCommand(
                     restaurantManager.getSubManager("reservationManager", ReservationManager.class), 
-                    name, contact, reservationPeriod, 
-                    sc);
+                    name, contact, reservationPeriod);
 
                 try {
                     reservation = findReservationCommand.execute();
@@ -163,28 +159,32 @@ public class ReservationConsole extends ConsoleDisplay implements iGregorianCale
 
                 findReservationCommand = new FindReservationCommand(
                     restaurantManager.getSubManager("reservationManager", ReservationManager.class), 
-                    name, contact, reservationPeriod, 
-                    sc);
+                    name, contact, reservationPeriod);
 
                 try {
                     reservation = findReservationCommand.execute();
-                } catch (InvalidReservationException e) {
-                    System.out.println(e.getMessage());
-                }
-                
 
-                iCommand<MenuView> updateReservationCommand = new UpdateReservationCommand(
+                    updateReservationCommand = new UpdateReservationCommand(
                     restaurantManager.getSubManager("reservationManager", ReservationManager.class),
                     restaurantManager.getSubManager("tableManager", TableManager.class), 
                     reservation, sc);
-                
+
                     view = MenuView.CURRENT_MENU;
-                do {
-                    displayReservationDetails(reservation);
-                    System.out.println("What would you like to update?");
-                    displayUpdateReservationOptions();
-                    view = updateReservationCommand.execute();
-                } while (view != MenuView.PREVIOUS_MENU);
+
+                    do {
+                        try {
+                            displayReservationDetails(reservation);
+                            System.out.println("What would you like to update?");
+                            displayUpdateReservationOptions();
+                            view = updateReservationCommand.execute();
+                        } catch (InvalidReservationException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        
+                    } while (view != MenuView.PREVIOUS_MENU);
+                } catch (InvalidReservationException e) {
+                    System.out.println(e.getMessage());
+                }
 
                 view = MenuView.RESERVATIONS;
                 break;
@@ -201,8 +201,7 @@ public class ReservationConsole extends ConsoleDisplay implements iGregorianCale
 
                 removeReservationCommand = new RemoveReservationCommand(
                     restaurantManager.getSubManager("reservationManager", ReservationManager.class), 
-                    name, contact, reservationPeriod, 
-                    sc);
+                    name, contact, reservationPeriod);
 
                 try {
                     removeReservationCommand.execute();
@@ -210,7 +209,7 @@ public class ReservationConsole extends ConsoleDisplay implements iGregorianCale
                     System.out.println(e.getMessage());
                 }
                 
-                view = MenuView.MENU_ITEMS;
+                view = MenuView.RESERVATIONS;
                 break;
             case 5:
                 // Back
