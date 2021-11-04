@@ -19,8 +19,7 @@ public class ReservationManager extends Manager<Reservation> {
 
     private ArrayList<ScheduledExecutorService> executors;
 
-    final private long EXPIRYTIME_MS = 60000; // Time after the start of a reservation upon which reservation will expire
-
+    final private long EXPIRYTIME_MS = 900000; // Time after the start of a reservation upon which reservation will expire - 15 mins
     public ReservationManager() {
         //reservations = new ArrayList<Reservation>();
         entities = new ArrayList<Reservation>();
@@ -66,10 +65,10 @@ public class ReservationManager extends Manager<Reservation> {
          */ 
 
         Calendar advancedReservationPeriod = Calendar.getInstance();
-        advancedReservationPeriod.add(Calendar.MINUTE, 1); // Must make reservation 1 hour in advance
+        advancedReservationPeriod.add(Calendar.HOUR, 24); // Must make reservation 24 hours in advance
 
         if (reservationPeriod.before(advancedReservationPeriod)) {
-            throw new InvalidReservationException("A reservation can only be made at least 1 minute in advance.");
+            throw new InvalidReservationException("A reservation can only be made at least 24 hours in advance.");
         }
     }
 
