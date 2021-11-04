@@ -9,7 +9,7 @@ public class Reservation extends RestaurantEntity {
     private String name;
     private String contactNumber;
     private int tableNo; // Might want to use a better datatype for hashing
-    ScheduledFuture<Void> expiry;
+    private ScheduledFuture<Void> expiry;
 
     public Reservation(GregorianCalendar reservationPeriod, int pax, String name, String contactNumber, int tableNo) {
         this.reservationPeriod = reservationPeriod;
