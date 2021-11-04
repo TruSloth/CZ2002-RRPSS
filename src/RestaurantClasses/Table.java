@@ -9,11 +9,9 @@ public class Table extends RestaurantEntity {
     public Table(int size, int tableNo) {
         this.size = size;
         this.tableNumber = tableNo;
-        this.tableNumber = tableNo;
     }
 
     // Default getters & setters
-
     public int getSize() {
         return size;
     }
