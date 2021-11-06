@@ -17,7 +17,6 @@ import RestaurantClasses.Table;
  * In most cases, each Restaurant should only have a single {@code TableManager}
  * instance, although this is not enforced. In this way, this {@code TableManager}
  * provides the only access point to all {@code Table} instances.
- * <p>
  */
 public class TableManager extends Manager<Table> {
     private int index2Seater;

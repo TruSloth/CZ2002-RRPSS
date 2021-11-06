@@ -121,7 +121,7 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * Creates a new {@link ResturantClasses.Reservation} and adds it to {@link entities}.
+     * Creates a new {@link Reservation} and adds it to {@link entities}.
      * <p>
      * This method checks to see if the {@code Reservation} to be made is advanced (ahead of time).
      * If the {@code Reservation} is successfully created, also creates a {@link java.util.concurrent.ScheduledFuture}
