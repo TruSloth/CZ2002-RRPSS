@@ -5,8 +5,9 @@ import java.util.List;
 import RestaurantClasses.RestaurantEntity;
 
 /**
- * The {@code Manager} class is intending to control all logic surrounding a {@link RestaurantClasses.RestaurantEntity}.
- * The class provides storage of {@code RestaurantEntity} through a {@link java.util.List}.
+ * The {@code Manager} class is intended to control all logic surrounding a {@link RestaurantEntity}.
+ * <p>
+ * The class provides storage of {@code RestaurantEntity} through a {@link List}.
  * <p>
  * Although not required, most implementations of this class should provide a 
  * method of adding, retrieving and removing a specific {@code RestaurantEntity} from {@code entities}.
@@ -17,7 +18,8 @@ import RestaurantClasses.RestaurantEntity;
  */
 public abstract class Manager<T extends RestaurantEntity> {
     /**
-     * The {@link java.util.List} of all {@link RestaurantClasses.RestaurantEntity} of type {@code T} found in the Restaurant.
+     * The {@link List} of all {@link RestaurantEntity} of type {@code T} found in the Restaurant.
+     * <p>
      * Within the context of the Restaurant, {@code entities} should be the only access point for all {@code RestaurantEntity}
      * of type T.
      */

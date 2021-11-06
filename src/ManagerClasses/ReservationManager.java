@@ -14,16 +14,27 @@ import java.util.concurrent.TimeUnit;
 import Exceptions.InvalidReservationException;
 import RestaurantClasses.Reservation;
 
+/**
+ * The {@link Manager} class that maintains the state of and handles all 
+ * logic surrounding all {@link Reservation} instances in the Restaurant.
+ * <p>
+ * This class implements all necessary functionality surrounding {@code Reservation} 
+ * instances and provides the access point to all {@code Reservation} instances
+ * in the Restaurant.
+ * <p>
+ * In most cases, each Restaurant should only have a single {@code ReservationManager}
+ * instance, although this is not enforced. In this way, this {@code ReservationManager}
+ * provides the only access point to all {@code Reservation} instances.
+ */
 public class ReservationManager extends Manager<Reservation> {
-    //private ArrayList<Reservation> reservations;
-
     private ArrayList<ScheduledExecutorService> executors;
 
     final private long EXPIRYTIME_MS = 900000; // Time after the start of a reservation upon which reservation will expire - 15 mins
 
     /**
-     * Constructs a new {@code ReservationManager} to manage {@link RestaurantClasses.Reservation} instances.
-     * Initializes {@code entities} and {@code executors} to be empty {@link java.util.ArrayList}.
+     * Constructs a new {@code ReservationManager} to manage {@link Reservation} instances.
+     * <p>
+     * Initializes {@code entities} and {@code executors} to be an empty {@link ArrayList}.
      */
     public ReservationManager() {
         //reservations = new ArrayList<Reservation>();
@@ -79,10 +90,12 @@ public class ReservationManager extends Manager<Reservation> {
     
     /** 
      * Returns all table numbers that are unavailable for booking for the desired start time.
+     * <p>
      * This method assumes that each reservation takes at most 2 hours for dining. As such, the method
      * marks table numbers that have reservations within the 2 hour window before and after {@code reservationPeriod}
      * as being unavailable.
-     * @param reservationPeriod  the {@link java.util.GregorianCalendar} start time of the {@code Reservation}
+     * 
+     * @param reservationPeriod  the {@link GregorianCalendar} start time of the {@code Reservation}
      * @return the array consisting of all table numbers that are not suitable to be booked for {@code reservationPeriod}
      */
     public int[] getUnavailableTables(GregorianCalendar reservationPeriod) {
@@ -109,10 +122,12 @@ public class ReservationManager extends Manager<Reservation> {
     
     /** 
      * Creates a new {@link ResturantClasses.Reservation} and adds it to {@link entities}.
+     * <p>
      * This method checks to see if the {@code Reservation} to be made is advanced (ahead of time).
      * If the {@code Reservation} is successfully created, also creates a {@link java.util.concurrent.ScheduledFuture}
      * that cancels the {@code Reservation} when it expires.
-     * @param reservationPeriod  the {@link java.util.GregorianCalendar} start time of the {@code Reservation}
+     * 
+     * @param reservationPeriod  the {@link GregorianCalendar} start time of the {@code Reservation}
      * @param pax  the number of guests
      * @param name  the String to address the contact person
      * @param contact  the String representing the phone number to contact the guest at
@@ -131,13 +146,17 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * Retrieves a specific {@link RestaurantClasses.Reservation} from {@code entities}.
+     * Retrieves a specific {@link Reservation} from {@code entities}.
+     * <p>
      * This method searches for the first {@code Reservation} in {@code entities} whose {@code name}, {@code contactNumber}
-     * and {@code reservationPeriod} matches the given parameters. It is assumed that this combination of parameters
-     * will identify a unique {@code Reservation} in {@code entities}.
+     * and {@code reservationPeriod} matches the given parameters. 
+     * <p>
+     * It is assumed that this combination of parameters will identify a 
+     * unique {@code Reservation} in {@code entities}.
+     * 
      * @param name  the String to address the contact person
      * @param contact  the String representing the phone number to contact the guest at
-     * @param reservationPeriod  the {@link java.util.GregorianCalendar} start time of the {@code Reservation}
+     * @param reservationPeriod  the {@link GregorianCalendar} start time of the {@code Reservation}
      * @return the requested {@code Reservation}
      * @throws NoSuchElementException if the requested {@code Reservation} does not exist
      */
@@ -155,9 +174,11 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * Cancels a specific {@link RestaurantClasses.Reservation} by removing it from {@code entities}.
+     * Cancels a specific {@link Reservation} by removing it from {@code entities}.
+     * <p>
      * This method also cancels the {@link java.util.concurrent.ScheduledFuture} that causes this {@code reservation}
-     * to expire and the {@link java.util.concurrent.ScheduledExecutorService} that handles it.
+     * to expire and the {@link ScheduledExecutorService} that handles it.
+     * 
      * @param reservation  the {@code reservation} to be removed
      */
     public void deleteReservation(Reservation reservation) {
@@ -169,7 +190,8 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * Updates the {@code name} field of a specified {@link RestaurantClasses.Reservation}.
+     * Updates the {@code name} field of a specified {@link Reservation}.
+     * 
      * @param reservation  the {@code reseservation} to be modified
      * @param newName  the new String to address the contact person
      * @return  true if the modification was successful
@@ -181,7 +203,8 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * Updates the {@code contactNumber} field of a specified {@link RestaurantClasses.Reservation}.
+     * Updates the {@code contactNumber} field of a specified {@link Reservation}.
+     * 
      * @param reservation  the {@code reseservation} to be modified
      * @param newContact  the new String representing the phone number to contact the guest at
      * @return  true if the modification was successful
@@ -193,12 +216,14 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * Updates the {@code reservationPeriod} field of a specified {@link RestaurantClasses.Reservation}.
+     * Updates the {@code reservationPeriod} field of a specified {@link Reservation}.
+     * <p>
      * This method checks to see if {@code newReservationPeriod} is advanced (ahead of time).
-     * Additionally, the exisiting {@link java.util.concurrent.ScheduledExecutorService} is cancelled and
+     * Additionally, the exisiting {@link ScheduledExecutorService} is cancelled and
      * a new one is created for {@code newReservationPeriod}.
+     * 
      * @param reservation  the {@code reseservation} to be modified
-     * @param newReservationPeriod  the new {@link java.util.GregorianCalendar} start time of the {@code Reservation}
+     * @param newReservationPeriod  the new {@link GregorianCalendar} start time of the {@code Reservation}
      * @return  true if the modification was successful
      * @throws InvalidReservationException  if the time of modifying the {@code Reservation} is too close to {@code newReservationPeriod}
      */
@@ -216,8 +241,10 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * Updates the {@code tableNo} field of a specified {@link RestaurantClasses.Reservation}.
+     * Updates the {@code tableNo} field of a specified {@link Reservation}.
+     * <p>
      * This method checks if the {@code tableNo} is already reserved for this {@code reservationPeriod}.
+     * 
      * @param reservation  the {@code reseservation} to be modified
      * @param tableNo  the new table number reserved
      * @return  true if the modification was successful
@@ -235,17 +262,27 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * @param reservation
-     * @param pax
-     * @return boolean
+     * Updates the {@code pax} field of a specified {@link Reservation}.
+     * 
+     * @param reservation  the {@code reseservation} to be modified
+     * @param pax  the new number of guests
+     * @return  true if the modification was successful
      */
     public boolean modifyReservationPax(Reservation reservation, int pax) {
-        // TODO: Handle automatic shifting of table such that the new table is the smallest one that can fit pax
-        // The method should throw an exception if there are no tables that can accomodate pax and should inform the user if the tableNo was changed
         reservation.setPax(pax);
         return true;
     }
 
+    /**
+     * Cancels the existing {@link java.util.concurrent.ScheduledFuture} instances found in the {@code expiry}
+     * field of all {@link Reservation} instances stored in {@code entities}.
+     * <p>
+     * This method must be called when attempting to exit the entire program.
+     * <p>
+     * Assumes that there are no {@code Reservation} instances held in {@code entities} with a null {@code expiry}
+     * prior to calling this method. If this cannot be guaranteed, a {@link NullPointerException} may be
+     * thrown and must be handled.
+     */
     public void cancelAllReservationFutures() {
         // Called on shutting down to kill all live threads, otherwise JVM will not shutdown.
         for (Reservation reservation : entities) {

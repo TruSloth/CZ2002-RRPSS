@@ -21,6 +21,7 @@ public class Staff extends RestaurantEntity {
 
     /** 
      * Constructs a new staff that represents an employee at the restaurant.
+     * <p>
      * This does not guarantee that {@code employeeID} will be unique - such a guarantee
      * should be fulfilled by {@link ManagerClasses.StaffManager}.
      * @param name  the String representation by which to address this staff
@@ -37,6 +38,7 @@ public class Staff extends RestaurantEntity {
 
     /** 
      * Returns the String representation to address this staff by.
+     * 
      * @return the String that represents how this staff should be addressed
      */
     public String getName() {
@@ -45,6 +47,7 @@ public class Staff extends RestaurantEntity {
     
     /** 
      * Returns the identifier associated with this staff.
+     * 
      * @return the unique identifier associated with this staff
      */
     public int getEmployeeID() {
@@ -53,6 +56,7 @@ public class Staff extends RestaurantEntity {
   
     /** 
      * Updates the identifier associated with this staff.
+     * 
      * @param employeeID  the new identifier that this staff should be associated with
      */
     public void setEmployeeID(int employeeID) {
@@ -62,6 +66,7 @@ public class Staff extends RestaurantEntity {
     
     /** 
      * Returns the String representation of the occupation of this staff at the restaurant.
+     * 
      * @return the String that represents the role or occupation this staff holds
      */
     public String getJobTitle() {
@@ -71,6 +76,7 @@ public class Staff extends RestaurantEntity {
     
     /** 
      * Updates the String representation of the occupation of this staff at the restaurant.
+     * 
      * @param jobTitle  the String that represents the new role or occupation that this staff holds
      */
     public void setJobTitle(String jobTitle) {

@@ -17,6 +17,7 @@ public class Table extends RestaurantEntity {
 
     /** 
      * Constructs a new table that represents a specific table in {@code Restaurant}.
+     * <p>
      * A typical table can have a minimum {@code size} of 2 and a maximum {@code size} of 10.
      * This constructor does not check if {@code size} is within the bounds of a typical table size.
      * The {@code size} and {@code tableNo} of this table cannot be changed.
@@ -32,6 +33,7 @@ public class Table extends RestaurantEntity {
     
     /** 
      * Returns the maximum number of guests that can be seated at this table.
+     * 
      * @return the maximum number of guests that can be seated at this table.
      */
     // Default getters & setters
@@ -42,6 +44,7 @@ public class Table extends RestaurantEntity {
     
     /** 
      * Returns the unique table number of this table.
+     * 
      * @return the table number that identifies this table
      */
     public int getTableNumber() {
@@ -65,6 +68,7 @@ public class Table extends RestaurantEntity {
 
     /** 
      * Returns true if this table is occupied, false otherwise.
+     * 
      * @return a boolean representing whether this table is occupied
      */
     public boolean isOccupied() {
