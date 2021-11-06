@@ -20,6 +20,11 @@ public class ReservationManager extends Manager<Reservation> {
     private ArrayList<ScheduledExecutorService> executors;
 
     final private long EXPIRYTIME_MS = 900000; // Time after the start of a reservation upon which reservation will expire - 15 mins
+
+    /**
+     * Constructs a new {@code ReservationManager} to manage {@link RestaurantClasses.Reservation} instances.
+     * Initializes {@code entities} and {@code executors} to be empty {@link java.util.ArrayList}.
+     */
     public ReservationManager() {
         //reservations = new ArrayList<Reservation>();
         entities = new ArrayList<Reservation>();
@@ -72,6 +77,15 @@ public class ReservationManager extends Manager<Reservation> {
         }
     }
 
+    
+    /** 
+     * Returns all table numbers that are unavailable for booking for the desired start time.
+     * This method assumes that each reservation takes at most 2 hours for dining. As such, the method
+     * marks table numbers that have reservations within the 2 hour window before and after {@code reservationPeriod}
+     * as being unavailable.
+     * @param reservationPeriod  the {@link java.util.GregorianCalendar} start time of the {@code Reservation}
+     * @return the array consisting of all table numbers that are not suitable to be booked for {@code reservationPeriod}
+     */
     public int[] getUnavailableTables(GregorianCalendar reservationPeriod) {
         // Assume that a reservation will take 2 hours. This means that a table reserved for 8PM will be unavailable for reservation from 6PM to 10PM.
         class ReservationPeriod {
@@ -93,6 +107,19 @@ public class ReservationManager extends Manager<Reservation> {
                     .toArray();
     }
 
+    
+    /** 
+     * Creates a new {@link ResturantClasses.Reservation} and adds it to {@link entities}.
+     * This method checks to see if the {@code Reservation} to be made is advanced (ahead of time).
+     * If the {@code Reservation} is successfully created, also creates a {@link java.util.concurrent.ScheduledFuture}
+     * that cancels the {@code Reservation} when it expires.
+     * @param reservationPeriod  the {@link java.util.GregorianCalendar} start time of the {@code Reservation}
+     * @param pax  the number of guests
+     * @param name  the String to address the contact person
+     * @param contact  the String representing the phone number to contact the guest at
+     * @param tableNo  the table number reserved
+     * @throws InvalidReservationException  if the time of creating the {@code Reservation} is too close to {@code reservationPeriod} 
+     */
     public void createNewReservation(GregorianCalendar reservationPeriod, int pax, String name, String contact, int tableNo) throws InvalidReservationException {
         isAdvancedReservation(reservationPeriod);
         
@@ -103,6 +130,14 @@ public class ReservationManager extends Manager<Reservation> {
         setReservationExpiry(reservation);
     }
 
+    
+    /** 
+     * @param name
+     * @param contact
+     * @param reservationPeriod
+     * @return Reservation
+     * @throws NoSuchElementException
+     */
     public Reservation findReservation(String name, String contact, GregorianCalendar reservationPeriod) throws NoSuchElementException {
         try {
             return entities
@@ -115,6 +150,10 @@ public class ReservationManager extends Manager<Reservation> {
         }
     }
 
+    
+    /** 
+     * @param reservation
+     */
     public void deleteReservation(Reservation reservation) {
         reservation.getExpiry().cancel(true);
         reservation.setExpiry(null);
@@ -122,16 +161,35 @@ public class ReservationManager extends Manager<Reservation> {
         entities.remove(reservation);
     }
 
+    
+    /** 
+     * @param reservation
+     * @param newName
+     * @return boolean
+     */
     public boolean modifyReservationName(Reservation reservation, String newName) {
         reservation.setName(newName);
         return true;
     }
 
+    
+    /** 
+     * @param reservation
+     * @param newContact
+     * @return boolean
+     */
     public boolean modifyReservationContact(Reservation reservation, String newContact) {
         reservation.setContactNumber(newContact);
         return true;
     }
 
+    
+    /** 
+     * @param reservation
+     * @param newReservationPeriod
+     * @return boolean
+     * @throws InvalidReservationException
+     */
     public boolean modifyReservationPeriod(Reservation reservation, GregorianCalendar newReservationPeriod) throws InvalidReservationException {
         isAdvancedReservation(newReservationPeriod);
         
@@ -144,6 +202,13 @@ public class ReservationManager extends Manager<Reservation> {
         return true;
     }
 
+    
+    /** 
+     * @param reservation
+     * @param tableNo
+     * @return boolean
+     * @throws IllegalArgumentException
+     */
     public boolean modifyReservationTableNo(Reservation reservation, int tableNo) throws IllegalArgumentException {
         // TODO: Handle unbooking of old table no. and booking of new one
         // The method should throw an exception if the new tableNo refers to a table that cannot satisfy the reservation requirements
@@ -155,6 +220,12 @@ public class ReservationManager extends Manager<Reservation> {
         return true;
     }
 
+    
+    /** 
+     * @param reservation
+     * @param pax
+     * @return boolean
+     */
     public boolean modifyReservationPax(Reservation reservation, int pax) {
         // TODO: Handle automatic shifting of table such that the new table is the smallest one that can fit pax
         // The method should throw an exception if there are no tables that can accomodate pax and should inform the user if the tableNo was changed

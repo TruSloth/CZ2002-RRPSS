@@ -17,10 +17,13 @@ public class MainMenuConsole extends ConsoleDisplay {
         super.restaurantManager = restaurantManager;
 
         super.sc = sc;
-        System.out.println("MainMenu constructor");
         reservationConsole = new ReservationConsole(restaurantManager, sc);
     }
 
+    
+    /** 
+     * @return MenuView
+     */
     public MenuView handleConsoleOptions() {
         MenuView view = MenuView.CURRENT_MENU;
     
@@ -60,6 +63,10 @@ public class MainMenuConsole extends ConsoleDisplay {
         return view;
     }
 
+    
+    /** 
+     * @return int
+     */
     public int displayConsoleOptions() {
         String[] options = new String[] {
             "Menu Items",
