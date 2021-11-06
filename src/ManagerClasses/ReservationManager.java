@@ -42,7 +42,6 @@ public class ReservationManager extends Manager<Reservation> {
         // Use a ScheduledThreadPool to remove reservation at expiryTimeMS time after start of reservation (Reservation Expires)
         ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(1);
         executor.setRemoveOnCancelPolicy(true); // Set to true to allow tasks to be immediately removed from the work queue upon cancellation
-        //executors.add(reservations.indexOf(reservation), executor);
         executors.add(entities.indexOf(reservation), executor);
 
         long timeDifference = reservation.getReservationPeriod().getTimeInMillis() - System.currentTimeMillis() + EXPIRYTIME_MS;
@@ -132,11 +131,15 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * @param name
-     * @param contact
-     * @param reservationPeriod
-     * @return Reservation
-     * @throws NoSuchElementException
+     * Retrieves a specific {@link RestaurantClasses.Reservation} from {@code entities}.
+     * This method searches for the first {@code Reservation} in {@code entities} whose {@code name}, {@code contactNumber}
+     * and {@code reservationPeriod} matches the given parameters. It is assumed that this combination of parameters
+     * will identify a unique {@code Reservation} in {@code entities}.
+     * @param name  the String to address the contact person
+     * @param contact  the String representing the phone number to contact the guest at
+     * @param reservationPeriod  the {@link java.util.GregorianCalendar} start time of the {@code Reservation}
+     * @return the requested {@code Reservation}
+     * @throws NoSuchElementException if the requested {@code Reservation} does not exist
      */
     public Reservation findReservation(String name, String contact, GregorianCalendar reservationPeriod) throws NoSuchElementException {
         try {
@@ -152,7 +155,10 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * @param reservation
+     * Cancels a specific {@link RestaurantClasses.Reservation} by removing it from {@code entities}.
+     * This method also cancels the {@link java.util.concurrent.ScheduledFuture} that causes this {@code reservation}
+     * to expire and the {@link java.util.concurrent.ScheduledExecutorService} that handles it.
+     * @param reservation  the {@code reservation} to be removed
      */
     public void deleteReservation(Reservation reservation) {
         reservation.getExpiry().cancel(true);
@@ -163,9 +169,10 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * @param reservation
-     * @param newName
-     * @return boolean
+     * Updates the {@code name} field of a specified {@link RestaurantClasses.Reservation}.
+     * @param reservation  the {@code reseservation} to be modified
+     * @param newName  the new String to address the contact person
+     * @return  true if the modification was successful
      */
     public boolean modifyReservationName(Reservation reservation, String newName) {
         reservation.setName(newName);
@@ -174,9 +181,10 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * @param reservation
-     * @param newContact
-     * @return boolean
+     * Updates the {@code contactNumber} field of a specified {@link RestaurantClasses.Reservation}.
+     * @param reservation  the {@code reseservation} to be modified
+     * @param newContact  the new String representing the phone number to contact the guest at
+     * @return  true if the modification was successful
      */
     public boolean modifyReservationContact(Reservation reservation, String newContact) {
         reservation.setContactNumber(newContact);
@@ -185,10 +193,14 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * @param reservation
-     * @param newReservationPeriod
-     * @return boolean
-     * @throws InvalidReservationException
+     * Updates the {@code reservationPeriod} field of a specified {@link RestaurantClasses.Reservation}.
+     * This method checks to see if {@code newReservationPeriod} is advanced (ahead of time).
+     * Additionally, the exisiting {@link java.util.concurrent.ScheduledExecutorService} is cancelled and
+     * a new one is created for {@code newReservationPeriod}.
+     * @param reservation  the {@code reseservation} to be modified
+     * @param newReservationPeriod  the new {@link java.util.GregorianCalendar} start time of the {@code Reservation}
+     * @return  true if the modification was successful
+     * @throws InvalidReservationException  if the time of modifying the {@code Reservation} is too close to {@code newReservationPeriod}
      */
     public boolean modifyReservationPeriod(Reservation reservation, GregorianCalendar newReservationPeriod) throws InvalidReservationException {
         isAdvancedReservation(newReservationPeriod);
@@ -204,13 +216,14 @@ public class ReservationManager extends Manager<Reservation> {
 
     
     /** 
-     * @param reservation
-     * @param tableNo
-     * @return boolean
-     * @throws IllegalArgumentException
+     * Updates the {@code tableNo} field of a specified {@link RestaurantClasses.Reservation}.
+     * This method checks if the {@code tableNo} is already reserved for this {@code reservationPeriod}.
+     * @param reservation  the {@code reseservation} to be modified
+     * @param tableNo  the new table number reserved
+     * @return  true if the modification was successful
+     * @throws IllegalArgumentException  if new {@code tableNo} is already reserved for this {@code reservationPeriod}
      */
     public boolean modifyReservationTableNo(Reservation reservation, int tableNo) throws IllegalArgumentException {
-        // TODO: Handle unbooking of old table no. and booking of new one
         // The method should throw an exception if the new tableNo refers to a table that cannot satisfy the reservation requirements
         if (Arrays.stream(getUnavailableTables(reservation.getReservationPeriod()))
             .anyMatch(unavailableTableNo -> unavailableTableNo == tableNo)) {
