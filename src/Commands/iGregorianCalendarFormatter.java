@@ -8,7 +8,21 @@ import java.time.format.DateTimeParseException;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+/**
+ * Provides {@code format(Scanner sc, String prompt)} to parse the given {@code prompt} into a {@link GregorianCalendar} instance.
+ */
 public interface iGregorianCalendarFormatter {
+    /**
+     * Parses the given {@code prompt} into a {@link GregorianCalendar} instance.
+     * <p>
+     * The given {@code prompt} must be in the format dd/MM/yy HH:mm.
+     * <p>
+     * This method uses the value of "Asia/Singapore" for its {@link ZonedDateTime}.
+     * 
+     * @param sc  the {@link Scanner} instance the boundary layer uses
+     * @param prompt  the String that should be parsed
+     * @return  the {@code GregorianCalendar} instance that represents the time given by {@code prompt}
+     */
     default GregorianCalendar format(Scanner sc, String prompt) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
         boolean done = false; // Exit loop only if no exception is caught

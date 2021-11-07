@@ -8,13 +8,24 @@ import ManagerClasses.RestaurantManager;
 import Utils.MenuBuilder;
 import Utils.MenuView;
 
-public class MainMenuConsole extends ConsoleDisplay {
+/**
+ * The main interface that the user interacts with.
+ * <p>
+ * This represents the first screen that the user interacts with and links to all other {@link ConsoleDisplay} instances.
+ */
+public class GeneralConsole extends ConsoleDisplay {
     private ReservationConsole reservationConsole;
     // TODO: Add other consoles
 
-    public MainMenuConsole(RestaurantManager restaurantManager, Scanner sc) {
+    /**
+     * Initialises this {@code GeneralConsole} and all other {@link ConsoleDisplay} instances.
+     * 
+     * @param restaurantManager  the reference to the {@link RestaurantManager} to be used
+     * @param sc  the {@link Scanner} instance used by the boundary layer
+     */
+    public GeneralConsole(RestaurantManager restaurantManager, Scanner sc) {
         // Initialise consoles
-        super.restaurantManager = restaurantManager;
+        super.mainManager = restaurantManager;
 
         super.sc = sc;
         reservationConsole = new ReservationConsole(restaurantManager, sc);
@@ -22,8 +33,11 @@ public class MainMenuConsole extends ConsoleDisplay {
 
     
     /** 
-     * @return MenuView
+     * Accepts input from the user surrounding the possible actions the user can take in relation
+     * to the entire program.
+     *
      */
+    @Override
     public MenuView handleConsoleOptions() {
         MenuView view = MenuView.CURRENT_MENU;
     
@@ -65,8 +79,10 @@ public class MainMenuConsole extends ConsoleDisplay {
 
     
     /** 
-     * @return int
+     * Formats and outputs the possible actions that can be taken on this {@code GeneralConsole}.
+     * 
      */
+    @Override
     public int displayConsoleOptions() {
         String[] options = new String[] {
             "Menu Items",

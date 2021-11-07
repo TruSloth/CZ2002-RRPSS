@@ -51,16 +51,4 @@ public class Restaurant {
     public void setNumStaff(int numStaff) {
         this.numStaff = numStaff;
     }
-
-    // public ArrayList<SalesRevenue> getSalesRevenueList() {
-    //     return salesRevenueList;
-    // }
-    
-    // public double getTotalSalesRevnue(GregorianCalendar startDate, GregorianCalendar endDate) {
-    //     return salesRevenueList
-    //     .stream()
-    //     .filter(salesRevenue -> (salesRevenue.getDate().after(startDate) && salesRevenue.getDate().before(endDate)) == true)
-    //     .mapToDouble(salesRevenue -> salesRevenue.calculateTotalRevenue())
-    //     .sum();
-    // }
 }

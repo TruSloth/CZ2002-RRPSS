@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-import Display.MainMenu.MainMenuConsole;
+import Display.MainMenu.GeneralConsole;
 import ManagerClasses.RestaurantManager;
 import RestaurantClasses.Restaurant;
 import Utils.MenuView;
@@ -11,7 +11,7 @@ public class Main {
         
         Restaurant restaurant = new Restaurant("RestaurantA", 40, 5, 10);
         RestaurantManager restaurantManager = new RestaurantManager(restaurant);
-        MainMenuConsole mainMenuConsole = new MainMenuConsole(restaurantManager, sc);
+        GeneralConsole mainMenuConsole = new GeneralConsole(restaurantManager, sc);
 
         MenuView view = MenuView.CURRENT_MENU;
         

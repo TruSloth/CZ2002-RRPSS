@@ -6,6 +6,10 @@ import Exceptions.InvalidReservationException;
 import ManagerClasses.ReservationManager;
 import RestaurantClasses.Reservation;
 
+
+/**
+ * This class implements {@link iCommand} to complete the 'find reservation' action.
+ */
 public class FindReservationCommand implements iCommand<Reservation, InvalidReservationException>, iGregorianCalendarFormatter {
     private ReservationManager reservationManager;
 
@@ -13,6 +17,14 @@ public class FindReservationCommand implements iCommand<Reservation, InvalidRese
     private String contact;
     private GregorianCalendar reservationPeriod;
 
+    /**
+     * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
+     * 
+     * @param reservationManager  the reference to the Restaurant's {@link ReservationManager}
+     * @param name  the String to address the contact person
+     * @param contact  the String representing the phone number to contact the guest at
+     * @param reservationPeriod  the {@link GregorianCalendar} start time of this reservation
+     */
     public FindReservationCommand(
         ReservationManager reservationManager, 
         String name, String contact, GregorianCalendar reservationPeriod) {
@@ -24,9 +36,14 @@ public class FindReservationCommand implements iCommand<Reservation, InvalidRese
         this.reservationPeriod = reservationPeriod;
     }
 
+    /**
+     * Completes the 'find reservation' action.
+     * 
+     * @return  the requested {@code Reservation} instance
+     * @throws InvalidReservationException  if the requested {@code Reservation} could not be found
+     */
     @Override
     public Reservation execute() throws InvalidReservationException {
-        //getInput();
         Reservation reservation;
         try {
             reservation = reservationManager.findReservation(name, contact, reservationPeriod);
@@ -36,15 +53,4 @@ public class FindReservationCommand implements iCommand<Reservation, InvalidRese
 
         return reservation;
     }
-
-    // private void getInput() {
-    //     System.out.println("Which Reservation are you looking for?");
-    //     sc.nextLine(); // Throw away \n in buffer
-    //     System.out.printf("Name: ");
-    //     name = sc.nextLine();
-    //     System.out.printf("Contact: ");
-    //     contact = sc.nextLine();
-        
-    //     reservationPeriod = format(sc, "Reservation Period");
-    // }
 }

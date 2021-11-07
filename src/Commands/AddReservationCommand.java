@@ -5,6 +5,9 @@ import Exceptions.InvalidReservationException;
 import ManagerClasses.ReservationManager;
 import ManagerClasses.TableManager;
 
+/**
+ * This class implements {@link iCommand} to complete the 'add reservation' action.
+ */
 public class AddReservationCommand implements iCommand<Void, InvalidReservationException>, iGregorianCalendarFormatter {
 
     private ReservationManager reservationManager;
@@ -15,6 +18,16 @@ public class AddReservationCommand implements iCommand<Void, InvalidReservationE
     private String name;
     private String contact;
 
+    /**
+     * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
+     * 
+     * @param reservationManager  the reference to the Restaurant's {@link ReservationManager}
+     * @param tableManager  the reference to the Restaurant's {@link TableManager}
+     * @param name  the String to address the contact person
+     * @param contact  the String representing the phone number to contact the guest at
+     * @param pax  the number of guests
+     * @param reservationPeriod  the {@link GregorianCalendar} start time of this reservation
+     */
     public AddReservationCommand(
         ReservationManager reservationManager, TableManager tableManager, 
         String name, String contact, int pax, GregorianCalendar reservationPeriod) {
@@ -27,6 +40,12 @@ public class AddReservationCommand implements iCommand<Void, InvalidReservationE
         this.reservationPeriod = reservationPeriod;
     }
 
+    /** 
+     * Completes the 'add reservation' action.
+     * 
+     * @return Void
+     * @throws InvalidReservationException  if there are no tables available or suitable
+     */
     @Override
     public Void execute() throws InvalidReservationException {
         int[] unavailableTableNos = reservationManager.getUnavailableTables(reservationPeriod);

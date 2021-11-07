@@ -9,6 +9,19 @@ import ManagerClasses.TableManager;
 import RestaurantClasses.Reservation;
 import Utils.MenuView;
 
+/**
+ * This class implements {@link iCommand} to complete the 'update reservation' action.
+ * <p>
+ * There are several ways to update a {@link Reservation} instance:
+ * <ul>
+ * <li>Name
+ * <li>Contact
+ * <li>Pax
+ * <li>Table Number
+ * <li>Reservation Period
+ * </ul>
+ * This class handles each one seperately and so must accept input to decide which field to update.
+ */
 public class UpdateReservationCommand implements iCommand<MenuView, InvalidReservationException>, iGregorianCalendarFormatter {
     private ReservationManager reservationManager;
     private TableManager tableManager;
@@ -17,6 +30,14 @@ public class UpdateReservationCommand implements iCommand<MenuView, InvalidReser
 
     private Scanner sc;
 
+    /**
+     * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
+     * 
+     * @param reservationManager  the reference to the Restaurant's {@link ReservationManager}
+     * @param tableManager  the reference to the Restaurant's {@link TableManager}
+     * @param reservation  the reference to the specific {@link Reservation} instance to be updated
+     * @param sc  the {@link Scanner} used by the boundary layer
+     */
     public UpdateReservationCommand(ReservationManager reservationManager, TableManager tableManager, Reservation reservation, Scanner sc) {
         this.reservationManager = reservationManager;
         this.tableManager = tableManager;
@@ -24,6 +45,17 @@ public class UpdateReservationCommand implements iCommand<MenuView, InvalidReser
         this.sc = sc;
     }
 
+    /**
+     * Completes the 'update reservation' action.
+     * <p>
+     * This method requests for additional input to decide which field to update.
+     * <p>
+     * The method also performs the necessary checks to ensure that the new value with
+     * with which the field is to be updated is valid.
+     * 
+     * @return  {@code MenuView#PREVIOUS_MENU} if the option to return is chosen, {@code MenuView#CURRENT_MENU} otherwise
+     * @throws  InvalidReservationException  if the desired field of the {@link Reservation} instance cannot be updated with the new value
+     */
     @Override
     public MenuView execute() throws InvalidReservationException {
         int choice = sc.nextInt();
