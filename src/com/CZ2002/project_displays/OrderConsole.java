@@ -1,19 +1,19 @@
 package com.CZ2002.project_displays;
-import com.CZ2002.project_boundaries.MenuManager;
-import com.CZ2002.project_boundaries.SalesRevenueManager;
-import com.CZ2002.project_boundaries.StaffManager;
+import com.CZ2002.project_boundaries.*;
 import com.CZ2002.project_commands.*;
-import com.CZ2002.project_boundaries.OrderManager;
+import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.InvalidStaffException;
-import com.CZ2002.project_interfaces.IMainManager;
+import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
 import com.CZ2002.project_utils.MenuBuilder;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 /**
  * A boundary class that takes in inputs from user
  */
-public class OrderConsole {
+public class OrderConsole extends ConsoleDisplay implements IGregorianCalendarFormatter {
+    RestaurantManager restaurantManager = null;
     /**
      * OrderConsole to print out the display console
      * Only takes in input and produce output
@@ -21,7 +21,6 @@ public class OrderConsole {
      * Input are passed into Commands for logic processing
      */
     public void orderConsole () throws InvalidStaffException {
-        IMainManager restaurantManager = null;
         int choice = 0;
         String[] options = new String[6];
         options[0] = "Create Order";
@@ -123,4 +122,13 @@ public class OrderConsole {
     }
 
 
+    @Override
+    public int displayConsoleOptions() {
+        return 0;
+    }
+
+    @Override
+    public MenuView handleConsoleOptions() throws InvalidStaffException, ParseException {
+        return null;
+    }
 }

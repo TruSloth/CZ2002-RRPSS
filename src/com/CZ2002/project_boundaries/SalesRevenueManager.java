@@ -4,6 +4,8 @@ import com.CZ2002.project_entities.AlaCarteItem;
 import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_entities.PackageItem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,7 +14,7 @@ import java.util.Date;
 /**
  * A Control class to execute the logics of SalesRevenue - Print and Calculate
  */
-public class SalesRevenueManager {
+public class SalesRevenueManager extends Manager<Order>{
     // Attributes
     private ArrayList<Double> revenueList;
     private OrderManager orderManager;
@@ -60,9 +62,9 @@ public class SalesRevenueManager {
 
     /**
      * To print the sales revenue by the date given
-     * @param date The date of the SalesRevenue
+     * @param date GregorianCalender of the SalesRevenue
      */
-    public void printByDay(Date date){
+    public void printByDay(Date date) throws ParseException {
         // Tabulate by Day
         System.out.println("Date: " + date);
         int count = 1;
@@ -91,10 +93,10 @@ public class SalesRevenueManager {
 
     /**
      * To print the sales revenue by month given
-     * @param startDate Date of the start of the month
-     * @param endDate Date of the end of the month
+     * @param startDate GregorianCalender of the start of the month
+     * @param endDate GregorianCalender of the end of the month
      */
-    public void printByMonth(Date startDate, Date endDate){
+    public void printByMonth(Date startDate, Date endDate) throws ParseException {
         // Tabulate by Month
         System.out.println("Period: " + startDate + " - " + endDate);
         int count = 1;
@@ -128,3 +130,4 @@ public class SalesRevenueManager {
         System.out.println("Total Revenue is: " + tabulatedBill);
     }
 }
+

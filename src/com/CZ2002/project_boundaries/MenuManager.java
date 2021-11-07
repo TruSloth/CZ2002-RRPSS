@@ -5,13 +5,14 @@ import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_entities.PackageItem;
 import com.CZ2002.project_enums.Type;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * A Control class to execute the logics of MenuItem objects 
  * MenuManager will keep track of all MenuItem objects created
  */
-public class MenuManager {
+public class MenuManager extends Manager<MenuItem>{
     private ArrayList<MenuItem> menu = new ArrayList<>();
 
     /** Gets the MenuItem object based on its name

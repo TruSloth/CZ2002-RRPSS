@@ -1,8 +1,13 @@
 package com.CZ2002.project_displays;
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_entities.AlaCarteItem;
+import com.CZ2002.project_enums.MenuView;
+import com.CZ2002.project_exceptions.InvalidStaffException;
+import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
 import com.CZ2002.project_utils.MenuBuilder;
 import com.CZ2002.project_enums.Type;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,7 +15,7 @@ import java.util.Scanner;
 /**
  * A boundary class that takes in inputs from user to interact with MenuItem
  */
-public class MenuConsole{
+public class MenuConsole extends ConsoleDisplay {
 /**
  * function to print out the console
  */
@@ -249,4 +254,13 @@ public class MenuConsole{
         }
     }
 
+    @Override
+    public int displayConsoleOptions() {
+        return 0;
+    }
+
+    @Override
+    public MenuView handleConsoleOptions() throws InvalidStaffException, ParseException {
+        return null;
+    }
 }

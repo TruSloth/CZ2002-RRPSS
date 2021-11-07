@@ -9,7 +9,6 @@ import com.CZ2002.project_interfaces.IMainManager;
 public class RestaurantManager implements IMainManager {
     // TODO: Documentation
     // TODO: Add other manager classes
-
     private Restaurant restaurant;
 
     /**
@@ -21,6 +20,10 @@ public class RestaurantManager implements IMainManager {
         this.restaurant = restaurant;
 
         subManagers.putIfAbsent("reservationManager", new ReservationManager());
+        subManagers.putIfAbsent("orderManager", new OrderManager());
+        subManagers.putIfAbsent("salesRevenueManager", new SalesRevenueManager());
+        subManagers.putIfAbsent("staffManager", new StaffManager());
+        subManagers.putIfAbsent("menuManager", new MenuManager());
 
         int numOfTables = restaurant.getNumOfTables();
 

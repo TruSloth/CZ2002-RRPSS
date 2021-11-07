@@ -4,7 +4,7 @@ public enum MenuView {
     PREVIOUS_MENU,
     CURRENT_MENU,
     MENU_ITEMS,
-    PROMOTIONS,
+    SALES_REVENUE,
     ORDERS,
     RESERVATIONS,
     PROGRAM_END

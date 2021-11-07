@@ -1,8 +1,11 @@
 package com.CZ2002.project_displays;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 import com.CZ2002.project_boundaries.RestaurantManager;
+import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.project_exceptions.InvalidStaffException;
 import com.CZ2002.project_utils.MenuBuilder;
 import com.CZ2002.project_enums.MenuView;
 
@@ -13,7 +16,9 @@ import com.CZ2002.project_enums.MenuView;
  */
 public class GeneralConsole extends ConsoleDisplay {
     private ReservationConsole reservationConsole;
-    // TODO: Add other consoles
+    private MenuConsole menuConsole;
+    private OrderConsole orderConsole;
+    private SalesRevenueConsole salesRevenueConsole;
 
     /**
      * Initialises this {@code GeneralConsole} and all other {@link ConsoleDisplay} instances.
@@ -27,6 +32,10 @@ public class GeneralConsole extends ConsoleDisplay {
 
         super.sc = sc;
         reservationConsole = new ReservationConsole(restaurantManager, sc);
+        menuConsole = new MenuConsole();
+        orderConsole = new OrderConsole();
+        salesRevenueConsole = new SalesRevenueConsole(restaurantManager, sc);
+
     }
 
 
@@ -36,7 +45,7 @@ public class GeneralConsole extends ConsoleDisplay {
      *
      */
     @Override
-    public MenuView handleConsoleOptions() {
+    public MenuView handleConsoleOptions() throws InvalidStaffException, ParseException, InvalidSalesRevenueQueryException {
         MenuView view = MenuView.CURRENT_MENU;
 
         int choice = sc.nextInt();
@@ -45,16 +54,14 @@ public class GeneralConsole extends ConsoleDisplay {
             case 1:
                 // Menu Items
                 view = MenuView.MENU_ITEMS;
+                menuConsole.menuConsole();
                 break;
             case 2:
-                // Promotions
-                view = MenuView.PROMOTIONS;
-                break;
-            case 3:
                 // Orders
                 view = MenuView.ORDERS;
+                orderConsole.orderConsole();
                 break;
-            case 4:
+            case 3:
                 // Reservations
                 view = MenuView.RESERVATIONS;
                 do {
@@ -63,10 +70,15 @@ public class GeneralConsole extends ConsoleDisplay {
                 } while (view != MenuView.PREVIOUS_MENU);
 
                 break;
-            case 5:
+            case 4:
                 // Sales Revenue Report
+                view = MenuView.SALES_REVENUE;
+                do {
+                    salesRevenueConsole.displayConsoleOptions();
+                    view = salesRevenueConsole.handleConsoleOptions();
+                } while (view != MenuView.PREVIOUS_MENU);
                 break;
-            case 6:
+            case 5:
                 // Quit
                 view = MenuView.PROGRAM_END;
                 break;
@@ -84,7 +96,6 @@ public class GeneralConsole extends ConsoleDisplay {
     public int displayConsoleOptions() {
         String[] options = new String[] {
                 "Menu Items",
-                "Promotions",
                 "Orders",
                 "Reservations",
                 "Sales Revenue Report",

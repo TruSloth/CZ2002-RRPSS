@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * A Control class to execute the logics of Order - Create Read Update Destruction
  * OrderManager will only keep track of active orders
  */
-public class OrderManager {
+public class OrderManager extends Manager<Order>{
     public ArrayList<Order> order_list = new ArrayList<Order>();
     /** To Create new active Order object to add into the ArrayList of active orders
      * @param table The Table Number ( 1 to 20 ) which diners are seated at
