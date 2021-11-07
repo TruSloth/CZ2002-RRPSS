@@ -19,7 +19,7 @@ public class AddItemOrderCommand {
      * To obtain the MenuItem object to be added to the Order
      * @param menuManager The MenuManager object that controls MenuItem objects
      * @param orderManager The OrderManager object that controls Order objects
-     * @param table_add The table Number which the item is to be added to the Order
+     * @param tableAdd The table Number which the item is to be added to the Order
      * @param addItem The name of the MenuItem object that is to be added to the Order
      */
     public AddItemOrderCommand( MenuManager menuManager , OrderManager orderManager

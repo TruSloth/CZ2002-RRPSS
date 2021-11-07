@@ -18,7 +18,7 @@ public class RemoveItemOrderCommand {
      * To obtain the MenuItem object to be removed from the Order
      * @param menuManager The MenuManager object that controls MenuItem objects
      * @param orderManager The OrderManager object that controls Order objects
-     * @param table_remove The table Number which the item is to be remove from the Order
+     * @param tableRemove The table Number which the item is to be remove from the Order
      * @param removeItem The name of the MenuItem object that is to be removed from the Order
      */
     public RemoveItemOrderCommand(MenuManager menuManager , OrderManager orderManager

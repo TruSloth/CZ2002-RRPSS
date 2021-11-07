@@ -20,7 +20,7 @@ public class CreateOrderCommand {
      * @param orderManager The OrderManager object that controls Order objects
      * @param tableNumber The table Number which the new customer is being seated at
      * @param pax Number of diners seated at table
-     * @param server The ID of the Staff who is/was serving them
+     * @param serverId The ID of the Staff who is/was serving them
      */
     public CreateOrderCommand( StaffManager staffManager ,
                                OrderManager orderManager , int tableNumber
