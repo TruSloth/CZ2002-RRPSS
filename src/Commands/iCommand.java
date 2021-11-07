@@ -3,7 +3,7 @@ package Commands;
 /**
  * The {@code iCommand} interface defines the contract between the boundary and control layers.
  * <p>
- * More specifically, it defines the possible actions that can be taken from a specific {@link ConsoleDisplay} subclass.
+ * More specifically, it defines the possible actions that can be taken from a specific {@link Display.ConsoleDisplay} subclass.
  * Implementations of this class should pass in all necessary parameters through the class constructor and
  * should avoid, as far as possible, requesting input or displaying output within the {@code iCommand} class itself.
  * <p>

@@ -32,7 +32,7 @@ public abstract class ConsoleDisplay {
      * The method to call to accept input from the user.
      * <p>
      * This method then performs the necessary transition of control from this
-     * {@code ConsoleDisplay} to another or to a {@link iCommand} instance.
+     * {@code ConsoleDisplay} to another or to a {@link Commands.iCommand} instance.
      * 
      * @return  the {@link MenuView} that represents the state of the interface
      */
