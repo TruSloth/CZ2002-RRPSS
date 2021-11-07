@@ -1,11 +1,12 @@
 package com.CZ2002.project_commands;
 
 import com.CZ2002.project_boundaries.OrderManager;
+import com.CZ2002.project_boundaries.SalesRevenueManager;
 
 /**
  * A Control Class that executes the DeleteOrder Command
  */
-public class DeleteOrderCommand {
+public class DeleteItemOrderCommand {
     private SalesRevenueManager salesRevenueManager;
     private OrderManager orderManager;
     private int tableClose;
@@ -13,9 +14,9 @@ public class DeleteOrderCommand {
     /**
      * @param orderManager The OrderManager object that controls Orders objects
      * @param salesRevenueManager The SalesRevenueManager object that controls SaleRevenue objects
-     * @param table_close The table Number which the Order is being closed
+     * @param tableClose The table Number which the Order is being closed
      */
-    DeleteOrderCommand ( OrderManager orderManager , SalesRevenueManager salesRevenueManager, int tableClose ){
+    public DeleteItemOrderCommand(OrderManager orderManager, SalesRevenueManager salesRevenueManager, int tableClose){
         this.orderManager = orderManager;
         this.salesRevenueManager = salesRevenueManager;
         this.tableClose = tableClose;
@@ -27,10 +28,10 @@ public class DeleteOrderCommand {
      * Executes the method to deleteOrder in OrderManager
      */
     public void execute(){
-        for ( int i  = 0 ; i < orderManager.order_list.size() ; i++ )
+        for ( int i  = 0 ; i < orderManager.order_list.size() ; i++)
         {
-            salesRevenueManager.addOrder( orderManager.order_list.get(i) );
-            orderManager.deleteOrder( tableClose  );
+            salesRevenueManager.addOrder(orderManager.order_list.get(i));
+            orderManager.deleteOrder(tableClose);
         }
     }
 }

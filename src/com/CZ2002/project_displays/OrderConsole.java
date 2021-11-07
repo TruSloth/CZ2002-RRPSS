@@ -1,6 +1,11 @@
 package com.CZ2002.project_displays;
+import com.CZ2002.project_boundaries.MenuManager;
+import com.CZ2002.project_boundaries.SalesRevenueManager;
+import com.CZ2002.project_boundaries.StaffManager;
 import com.CZ2002.project_commands.*;
 import com.CZ2002.project_boundaries.OrderManager;
+import com.CZ2002.project_exceptions.InvalidStaffException;
+import com.CZ2002.project_interfaces.IMainManager;
 import com.CZ2002.project_utils.MenuBuilder;
 
 import java.util.Scanner;
@@ -15,9 +20,9 @@ public class OrderConsole {
      * Does not process any logics
      * Input are passed into Commands for logic processing
      */
-    public void orderConsole (){
+    public void orderConsole () throws InvalidStaffException {
+        IMainManager restaurantManager = null;
         int choice = 0;
-        MenuBuilder orderMenu = new MenuBuilder();
         String[] options = new String[6];
         options[0] = "Create Order";
         options[1] = "Add Item to Order";
@@ -27,9 +32,10 @@ public class OrderConsole {
         options[5] = "Quit";
         do {
 
-            System.out.println(orderMenu.buildMenu("Order console", options));
+            System.out.println(MenuBuilder.buildMenu("Order console", options));
             Scanner input_console = new Scanner(System.in);
             choice = input_console.nextInt();
+            assert restaurantManager != null;
 
             switch (choice) {
                 case 1:
@@ -43,8 +49,7 @@ public class OrderConsole {
                     Scanner input_server = new Scanner(System.in);
                     server_id = input_server.nextInt();
 
-                    // getSubManager ( String variable name for class retrieved , from which file)
-                    createNewOrder = new CreateOrderCommand(
+                    CreateOrderCommand createNewOrder = new CreateOrderCommand(
                             restaurantManager.getSubManager("staffManager", StaffManager.class),
                             restaurantManager.getSubManager("orderManager", OrderManager.class),
                             table_createOrder, pax, server_id
@@ -61,7 +66,7 @@ public class OrderConsole {
                     addItem = input_add.nextLine();
                     System.out.println("Adding Item to Order for Table " + table_add);
 
-                    addItemOrder = new AddItemOrderCommand(
+                    AddItemOrderCommand addItemOrder = new AddItemOrderCommand(
                             restaurantManager.getSubManager("menuManager", MenuManager.class),
                             restaurantManager.getSubManager("orderManager", OrderManager.class)
                             , table_add, addItem
@@ -78,7 +83,7 @@ public class OrderConsole {
                     removeItem = input_remove.nextLine();
                     System.out.println("Removing Item from Order for Table " + table_remove);
 
-                    addItemOrder = new RemoveItemOrderCommand(
+                    addItemOrder = new AddItemOrderCommand(
                             restaurantManager.getSubManager("menuManager", MenuManager.class),
                             restaurantManager.getSubManager("orderManager", OrderManager.class)
                             , table_remove, removeItem
@@ -90,7 +95,7 @@ public class OrderConsole {
                     Scanner input_table_print = new Scanner(System.in);
                     table_print = input_table_print.nextInt();
 
-                    printOrder = new PrintOrderCommand(
+                    PrintOrderCommand printOrder = new PrintOrderCommand(
                             restaurantManager.getSubManager("orderManager", OrderManager.class)
                             , table_print
                     );
@@ -101,7 +106,7 @@ public class OrderConsole {
                     Scanner input_table_close = new Scanner(System.in);
                     table_close = input_table_close.nextInt();
 
-                    deleteOrder = new DeleteOrderCommand(
+                    DeleteItemOrderCommand deleteOrder = new DeleteItemOrderCommand(
                             restaurantManager.getSubManager("orderManager", OrderManager.class)
                             , restaurantManager.getSubManager("salesRevenueManager", SalesRevenueManager.class)
                             , table_close

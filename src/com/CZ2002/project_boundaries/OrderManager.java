@@ -10,11 +10,11 @@ import java.util.ArrayList;
  * OrderManager will only keep track of active orders
  */
 public class OrderManager {
-    ArrayList<Order> order_list = new ArrayList<Order>();
+    public ArrayList<Order> order_list = new ArrayList<Order>();
     /** To Create new active Order object to add into the ArrayList of active orders
      * @param table The Table Number ( 1 to 20 ) which diners are seated at
      * @param pax Number of diners seated at table
-     * @param server_name Staff who is/was serving them
+     * @param server Staff who is/was serving them
      */
     public void createNewOrder( int table , int pax , Staff server ){
         Order new_order = new Order( table , pax , server );

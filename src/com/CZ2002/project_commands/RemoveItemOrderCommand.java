@@ -1,5 +1,6 @@
 package com.CZ2002.project_commands;
 
+import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
 
@@ -20,7 +21,7 @@ public class RemoveItemOrderCommand {
      * @param table_remove The table Number which the item is to be remove from the Order
      * @param removeItem The name of the MenuItem object that is to be removed from the Order
      */
-    public RemoveItemOrderCommand( MenuManager menuManager , OrderManager orderManager
+    public RemoveItemOrderCommand(MenuManager menuManager , OrderManager orderManager
             , int tableRemove  , String removeItem){
         this.menuManager = menuManager;
         this.item = removeItem;

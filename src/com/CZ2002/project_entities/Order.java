@@ -17,7 +17,7 @@ public class Order {
     private Staff server;
     private double bill;
     private double discountTotal;
-    ArrayList<MenuItem> ordered = new ArrayList<MenuItem>();
+    public ArrayList<MenuItem> ordered = new ArrayList<MenuItem>();
     Calendar cal;
 
     /** Creates an Order object with arguments provided
@@ -28,7 +28,7 @@ public class Order {
     public Order( int table , int pax , Staff server_name ){
         this.table = table;
         this.pax = pax;
-        this.server = Staff;
+        this.server = server_name;
         this.membership = false;
         this.bill= 0.00;
         this.discountTotal = 0.00;
@@ -74,8 +74,8 @@ public class Order {
     /** Gets Name of Staff who is/was serving the diners
      * @return A String of the name of Staff who is/was serving the diners
      */
-    public String getServer() {
-        return server;
+    public Staff getServer() {
+        return this.server;
     }
 
     /**
@@ -87,7 +87,7 @@ public class Order {
         for ( int i = 0 ; i < ordered.size() ; i++ ){
             bill += ordered.get(i).getPrice();
         }
-        if ( membership == true ){
+        if (membership){
             discountTotal = 0.1*bill;
             bill -= discountTotal;
         }
@@ -126,7 +126,7 @@ public class Order {
     /** Sets the updated name of Staff serving the diners
      * @param server A String containing the Staff's name
      */
-    public void setServer(String server) {
+    public void setServer(Staff server) {
         this.server = server;
     }
 
@@ -161,12 +161,12 @@ public class Order {
         option[0] = "";
         for ( int i = 1 ;  i < ordered.size() + 1 ; i++ ){
             optionHeader[i] = ordered.get(i).getName();
-            option[i] = ordered.get(i).getPrice();
+            option[i] = String.valueOf(ordered.get(i).getPrice());
             System.out.println( ordered.get(i) );
         }
         optionHeader[ordered.size()+1] = "Total Discount applied: ";
-        option[ordered.size()+1] = this.getDiscountTotal();
+        option[ordered.size()+1] = String.valueOf(this.getDiscountTotal());
         optionHeader[ordered.size()+2] = "Total Bill: ";
-        option[ordered.size()+2] = this.getBill();
+        option[ordered.size()+2] = String.valueOf(this.getBill());
     }
 }
