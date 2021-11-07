@@ -3,11 +3,13 @@ package com.CZ2002.project_commands;
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_exceptions.InvalidAddItemOrderException;
+import com.CZ2002.project_interfaces.ICommand;
 
 /**
  * A Control Class that executes the AddItemOrder Command
  */
-public class AddItemOrderCommand {
+public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderException> {
     private MenuManager menuManager;
     private String item;
     private MenuItem menuItem;
@@ -34,7 +36,9 @@ public class AddItemOrderCommand {
     /**
      * Executes the method to addItem to Order in OrderManager
      */
-    public void execute(){
+    @Override
+    public Void execute() throws InvalidAddItemOrderException{
         orderManager.addItemOrder( menuItem , tableAdd );
+        return null;
     }
 }

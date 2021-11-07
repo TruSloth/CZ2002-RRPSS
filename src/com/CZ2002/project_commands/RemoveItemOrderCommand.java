@@ -3,11 +3,13 @@ package com.CZ2002.project_commands;
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
+import com.CZ2002.project_interfaces.ICommand;
 
 /**
  * A Control Class that executes the RemoveItemOrder Command
  */
-public class RemoveItemOrderCommand {
+public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemOrderException> {
     private MenuManager menuManager;
     private String item;
     private MenuItem menuItem;
@@ -33,7 +35,9 @@ public class RemoveItemOrderCommand {
     /**
      * Executes the method to removeItem from Order in OrderManager
      */
-    public void execute(){
+    @Override
+    public Void execute() throws InvalidRemoveItemOrderException{
         orderManager.removeItemOrder( menuItem , tableRemove );
+        return null;
     }
 }

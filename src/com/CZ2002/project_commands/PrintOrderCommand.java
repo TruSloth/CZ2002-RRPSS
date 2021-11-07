@@ -1,11 +1,13 @@
 package com.CZ2002.project_commands;
 
 import com.CZ2002.project_boundaries.OrderManager;
+import com.CZ2002.project_exceptions.InvalidPrintOrderException;
+import com.CZ2002.project_interfaces.ICommand;
 
 /**
  * A Control Class that executes the PrintOrder Command
  */
-public class PrintOrderCommand {
+public class PrintOrderCommand implements ICommand<Void , InvalidPrintOrderException> {
     private OrderManager orderManager;
     private int tablePrint;
 
@@ -22,7 +24,9 @@ public class PrintOrderCommand {
      * Printing out the list of MenuItem object that customer at the table ordered
      * Executes the method to printOrder in OrderManager
      */
-    public void execute() {
+    @Override
+    public Void execute() throws InvalidPrintOrderException{
         orderManager.printOrder(tablePrint);
+        return null;
     }
 }
