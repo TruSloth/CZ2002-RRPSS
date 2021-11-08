@@ -3,25 +3,25 @@ package com.CZ2002.project_boundaries;
 import com.CZ2002.project_entities.AlaCarteItem;
 import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_entities.PackageItem;
-import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_enums.Type;
 
 import java.util.ArrayList;
 
 /**
- * A Control class to execute the logics of MenuItem objects
+ * A Control class to execute the logics of MenuItem objects 
  * MenuManager will keep track of all MenuItem objects created
  */
 public class MenuManager extends Manager<MenuItem>{
-    public MenuManager() {
-        entities = new ArrayList<MenuItem>();
-    }
+  
 
     /** Gets the MenuItem object based on its name
      * returns null if no MenuItem with called name exists
      * @param name name of the wanted MenuItem
      * @return A MenuItem object with called name
      */
+    public MenuManager() {
+    	entities = new ArrayList<MenuItem>();
+    }
     public MenuItem getItem(String name) {
         for (MenuItem item: entities) {
             if (item.getName().equals(name)) {
@@ -38,7 +38,7 @@ public class MenuManager extends Manager<MenuItem>{
      * @param type one of three types of AlaCarteItem
      */
     public void addAlaCarteItem(String name, String description, double price, Type type) {
-        entities.add(new AlaCarteItem(name,description,price,type));
+    	entities.add(new AlaCarteItem(name,description,price,type));
     }
 
     /** Creates and stores a PackageItem inside menu
@@ -48,7 +48,7 @@ public class MenuManager extends Manager<MenuItem>{
      * @param list an ArrayList of AlaCarteItem that are included inside the PackageItem
      */
     public void addPackageItem(String name, String description, double price, ArrayList<AlaCarteItem> list) {
-        entities.add(new PackageItem(name,description,price,list));
+    	entities.add(new PackageItem(name,description,price,list));
     }
 
     /** Changes the name, description and price of any item on the menu
@@ -73,7 +73,7 @@ public class MenuManager extends Manager<MenuItem>{
     public void removeItem(String name) {
         for (MenuItem item: entities) {
             if (item.getName().equals(name)) {
-                entities.remove(item);
+            	entities.remove(item);
                 break;
             }
         }
@@ -120,27 +120,10 @@ public class MenuManager extends Manager<MenuItem>{
         }
     }
 
-    /** Prints all the MenuItem objects form the menu with their names, descriptions, and price
-     * If the MenuItem is stored as an AlaCarteItem, its type will also be printed
-     * If the MenuItem is stored as a PackageItem, its components will also be printed
+    /** Returns the menu
+     * @return	the ArryList of MenuItem in menu
      */
-    public void printMenu() {
-        for (MenuItem item: entities) {
-            System.out.println("Name: " + item.getName());
-            System.out.println("Description: " + item.getDescription());
-            try {
-                AlaCarteItem dummyAla = (AlaCarteItem)item;
-                System.out.println("Type: " + dummyAla.getType());
-            }
-            catch (Exception e){
-                PackageItem dummyPack = (PackageItem)item;
-                dummyPack.printItems();
-                System.out.println("");
-            }
-            finally {
-                System.out.println("Price: " + item.getPrice());
-                System.out.println("");
-            }
-        }
+    public ArrayList<MenuItem> getMenu(){
+    	return (ArrayList<MenuItem>) entities;
     }
 }
