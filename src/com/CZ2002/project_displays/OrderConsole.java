@@ -141,7 +141,8 @@ public class OrderConsole extends ConsoleDisplay{
                 tableClose = sc.nextInt();
 
                 ICommand<Void , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
-                        mainManager.getSubManager("orderManager", OrderManager.class)
+                        mainManager.getSubManager("orderManager", OrderManager.class),
+                        mainManager.getSubManager("tableManager", TableManager.class)
                         , mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class)
                         , tableClose
                 );
