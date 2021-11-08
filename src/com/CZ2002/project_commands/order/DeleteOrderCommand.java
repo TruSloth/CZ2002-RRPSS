@@ -38,7 +38,6 @@ public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderExc
             {
                 if ( orderManager.entities.get(i).getTable() == tableClose ){
                     salesRevenueManager.addOrder(orderManager.entities.get(i));
-                    // i refers to the index of entities
                     orderManager.deleteOrder(tableClose);
                 }
             }

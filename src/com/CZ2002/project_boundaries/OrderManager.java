@@ -20,9 +20,9 @@ public class OrderManager extends Manager<Order>{
      * @param server Staff who is/was serving them
      */
     public void createNewOrder( int tableNumber , int pax , Staff server ){
-        Order new_order = new Order( tableNumber , pax , server );
-        entities.add(new_order);
-        System.out.println("new order for table " + tableNumber + " has been created");
+        Order newOrder = new Order( tableNumber , pax , server );
+        entities.add(newOrder);
+        System.out.println("New Order for Table " + tableNumber + " Created");
     }
 
     /** To Read in the Order to show a summary of Order for the table

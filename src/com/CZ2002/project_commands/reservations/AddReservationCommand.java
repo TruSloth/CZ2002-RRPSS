@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands.revenue.reservations;
+package com.CZ2002.project_commands.reservations;
 
 import java.util.GregorianCalendar;
 import com.CZ2002.project_exceptions.InvalidReservationException;

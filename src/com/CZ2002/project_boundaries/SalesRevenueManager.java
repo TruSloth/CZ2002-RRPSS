@@ -17,13 +17,11 @@ import java.util.Date;
  */
 public class SalesRevenueManager extends Manager<SalesRevenue>{
     // Attributes
-    private OrderManager orderManager; // TODO: REMOVE THIS TO? HAVE TO REMOVE
 
     // Constructor
     public SalesRevenueManager(){
         int numDays = Year.of(2021).length();
         entities = new ArrayList<>(numDays); //ArrayList revenueList
-        this.orderManager = new OrderManager();
 
         // Prepopulate List of Revenue
         for (int i=0; i<numDays; i++){
@@ -41,11 +39,13 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
         cal.setTime(order.getDate());
         int dayOfYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
         double bill = order.getBill();
-
-        // Update Final Bill
+        
+        
+        // Update Final Bill and Add Order
         double finalTotal = entities.get(dayOfYear).getRevenue() + bill;
         SalesRevenue temp = entities.get(dayOfYear);
         temp.setRevenue(finalTotal);
+        temp.addOrderToList(order);
 
         entities.set(dayOfYear, temp);
     }
@@ -54,32 +54,39 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
      * To print the sales revenue by the date given
      * @param date GregorianCalender of the SalesRevenue
      */
-    public void printByDay(Date date) throws ParseException, InvalidSalesRevenueQueryException {
+    public void printByDay(Date date, boolean monthly) throws ParseException, InvalidSalesRevenueQueryException {
         // Tabulate by Day
         System.out.println("Date: " + date);
         int count = 1;
-        for(int i=0; i<orderManager.entities.size(); i++){
-            if(orderManager.entities.get(i).getDate()==date){
-                System.out.printf("Order %d\n",count);
-                count++;
-                for(int j=0; j<orderManager.entities.get(i).ordered.size(); j++)
-                {
-                    if(orderManager.entities.get(i).ordered.get(j) instanceof PackageItem){
-                        System.out.println(orderManager.entities.get(i).ordered.get(j) + " (Package)");
-                    }
-                    else if(orderManager.entities.get(i).ordered.get(j) instanceof AlaCarteItem){
-                        System.out.println(orderManager.entities.get(i).ordered.get(j) + " (Ala Carte)");
-                    }
-                }
-            }
-        }
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int dayOfYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
-        double bill;
-        bill = entities.get(dayOfYear).getRevenue();
+        SalesRevenue queryRevenue = entities.get(dayOfYear);
+        ArrayList<Order> tempOrderList = queryRevenue.getOrderList();
 
-        System.out.println("Total Revenue is: " + bill);
+        if (tempOrderList != null) {
+            for (int i=0; i<tempOrderList.size(); i++){
+                System.out.printf("Order %d\n", ++count);
+                Order tempOrder = tempOrderList.get(i);
+                for (int j=0; j<tempOrder.ordered.size(); j++){
+                    if(tempOrder.ordered.get(j) instanceof PackageItem){
+                        System.out.println(tempOrderList.get(i).ordered.get(j) + " (Package)");
+                    }
+                    else {
+                        System.out.println(tempOrderList.get(i).ordered.get(j) + " (Ala Carte)");
+                    }
+                }
+            }
+        } else {
+            System.out.println("No Orders On " + date);
+        }
+
+
+        if (!monthly){
+            double bill;
+            bill = entities.get(dayOfYear).getRevenue();
+            System.out.println("Total Revenue is: " + bill);
+        }
     }
 
     /**
@@ -87,27 +94,10 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
      * @param startDate GregorianCalender of the start of the month
      * @param endDate GregorianCalender of the end of the month
      */
-    public void printByMonth(Date startDate, Date endDate) throws ParseException {
+    public void printByMonth(Date startDate, Date endDate) throws ParseException, InvalidSalesRevenueQueryException {
         // Tabulate by Month
         System.out.println("Period: " + startDate + " - " + endDate);
-        int count = 1;
-        for(int i=0; i<orderManager.entities.size(); i++){
-            if(!orderManager.entities.get(i).getDate().before(startDate) && !orderManager.entities.get(i).getDate().after(endDate) ){
-                System.out.printf("Order %d\n",count);
-                count++;
-                for(int j=0; j<orderManager.entities.get(i).ordered.size(); j++)
-                {
-                    if(orderManager.entities.get(i).ordered.get(j) instanceof PackageItem){
-                        System.out.println(orderManager.entities.get(i).ordered.get(j) + " (Package)");
-                    }
-                    else if(orderManager.entities.get(i).ordered.get(j) instanceof AlaCarteItem){
-                        System.out.println(orderManager.entities.get(i).ordered.get(j) + " (Ala Carte)");
-                    }
-                }
-            }
-        }
         Calendar cal = Calendar.getInstance();
-
         cal.setTime(startDate);
         int startDayOfTheYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
 
@@ -117,8 +107,17 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
         double tabulatedBill = 0;
         for(int i=startDayOfTheYear; i<endDayOfTheYear; i++){
             tabulatedBill += entities.get(i).getRevenue();
+            printByDay(startDate, true);
+            startDate = addDate(startDate);
         }
         System.out.println("Total Revenue is: " + tabulatedBill);
+    }
+
+    public static Date addDate(Date date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE,1);
+        return calendar.getTime();
     }
 }
 

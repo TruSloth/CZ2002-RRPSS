@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands.revenue.reservations;
+package com.CZ2002.project_commands.revenue;
 
 import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_interfaces.ICommand;
@@ -38,7 +38,7 @@ public class PrintRevenueByDay implements ICommand<Void, InvalidSalesRevenueQuer
     @Override
     public Void execute() throws InvalidSalesRevenueQueryException, ParseException {
         try {
-            salesRevenueManager.printByDay(queryDate);
+            salesRevenueManager.printByDay(queryDate, false);
         } catch (NoSuchElementException e){
             throw new InvalidSalesRevenueQueryException("The requested period is invalid.");
         }
