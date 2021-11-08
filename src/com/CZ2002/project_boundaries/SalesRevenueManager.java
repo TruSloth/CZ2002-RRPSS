@@ -66,17 +66,17 @@ public class SalesRevenueManager {
         // Tabulate by Day
         System.out.println("Date: " + date);
         int count = 1;
-        for(int i=0; i<orderManager.order_list.size(); i++){
-            if(orderManager.order_list.get(i).getDate()==date){
+        for(int i=0; i<orderManager.orderList.size(); i++){
+            if(orderManager.orderList.get(i).getDate()==date){
                 System.out.printf("Order %d\n",count);
                 count++;
-                for(int j=0; j<orderManager.order_list.get(i).ordered.size(); j++)
+                for(int j=0; j<orderManager.orderList.get(i).ordered.size(); j++)
                 {
-                    if(orderManager.order_list.get(i).ordered.get(j) instanceof PackageItem){
-                        System.out.println(orderManager.order_list.get(i).ordered.get(j) + " (Package)");
+                    if(orderManager.orderList.get(i).ordered.get(j) instanceof PackageItem){
+                        System.out.println(orderManager.orderList.get(i).ordered.get(j) + " (Package)");
                     }
-                    else if(orderManager.order_list.get(i).ordered.get(j) instanceof AlaCarteItem){
-                        System.out.println(orderManager.order_list.get(i).ordered.get(j) + " (Ala Carte)");
+                    else if(orderManager.orderList.get(i).ordered.get(j) instanceof AlaCarteItem){
+                        System.out.println(orderManager.orderList.get(i).ordered.get(j) + " (Ala Carte)");
                     }
                 }
             }
@@ -98,17 +98,17 @@ public class SalesRevenueManager {
         // Tabulate by Month
         System.out.println("Period: " + startDate + " - " + endDate);
         int count = 1;
-        for(int i=0; i<orderManager.order_list.size(); i++){
-            if(!orderManager.order_list.get(i).getDate().before(startDate) && !orderManager.order_list.get(i).getDate().after(endDate) ){
+        for(int i=0; i<orderManager.orderList.size(); i++){
+            if(!orderManager.orderList.get(i).getDate().before(startDate) && !orderManager.orderList.get(i).getDate().after(endDate) ){
                 System.out.printf("Order %d\n",count);
                 count++;
-                for(int j=0; j<orderManager.order_list.get(i).ordered.size(); j++)
+                for(int j=0; j<orderManager.orderList.get(i).ordered.size(); j++)
                 {
-                    if(orderManager.order_list.get(i).ordered.get(j) instanceof PackageItem){
-                        System.out.println(orderManager.order_list.get(i).ordered.get(j) + " (Package)");
+                    if(orderManager.orderList.get(i).ordered.get(j) instanceof PackageItem){
+                        System.out.println(orderManager.orderList.get(i).ordered.get(j) + " (Package)");
                     }
-                    else if(orderManager.order_list.get(i).ordered.get(j) instanceof AlaCarteItem){
-                        System.out.println(orderManager.order_list.get(i).ordered.get(j) + " (Ala Carte)");
+                    else if(orderManager.orderList.get(i).ordered.get(j) instanceof AlaCarteItem){
+                        System.out.println(orderManager.orderList.get(i).ordered.get(j) + " (Ala Carte)");
                     }
                 }
             }
