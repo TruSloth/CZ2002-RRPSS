@@ -100,7 +100,7 @@ public class MenuConsole extends ConsoleDisplay{
         dummy= sc.nextLine();
          
         while (choice != 8) {
-            if (choice == 1) {	// add an ala carte item
+            if (choice == 1) {	// add an ala carte package
 
                 //input for the required params
                 System.out.println("Enter ala carte item's name:");
