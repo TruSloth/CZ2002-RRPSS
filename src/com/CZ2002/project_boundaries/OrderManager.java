@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * OrderManager will only keep track of active orders
  */
 public class OrderManager {
-    public ArrayList<Order> order_list = new ArrayList<Order>();
+    public ArrayList<Order> orderList = new ArrayList<Order>();
     /** To Create new active Order object to add into the ArrayList of active orders
      * @param table The Table Number ( 1 to 20 ) which diners are seated at
      * @param pax Number of diners seated at table
@@ -26,12 +26,12 @@ public class OrderManager {
      * @param table_number An integer representing the table number which the Order belongs to
      */
     public void printOrder ( int table_number ){
-        for ( int i  = 0 ; i < order_list.size() ; i++){
-            if ( order_list.get(i).getTable() == table_number ){
+        for ( int i  = 0 ; i < orderList.size() ; i++){
+            if ( orderList.get(i).getTable() == table_number ){
                 System.out.println("Table number: " + table_number);
-                order_list.get(i).printOrdered();
+                orderList.get(i).printOrdered();
                 System.out.print("Total Bill:");
-                System.out.println(order_list.get(i).getBill());
+                System.out.println(orderList.get(i).getBill());
                 break;
             }
         }
@@ -44,9 +44,9 @@ public class OrderManager {
      */
     public void addItemOrder ( MenuItem menuItem , int table_number )
     {
-        for ( int i  = 0 ; i < order_list.size() ; i++) {
-            if (order_list.get(i).getTable() == table_number) {
-                order_list.get(i).addItem(menuItem);
+        for ( int i  = 0 ; i < orderList.size() ; i++) {
+            if (orderList.get(i).getTable() == table_number) {
+                orderList.get(i).addItem(menuItem);
                 break;
             }
         }
@@ -59,9 +59,9 @@ public class OrderManager {
      */
     public void removeItemOrder ( MenuItem menuItem , int table_number )
     {
-        for ( int i  = 0 ; i < order_list.size() ; i++) {
-            if (order_list.get(i).getTable() == table_number) {
-                order_list.get(i).removeItem(menuItem);
+        for ( int i  = 0 ; i < orderList.size() ; i++) {
+            if (orderList.get(i).getTable() == table_number) {
+                orderList.get(i).removeItem(menuItem);
                 break;
             }
         }
@@ -71,10 +71,11 @@ public class OrderManager {
      * To delete the Order from the ArrayList of active Orders
      * @param table_number An integer representing the table number which the Order belongs to
      */
-    public void deleteOrder ( int table_number ){
-        for ( int i  = 0 ; i < order_list.size() ; i++ ){
-            if ( order_list.get(i).getTable() == table_number ){
-                order_list.remove(i);
+    public void deleteOrder ( int tableNumber ){
+        for ( int i  = 0 ; i < orderList.size() ; i++ ){
+            if ( orderList.get(i).getTable() == tableNumber ){
+                printOrder(tableNumber);
+                orderList.remove(i);
                 break;
             }
         }

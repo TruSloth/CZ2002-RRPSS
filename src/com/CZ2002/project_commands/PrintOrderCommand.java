@@ -4,8 +4,10 @@ import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_exceptions.InvalidPrintOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
+import java.util.NoSuchElementException;
+
 /**
- * A Control Class that executes the PrintOrder Command
+ * This class implements {@link ICommand} to complete the 'Print Order' action.
  */
 public class PrintOrderCommand implements ICommand<Void , InvalidPrintOrderException> {
     private OrderManager orderManager;
@@ -26,7 +28,12 @@ public class PrintOrderCommand implements ICommand<Void , InvalidPrintOrderExcep
      */
     @Override
     public Void execute() throws InvalidPrintOrderException{
-        orderManager.printOrder(tablePrint);
+        try {
+            orderManager.printOrder(tablePrint);
+        } catch (NoSuchElementException e) {
+            throw new InvalidPrintOrderException("Invalid table");
+        }
+
         return null;
     }
 }

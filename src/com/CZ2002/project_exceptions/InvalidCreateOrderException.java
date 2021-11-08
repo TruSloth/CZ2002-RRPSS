@@ -1,11 +1,11 @@
 package com.CZ2002.project_exceptions;
 
 public class InvalidCreateOrderException extends Exception{
-    public InvalidCreateOrderCommandException() {
+    public InvalidCreateOrderException() {
         super();
     }
 
-    public InvalidCreateOrderCommandException(String message) {
+    public InvalidCreateOrderException(String message) {
         super(message);
     }
 }

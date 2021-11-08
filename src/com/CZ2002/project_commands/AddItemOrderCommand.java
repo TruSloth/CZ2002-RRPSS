@@ -6,8 +6,10 @@ import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_exceptions.InvalidAddItemOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
+import java.util.NoSuchElementException;
+
 /**
- * A Control Class that executes the AddItemOrder Command
+ * This class implements {@link ICommand} to complete the 'Add Item to Order' action.
  */
 public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderException> {
     private MenuManager menuManager;
@@ -28,7 +30,6 @@ public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderE
             , int tableAdd  , String addItem){
         this.menuManager = menuManager;
         this.item = addItem;
-        this.menuItem = menuManager.getItem(addItem);
         this.orderManager = orderManager;
         this.tableAdd = tableAdd;
     }
@@ -38,7 +39,17 @@ public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderE
      */
     @Override
     public Void execute() throws InvalidAddItemOrderException{
-        orderManager.addItemOrder( menuItem , tableAdd );
+        try {
+            this.menuItem = menuManager.getItem(item);
+        } catch (NoSuchElementException e){
+            throw new InvalidAddItemOrderException("invalid item");
+        }
+        try {
+            orderManager.addItemOrder( menuItem , tableAdd );
+        } catch (NoSuchElementException e) {
+            throw new InvalidAddItemOrderException("Invalid table");
+        }
+
         return null;
     }
 }

@@ -1,26 +1,21 @@
 package com.CZ2002.project_displays;
-import com.CZ2002.project_boundaries.MenuManager;
-import com.CZ2002.project_boundaries.SalesRevenueManager;
-import com.CZ2002.project_boundaries.StaffManager;
+import com.CZ2002.project_boundaries.*;
 import com.CZ2002.project_commands.*;
-import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.*;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_utils.MenuBuilder;
 
-import java.awt.*;
 import java.util.Scanner;
 
 /**
  * A boundary class that takes in inputs from user
  */
 public class OrderConsole extends ConsoleDisplay{
-    private ICommand<Void, InvalidCreateOrderException> CreateOrderCommand;
-    private ICommand<Void, InvalidAddItemOrderException> AddItemOrderCommand;
-    private ICommand<Void, InvalidRemoveItemOrderException> RemoveItemOrderCommand;
-    private ICommand<Void, InvalidPrintOrderException> PrintOrderCommand;
-    private ICommand<Void, InvalidDeleteOrderException> DeleteOrderCommand;
+    public OrderConsole(RestaurantManager restaurantManager, Scanner sc){
+        super.mainManager = restaurantManager;
+        super.sc = sc;
+    }
 
     @Override
     public int displayConsoleOptions() {
@@ -39,92 +34,122 @@ public class OrderConsole extends ConsoleDisplay{
 
     @Override
     public MenuView handleConsoleOptions() {
-        int choice;
+        int choice = sc.nextInt();
         MenuView view = MenuView.ORDERS;
-        Scanner input_console = new Scanner(System.in);
-        choice = input_console.nextInt();
         switch (choice) {
             case 1:
                 // Create Order
-                int table_createOrder, pax;
+                sc.nextLine();
+                int tableCreateOrder, pax;
                 int serverId;
                 System.out.printf("Table: ");
-                Scanner input_table_createOrder = new Scanner(System.in);
-                table_createOrder = input_table_createOrder.nextInt();
+                tableCreateOrder = sc.nextInt();
 
                 System.out.printf("Pax: ");
-                Scanner input_pax = new Scanner(System.in);
-                pax = input_pax.nextInt();
+                pax = sc.nextInt();
 
                 System.out.printf("Server's ID: ");
-                Scanner input_server = new Scanner(System.in);
-                serverId = input_server.nextInt();
+                serverId = sc.nextInt();
 
-                CreateOrderCommand createNewOrder = new CreateOrderCommand(
+                ICommand<Void,InvalidStaffException> createOrderCommand  = new CreateOrderCommand(
                         mainManager.getSubManager("staffManager", StaffManager.class),
                         mainManager.getSubManager("orderManager", OrderManager.class),
-                        table_createOrder, pax, serverId
+                        tableCreateOrder, pax, serverId
                 );
 
+                try {
+                    createOrderCommand.execute();
+                } catch ( InvalidStaffException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+
             case 2:
+                // Add item to Order
+                sc.nextLine();
                 int tableAdd;
                 String addItem;
                 System.out.print("Add item to order for which table: ");
-                Scanner input_table_add = new Scanner(System.in);
-                tableAdd = input_table_add.nextInt();
+                tableAdd = sc.nextInt();
 
                 System.out.printf("What item to add to order: ");
-                Scanner input_add = new Scanner(System.in);
-                addItem = input_add.nextLine();
+                addItem = sc.nextLine();
                 System.out.println("Adding Item to Order for Table " + tableAdd);
 
-                AddItemOrderCommand addItemOrder = new AddItemOrderCommand(
+                ICommand<Void, InvalidAddItemOrderException> addItemOrder = new AddItemOrderCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
                         mainManager.getSubManager("orderManager", OrderManager.class)
                         , tableAdd, addItem
                 );
 
+                try {
+                    addItemOrder.execute();
+                } catch ( InvalidAddItemOrderException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+
             case 3:
+                //  Remove item from order
+                sc.nextLine();
                 int tableRemove;
                 String removeItem;
                 System.out.printf("Remove item from order for which table: ");
-                Scanner input_table_remove = new Scanner(System.in);
-                tableRemove = input_table_remove.nextInt();
+                tableRemove = sc.nextInt();
 
                 System.out.printf("Which item to remove from order: ");
-                Scanner input_remove = new Scanner(System.in);
-                removeItem = input_remove.nextLine();
+                removeItem = sc.nextLine();
                 System.out.println("Removing Item from Order for Table " + tableRemove);
 
-                addItemOrder = new AddItemOrderCommand(
+                ICommand<Void , InvalidRemoveItemOrderException> removeItemOrder = new RemoveItemOrderCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
                         mainManager.getSubManager("orderManager", OrderManager.class)
                         , tableRemove, removeItem
                 );
 
+                try {
+                    removeItemOrder.execute();
+                } catch ( InvalidRemoveItemOrderException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+
             case 4:
+                // Print Order for Table xx
+                sc.nextLine();
                 int tablePrint;
                 System.out.print("Print order for which table: ");
-                Scanner input_table_print = new Scanner(System.in);
-                tablePrint = input_table_print.nextInt();
+                tablePrint = sc.nextInt();
 
-                PrintOrderCommand printOrder = new PrintOrderCommand(
+                ICommand<Void , InvalidPrintOrderException> printOrder = new PrintOrderCommand(
                         mainManager.getSubManager("orderManager", OrderManager.class)
                         , tablePrint
                 );
+                try {
+                    printOrder.execute();
+                } catch ( InvalidPrintOrderException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
+
             case 5:
+                // Delete Order
+                sc.nextLine();
                 int tableClose;
                 System.out.print("Close order for which table: ");
-                Scanner input_table_close = new Scanner(System.in);
-                tableClose = input_table_close.nextInt();
+                tableClose = sc.nextInt();
 
-                DeleteOrderCommand deleteOrder = new DeleteOrderCommand(
+                ICommand<Void , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
                         mainManager.getSubManager("orderManager", OrderManager.class)
                         , mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class)
                         , tableClose
                 );
-                System.out.println("Table " + tableClose + " is now vacant");
+
+                try {
+                    deleteOrder.execute();
+                } catch ( InvalidDeleteOrderException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case 6:
                 view = MenuView.PREVIOUS_MENU;

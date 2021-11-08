@@ -5,8 +5,10 @@ import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_exceptions.InvalidDeleteOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
+import java.util.NoSuchElementException;
+
 /**
- * A Control Class that executes the DeleteOrder Command
+ * This class implements {@link ICommand} to complete the 'Delete Order' action.
  */
 public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderException> {
     private SalesRevenueManager salesRevenueManager;
@@ -31,11 +33,19 @@ public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderExc
      */
     @Override
     public Void execute() throws InvalidDeleteOrderException{
-        for ( int i  = 0 ; i < orderManager.order_list.size() ; i++)
-        {
-            salesRevenueManager.addOrder(orderManager.order_list.get(i));
-            orderManager.deleteOrder(tableClose);
+        try {
+            for ( int i  = 0 ; i < orderManager.orderList.size() ; i++)
+            {
+                if ( orderManager.orderList.get(i).getTable() == tableClose ){
+                    salesRevenueManager.addOrder(orderManager.orderList.get(i));
+                    // i refers to the index of orderList
+                    orderManager.deleteOrder(tableClose);
+                }
+            }
+        } catch (NoSuchElementException e) {
+            throw new InvalidDeleteOrderException("Table not found");
         }
+
         return null;
     }
 }

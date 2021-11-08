@@ -6,8 +6,10 @@ import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
+import java.util.NoSuchElementException;
+
 /**
- * A Control Class that executes the RemoveItemOrder Command
+ * This class implements {@link ICommand} to complete the 'Remove item from order' action.
  */
 public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemOrderException> {
     private MenuManager menuManager;
@@ -27,7 +29,6 @@ public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemO
             , int tableRemove  , String removeItem){
         this.menuManager = menuManager;
         this.item = removeItem;
-        this.menuItem = menuManager.getItem(removeItem);
         this.orderManager = orderManager;
         this.tableRemove = tableRemove;
     }
@@ -37,7 +38,17 @@ public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemO
      */
     @Override
     public Void execute() throws InvalidRemoveItemOrderException{
-        orderManager.removeItemOrder( menuItem , tableRemove );
+        try {
+            this.menuItem = menuManager.getItem(item);
+        } catch (NoSuchElementException e){
+            throw new InvalidRemoveItemOrderException("invalid item");
+        }
+        try {
+            orderManager.removeItemOrder( menuItem , tableRemove );
+        } catch (NoSuchElementException e) {
+            throw new InvalidRemoveItemOrderException("Invalid table");
+        }
+
         return null;
     }
 }

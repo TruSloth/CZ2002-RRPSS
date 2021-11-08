@@ -3,16 +3,14 @@ package com.CZ2002.project_commands;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_boundaries.StaffManager;
 import com.CZ2002.project_entities.Staff;
-import com.CZ2002.project_exceptions.InvalidCreateOrderException;
 import com.CZ2002.project_exceptions.InvalidStaffException;
 import com.CZ2002.project_interfaces.ICommand;
 
 import java.util.NoSuchElementException;
 
 /**
- * A Control Class that executes the CreateOrder Command
+ * This class implements {@link ICommand} to complete the 'Create a new Order' action.
  */
-// h
 public class CreateOrderCommand implements ICommand<Void , InvalidStaffException>  {
     private final StaffManager staffManager;
     private OrderManager orderManager;
@@ -42,7 +40,6 @@ public class CreateOrderCommand implements ICommand<Void , InvalidStaffException
      * Creating a new active Order to add into the ArrayList of active orders
      * Executes the method to createNewOrder in OrderManager
      */
-
     @Override
     public Void execute() throws InvalidStaffException {
         try{
