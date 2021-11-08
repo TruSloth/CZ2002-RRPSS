@@ -1,3 +1,5 @@
 **/.vscode/*
 *.class
-**/doc/*
+\.idea
+\out
+\CZ2002 Project.iml
