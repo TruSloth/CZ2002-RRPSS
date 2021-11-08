@@ -1,13 +1,17 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.order;
 
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_exceptions.InvalidAddItemOrderException;
+import com.CZ2002.project_interfaces.ICommand;
+
+import java.util.NoSuchElementException;
 
 /**
- * A Control Class that executes the AddItemOrder Command
+ * This class implements {@link ICommand} to complete the 'Add Item to Order' action.
  */
-public class AddItemOrderCommand {
+public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderException> {
     private MenuManager menuManager;
     private String item;
     private MenuItem menuItem;
@@ -26,7 +30,6 @@ public class AddItemOrderCommand {
             , int tableAdd  , String addItem){
         this.menuManager = menuManager;
         this.item = addItem;
-        this.menuItem = menuManager.getItem(addItem);
         this.orderManager = orderManager;
         this.tableAdd = tableAdd;
     }
@@ -34,7 +37,19 @@ public class AddItemOrderCommand {
     /**
      * Executes the method to addItem to Order in OrderManager
      */
-    public void execute(){
-        orderManager.addItemOrder( menuItem , tableAdd );
+    @Override
+    public Void execute() throws InvalidAddItemOrderException{
+        try {
+            this.menuItem = menuManager.getItem(item);
+        } catch (NoSuchElementException e){
+            throw new InvalidAddItemOrderException("invalid item");
+        }
+        try {
+            orderManager.addItemOrder( menuItem , tableAdd );
+        } catch (NoSuchElementException e) {
+            throw new InvalidAddItemOrderException("Invalid table");
+        }
+
+        return null;
     }
 }

@@ -1,18 +1,18 @@
 package com.CZ2002.project_displays;
 
+import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-import com.CZ2002.project_commands.AddReservationCommand;
-import com.CZ2002.project_commands.FindReservationCommand;
-import com.CZ2002.project_commands.RemoveReservationCommand;
-import com.CZ2002.project_commands.UpdateReservationCommand;
+import com.CZ2002.project_commands.reservations.AddReservationCommand;
+import com.CZ2002.project_commands.reservations.FindReservationCommand;
+import com.CZ2002.project_commands.reservations.RemoveReservationCommand;
+import com.CZ2002.project_commands.reservations.UpdateReservationCommand;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
-import com.CZ2002.project_displays.ConsoleDisplay;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_boundaries.ReservationManager;
 import com.CZ2002.project_boundaries.RestaurantManager;
@@ -147,7 +147,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                         name, contact, pax, reservationPeriod);
                 try {
                     addReservationCommand.execute();
-                } catch (InvalidReservationException e) {
+                } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
 
@@ -171,7 +171,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                 try {
                     reservation = findReservationCommand.execute();
                     displayReservationDetails(reservation);
-                } catch (InvalidReservationException e) {
+                } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
 
@@ -210,10 +210,12 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                             view = updateReservationCommand.execute();
                         } catch (InvalidReservationException e) {
                             System.out.println(e.getMessage());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
 
                     } while (view != MenuView.PREVIOUS_MENU);
-                } catch (InvalidReservationException e) {
+                } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
 
@@ -236,7 +238,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
 
                 try {
                     removeReservationCommand.execute();
-                } catch (InvalidReservationException e) {
+                } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
 

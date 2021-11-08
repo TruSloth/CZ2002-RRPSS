@@ -3,16 +3,19 @@ package com.CZ2002.project_boundaries;
 import com.CZ2002.project_entities.AlaCarteItem;
 import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_entities.PackageItem;
+import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_enums.Type;
 
 import java.util.ArrayList;
 
 /**
- * A Control class to execute the logics of MenuItem objects 
+ * A Control class to execute the logics of MenuItem objects
  * MenuManager will keep track of all MenuItem objects created
  */
-public class MenuManager {
-    private ArrayList<MenuItem> menu = new ArrayList<>();
+public class MenuManager extends Manager<MenuItem>{
+    public MenuManager() {
+        entities = new ArrayList<MenuItem>();
+    }
 
     /** Gets the MenuItem object based on its name
      * returns null if no MenuItem with called name exists
@@ -20,7 +23,7 @@ public class MenuManager {
      * @return A MenuItem object with called name
      */
     public MenuItem getItem(String name) {
-        for (MenuItem item: menu) {
+        for (MenuItem item: entities) {
             if (item.getName().equals(name)) {
                 return item;
             }
@@ -35,7 +38,7 @@ public class MenuManager {
      * @param type one of three types of AlaCarteItem
      */
     public void addAlaCarteItem(String name, String description, double price, Type type) {
-        menu.add(new AlaCarteItem(name,description,price,type));
+        entities.add(new AlaCarteItem(name,description,price,type));
     }
 
     /** Creates and stores a PackageItem inside menu
@@ -45,7 +48,7 @@ public class MenuManager {
      * @param list an ArrayList of AlaCarteItem that are included inside the PackageItem
      */
     public void addPackageItem(String name, String description, double price, ArrayList<AlaCarteItem> list) {
-        menu.add(new PackageItem(name,description,price,list));
+        entities.add(new PackageItem(name,description,price,list));
     }
 
     /** Changes the name, description and price of any item on the menu
@@ -55,7 +58,7 @@ public class MenuManager {
      * @param price new price assigned to MenuItem
      */
     public void updateItem(String name,String newName, String des, double price) {
-        for (MenuItem item: menu) {
+        for (MenuItem item:entities) {
             if (item.getName().equals(name)) {	//possible error handling
                 item.setName(newName);
                 item.setDescription(des);
@@ -68,9 +71,9 @@ public class MenuManager {
      * @param name name of the MenuItem to be removed
      */
     public void removeItem(String name) {
-        for (MenuItem item: menu) {
+        for (MenuItem item: entities) {
             if (item.getName().equals(name)) {
-                menu.remove(item);
+                entities.remove(item);
                 break;
             }
         }
@@ -83,12 +86,12 @@ public class MenuManager {
      */
     public void addItemToPackage(String pName, String aName) {
         AlaCarteItem newItem = new AlaCarteItem("name", "description", 1.00, Type.MAIN); //dummy declaration
-        for (MenuItem aItem: menu) {
+        for (MenuItem aItem: entities) {
             if (aItem.getName().equals(aName)) {
                 newItem = (AlaCarteItem)aItem;	//ala carte item assigned
             }
         }
-        for (MenuItem item: menu) {
+        for (MenuItem item: entities) {
             if (item.getName().equals(pName)) {
                 PackageItem newPackage = (PackageItem)item;
                 newPackage.addItem(newItem);
@@ -103,12 +106,12 @@ public class MenuManager {
      */
     public void removeItemFromPackage(String pName, String aName) {
         AlaCarteItem newItem = new AlaCarteItem("name", "description", 1.00, Type.MAIN); //dummy declaration
-        for (MenuItem aItem: menu) {
+        for (MenuItem aItem: entities) {
             if (aItem.getName().equals(aName)) {
                 newItem = (AlaCarteItem)aItem;	//ala carte item assigned
             }
         }
-        for (MenuItem item: menu) {
+        for (MenuItem item: entities) {
             if (item.getName().equals(pName)) {
                 PackageItem newPackage = (PackageItem)item;
                 newPackage.removeItem(newItem);
@@ -122,7 +125,7 @@ public class MenuManager {
      * If the MenuItem is stored as a PackageItem, its components will also be printed
      */
     public void printMenu() {
-        for (MenuItem item: menu) {
+        for (MenuItem item: entities) {
             System.out.println("Name: " + item.getName());
             System.out.println("Description: " + item.getDescription());
             try {
@@ -138,9 +141,6 @@ public class MenuManager {
                 System.out.println("Price: " + item.getPrice());
                 System.out.println("");
             }
-
-
-
         }
     }
 }

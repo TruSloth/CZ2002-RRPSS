@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.reservations;
 
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
