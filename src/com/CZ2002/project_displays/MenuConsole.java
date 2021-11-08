@@ -6,8 +6,11 @@ import com.CZ2002.project_commands.AddPackageCommand;
 import com.CZ2002.project_commands.RemoveMenuItemCommand;
 import com.CZ2002.project_commands.UpdateMenuItemCommand;
 import com.CZ2002.project_commands.AddToPackageCommand;
+import com.CZ2002.project_commands.PrintMenuCommand;
 import com.CZ2002.project_commands.RemoveFromPackageCommand;
 import com.CZ2002.project_entities.AlaCarteItem;
+import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_entities.PackageItem;
 import com.CZ2002.project_utils.MenuBuilder;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_enums.Type;
@@ -26,6 +29,7 @@ public class MenuConsole extends ConsoleDisplay{
 	private RemoveMenuItemCommand removeMenuItemCommand;
 	private AddToPackageCommand addToPackageCommand;
 	private RemoveFromPackageCommand removeFromPackageCommand;
+	private PrintMenuCommand printMenuCommand;
 
 	/**
 	 * function to print out the console
@@ -100,7 +104,7 @@ public class MenuConsole extends ConsoleDisplay{
         dummy= sc.nextLine();
          
         while (choice != 8) {
-            if (choice == 1) {	// add an ala carte package
+            if (choice == 1) {	// add an ala carte item
 
                 //input for the required params
                 System.out.println("Enter ala carte item's name:");
@@ -295,7 +299,25 @@ public class MenuConsole extends ConsoleDisplay{
                 System.out.println();
 
             } else if (choice == 7) {
-            	mainManager.getSubManager("menuManager", MenuManager.class).printMenu();
+            	printMenuCommand = new PrintMenuCommand(mainManager.getSubManager("menuManager", MenuManager.class));
+            	ArrayList<MenuItem> menu = new ArrayList<MenuItem>(printMenuCommand.execute()) ;
+            	for (MenuItem item: menu) {
+                    System.out.println("Name: " + item.getName());
+                    System.out.println("Description: " + item.getDescription());
+                    try {
+                        AlaCarteItem dummyAla = (AlaCarteItem)item;
+                        System.out.println("Type: " + dummyAla.getType());
+                    }
+                    catch (Exception e){
+                        PackageItem dummyPack = (PackageItem)item;
+                        dummyPack.printItems();
+                        System.out.println("");
+                    }
+                    finally {
+                        System.out.println("Price: " + item.getPrice());
+                        System.out.println("");
+                    }
+                }
             } else {
                 System.out.println("Enter valid choice!");
             }
@@ -312,3 +334,5 @@ public class MenuConsole extends ConsoleDisplay{
     }
     
 }
+
+
