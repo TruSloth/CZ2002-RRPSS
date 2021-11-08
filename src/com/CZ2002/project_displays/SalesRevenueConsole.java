@@ -69,6 +69,7 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
         String[] options = new String[] {
                 "Print Sales Revenue by Day",
                 "Print Sales Revenue by Month",
+                "Back"
         };
         String title = "Restaurant Reservation & Point of Sale System";
 
