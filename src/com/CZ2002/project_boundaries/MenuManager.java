@@ -3,7 +3,6 @@ package com.CZ2002.project_boundaries;
 import com.CZ2002.project_entities.AlaCarteItem;
 import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_entities.PackageItem;
-import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_enums.Type;
 
 import java.util.ArrayList;
@@ -121,27 +120,10 @@ public class MenuManager extends Manager<MenuItem>{
         }
     }
 
-    /** Prints all the MenuItem objects form the menu with their names, descriptions, and price
-     * If the MenuItem is stored as an AlaCarteItem, its type will also be printed
-     * If the MenuItem is stored as a PackageItem, its components will also be printed
+    /** Returns the menu
+     * @return	the ArryList of MenuItem in menu
      */
-    public void printMenu() {
-        for (MenuItem item: entities) {
-            System.out.println("Name: " + item.getName());
-            System.out.println("Description: " + item.getDescription());
-            try {
-                AlaCarteItem dummyAla = (AlaCarteItem)item;
-                System.out.println("Type: " + dummyAla.getType());
-            }
-            catch (Exception e){
-                PackageItem dummyPack = (PackageItem)item;
-                dummyPack.printItems();
-                System.out.println("");
-            }
-            finally {
-                System.out.println("Price: " + item.getPrice());
-                System.out.println("");
-            }
-        }
+    public ArrayList<MenuItem> getMenu(){
+    	return (ArrayList<MenuItem>) entities;
     }
 }
