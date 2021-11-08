@@ -11,6 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import com.CZ2002.project_entities.RestaurantEntity;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_entities.Reservation;
 
@@ -121,7 +122,7 @@ public class ReservationManager extends Manager<Reservation> {
 
 
     /**
-     * Creates a new {@link Reservation} and adds it to {@link entities}.
+     * Creates a new {@link Reservation} and adds it to {@link RestaurantEntity}.
      * <p>
      * This method checks to see if the {@code Reservation} to be made is advanced (ahead of time).
      * If the {@code Reservation} is successfully created, also creates a {@link java.util.concurrent.ScheduledFuture}

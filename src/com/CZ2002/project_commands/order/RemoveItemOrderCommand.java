@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.order;
 
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;

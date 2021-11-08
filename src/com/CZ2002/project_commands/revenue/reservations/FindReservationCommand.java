@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.revenue.reservations;
 
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
@@ -8,16 +8,16 @@ import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
 
+
 /**
- * This class implements {@link ICommand} to complete the 'remove reservation' action.
+ * This class implements {@link ICommand} to complete the 'find reservation' action.
  */
-public class RemoveReservationCommand implements ICommand<Boolean, InvalidReservationException>, IGregorianCalendarFormatter {
+public class FindReservationCommand implements ICommand<Reservation, InvalidReservationException>, IGregorianCalendarFormatter {
     private ReservationManager reservationManager;
 
-    private GregorianCalendar reservationPeriod;
     private String name;
     private String contact;
-
+    private GregorianCalendar reservationPeriod;
 
     /**
      * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
@@ -27,7 +27,7 @@ public class RemoveReservationCommand implements ICommand<Boolean, InvalidReserv
      * @param contact  the String representing the phone number to contact the guest at
      * @param reservationPeriod  the {@link GregorianCalendar} start time of this reservation
      */
-    public RemoveReservationCommand(
+    public FindReservationCommand(
             ReservationManager reservationManager,
             String name, String contact, GregorianCalendar reservationPeriod) {
 
@@ -39,20 +39,20 @@ public class RemoveReservationCommand implements ICommand<Boolean, InvalidReserv
     }
 
     /**
-     * Completes the 'remove reservation' action.
+     * Completes the 'find reservation' action.
      *
-     * @return  true if the requested {@code Reservation} instance was successfully removed
-     * @throws  InvalidReservationException  if the requested {@code Reservation} could not be found
+     * @return  the requested {@code Reservation} instance
+     * @throws InvalidReservationException  if the requested {@code Reservation} could not be found
      */
     @Override
-    public Boolean execute() throws InvalidReservationException {
+    public Reservation execute() throws InvalidReservationException {
+        Reservation reservation;
         try {
-            Reservation reservation = reservationManager.findReservation(name, contact, reservationPeriod);
-            reservationManager.deleteReservation(reservation);
+            reservation = reservationManager.findReservation(name, contact, reservationPeriod);
         } catch (NoSuchElementException e) {
             throw new InvalidReservationException("The requested reservation does not exist.");
         }
 
-        return true;
+        return reservation;
     }
 }

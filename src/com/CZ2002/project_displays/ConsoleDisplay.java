@@ -1,8 +1,12 @@
 package com.CZ2002.project_displays;
 
 
+import java.text.ParseException;
 import java.util.Scanner;
 
+import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.project_exceptions.InvalidStaffException;
+import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_interfaces.IMainManager;
 import com.CZ2002.project_enums.MenuView;
 
@@ -33,9 +37,9 @@ public abstract class ConsoleDisplay {
      * The method to call to accept input from the user.
      * <p>
      * This method then performs the necessary transition of control from this
-     * {@code ConsoleDisplay} to another or to a {@link iCommand} instance.
+     * {@code ConsoleDisplay} to another or to a {@link ICommand} instance.
      *
      * @return  the {@link MenuView} that represents the state of the interface
      */
-    public abstract MenuView handleConsoleOptions();
+    public abstract MenuView handleConsoleOptions() throws InvalidStaffException, ParseException, InvalidSalesRevenueQueryException;
 }

@@ -23,5 +23,5 @@ public abstract class Manager<T extends RestaurantEntity> {
      * Within the context of the Restaurant, {@code entities} should be the only access point for all {@code RestaurantEntity}
      * of type T.
      */
-    protected List<T> entities;
+    public List<T> entities; //TODO: PROTECTED->PUBLIC
 }

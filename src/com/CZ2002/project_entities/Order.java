@@ -9,7 +9,7 @@ import java.util.Date;
  * An Entity class representing an unique Order
  */
 
-public class Order {
+public class Order extends RestaurantEntity {
     private int table;
     private int pax;
     private boolean membership;

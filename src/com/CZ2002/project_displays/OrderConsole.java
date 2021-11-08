@@ -1,11 +1,16 @@
 package com.CZ2002.project_displays;
 import com.CZ2002.project_boundaries.*;
+<<<<<<< HEAD
 import com.CZ2002.project_commands.*;
+=======
+import com.CZ2002.project_commands.order.*;
+>>>>>>> 9c8f5dc3fa2ff04a0c1403d3cac46f0d498e0049
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.*;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_utils.MenuBuilder;
 
+import java.text.ParseException;
 import java.util.Scanner;
 
 /**
@@ -59,7 +64,11 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     createOrderCommand.execute();
+<<<<<<< HEAD
                 } catch ( InvalidStaffException e) {
+=======
+                } catch (InvalidStaffException | ParseException e) {
+>>>>>>> 9c8f5dc3fa2ff04a0c1403d3cac46f0d498e0049
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -84,7 +93,11 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     addItemOrder.execute();
+<<<<<<< HEAD
                 } catch ( InvalidAddItemOrderException e) {
+=======
+                } catch (InvalidAddItemOrderException | ParseException e) {
+>>>>>>> 9c8f5dc3fa2ff04a0c1403d3cac46f0d498e0049
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -109,7 +122,11 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     removeItemOrder.execute();
+<<<<<<< HEAD
                 } catch ( InvalidRemoveItemOrderException e) {
+=======
+                } catch (InvalidRemoveItemOrderException | ParseException e) {
+>>>>>>> 9c8f5dc3fa2ff04a0c1403d3cac46f0d498e0049
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -127,7 +144,11 @@ public class OrderConsole extends ConsoleDisplay{
                 );
                 try {
                     printOrder.execute();
+<<<<<<< HEAD
                 } catch ( InvalidPrintOrderException e) {
+=======
+                } catch (InvalidPrintOrderException | ParseException e) {
+>>>>>>> 9c8f5dc3fa2ff04a0c1403d3cac46f0d498e0049
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -147,7 +168,11 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     deleteOrder.execute();
+<<<<<<< HEAD
                 } catch ( InvalidDeleteOrderException e) {
+=======
+                } catch (InvalidDeleteOrderException | ParseException e) {
+>>>>>>> 9c8f5dc3fa2ff04a0c1403d3cac46f0d498e0049
                     System.out.println(e.getMessage());
                 }
                 break;

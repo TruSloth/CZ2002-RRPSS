@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.order;
 
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_boundaries.StaffManager;
@@ -12,7 +12,11 @@ import java.util.NoSuchElementException;
  * This class implements {@link ICommand} to complete the 'Create a new Order' action.
  */
 public class CreateOrderCommand implements ICommand<Void , InvalidStaffException>  {
+<<<<<<< HEAD:src/com/CZ2002/project_commands/CreateOrderCommand.java
     private final StaffManager staffManager;
+=======
+    private StaffManager staffManager;
+>>>>>>> 9c8f5dc3fa2ff04a0c1403d3cac46f0d498e0049:src/com/CZ2002/project_commands/order/CreateOrderCommand.java
     private OrderManager orderManager;
     private int tableNumber;
     private int pax;
@@ -30,9 +34,13 @@ public class CreateOrderCommand implements ICommand<Void , InvalidStaffException
                                OrderManager orderManager , int tableNumber
             , int pax , int serverId){
         this.orderManager = orderManager;
+        this.staffManager = staffManager;
         this.tableNumber = tableNumber;
         this.pax = pax;
+<<<<<<< HEAD:src/com/CZ2002/project_commands/CreateOrderCommand.java
         this.staffManager = staffManager;
+=======
+>>>>>>> 9c8f5dc3fa2ff04a0c1403d3cac46f0d498e0049:src/com/CZ2002/project_commands/order/CreateOrderCommand.java
         this.serverId = serverId;
     }
 

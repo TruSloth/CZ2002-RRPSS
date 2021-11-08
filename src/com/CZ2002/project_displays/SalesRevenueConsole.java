@@ -1,70 +1,79 @@
 package com.CZ2002.project_displays;
+import com.CZ2002.project_boundaries.RestaurantManager;
 import com.CZ2002.project_boundaries.SalesRevenueManager;
-import java.util.Scanner;
+import com.CZ2002.project_commands.revenue.reservations.PrintRevenueByDay;
+import com.CZ2002.project_commands.revenue.reservations.PrintRevenueByMonth;
+import com.CZ2002.project_enums.MenuView;
+import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.project_interfaces.ICommand;
+import com.CZ2002.project_interfaces.IDateFormatter;
+import com.CZ2002.project_utils.MenuBuilder;
 import java.util.Date;
-import java.text.SimpleDateFormat;
+import java.util.Scanner;
 import java.text.ParseException;
-
 
 /**
  * A boundary class that takes in inputs from the user
  */
-public class SalesRevenueConsole {
+public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatter {
+    public SalesRevenueConsole(RestaurantManager restaurantManager, Scanner sc){
+        super.mainManager = restaurantManager;
+        super.sc = sc;
+    }
 
-    private SalesRevenueManager s;
     /**
      * SalesRevenueConsole to print out the display console
      * Only takes in inputs and produces outputs
      * Does not process any logics
-     * @throws ParseException if parsing fails
      */
-    public void SalesRevenueConsole() throws ParseException{
-        int choice;
-        Scanner sc = new Scanner(System.in);
 
-        Date d;
-        Date startDate;
-        Date endDate;
-        do{
-            System.out.println("Welcome to Sales Revenue Manager!");
-            System.out.println("Enter the number of your choice!");
-            System.out.println("(1) Print Sales Revenue by Day");
-            System.out.println("(2) Print Sales Revenue by Month");
-            System.out.println("(3) Quit Manager");
-            choice = sc.nextInt();
+    @Override
+    public MenuView handleConsoleOptions() throws ParseException {
+        int choice = sc.nextInt();
+        MenuView view = MenuView.SALES_REVENUE;
 
-            switch(choice)
-            {
-                case 1:
-                    System.out.println("Please enter a date");
-                    String date = sc.next();
-                    d = StringToDate(date);
-                    s.printByDay(d);
-                    break;
-                case 2:
-                    System.out.println("Please enter the start date");
-                    String sDate = sc.next();
-                    startDate = StringToDate(sDate);
-                    System.out.println("Please enter the end date");
-                    String eDate = sc.next();
-                    endDate = StringToDate(eDate);
-                    s.printByMonth(startDate, endDate);
-                    break;
-                case 3:
-                    break;
-            }
-        }while(choice<3);
+        switch(choice){
+            case 1:
+                // Print by Day
+                sc.nextLine();
+                Date queryD = format(sc, "Query Day");
+                ICommand<Void, InvalidSalesRevenueQueryException> printRevenueByDayCommand = new PrintRevenueByDay(mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class), queryD);
+                try {
+                    printRevenueByDayCommand.execute();
+                } catch(InvalidSalesRevenueQueryException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case 2:
+                // Print by Month
+                sc.nextLine();
+                Date startDate = format(sc, "Start Day");
+                Date endDate = format(sc, "End Day");
+                ICommand<Void, InvalidSalesRevenueQueryException> printRevenueByMonthCommand = new PrintRevenueByMonth(mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class), startDate, endDate);
+                try {
+                    printRevenueByMonthCommand.execute();
+                } catch(InvalidSalesRevenueQueryException e){
+                    System.out.println(e.getMessage());
+                }
+                break;
+            case 3:
+                // Back
+                view = MenuView.PREVIOUS_MENU;
+                break;
+        }
+        return view;
     }
 
-    /**
-     * To convert a string input into Date
-     * @param date String input of the date
-     * @return Date value of the input
-     * @throws ParseException if parsing fails
-     */
-    public static Date StringToDate(String date) throws ParseException{
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-mm-yy");
-        Date date1 = formatter.parse(date);
-        return date1;
+    @Override
+    public int displayConsoleOptions() {
+        String[] options = new String[] {
+                "Print Sales Revenue by Day",
+                "Print Sales Revenue by Month",
+        };
+        String title = "Restaurant Reservation & Point of Sale System";
+
+        System.out.println(MenuBuilder.buildMenu(title, options));
+
+        return options.length;
     }
 }
