@@ -19,6 +19,20 @@ public class RestaurantManager implements IMainManager {
      */
     public RestaurantManager(Restaurant restaurant) {
         this.restaurant = restaurant;
+        
+        subManagers.putIfAbsent("menuManager", new MenuManager());
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Battered Fish & Chips", "Battered fish fillets lightly seasoned, fried to a crisp golden brown and served with creamy tartar sauce.", 12.5, Type.MAIN);     
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Battered Fish & Chips", "Battered fish fillets lightly seasoned, fried to a crisp golden brown and served with creamy tartar sauce.", 12.5, Type.MAIN);
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("BBQ Chicken", "Super tender juicy grilled chicken generously brushed with our in-house guava BBQ sauce.", 12.50, Type.MAIN);
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Grilled Fish Sambal", "Tender fish fillet seasoned with spices for a mildly fiery kick, grilled to perfection.", 13.50, Type.MAIN);
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Lamb Chops", "Cuts of grilled lamb marinated with our homemade herbs and spices.", 14.00, Type.MAIN);
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Ribeye Steak", "Grilled ribeye steak with choice of pineapple BBQ, sambal or black pepper sauce.", 18.00,Type.MAIN);
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Cookie Summit", "Mountain of Cookies 'N' Cream and Butterscotch ice cream, covered by cold fudge and chocolate chips.", 3.00, Type.DESSERT);
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Double Berry", "Strawberry ice cream with layers of blueberry topping.", 3.00, Type.DESSERT);
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Mango Peach Tropics", "Mango and peach flavoured sparkling drink.", 3.00, Type.DRINK);
+        getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Sparkling Pink Lemonade", "Lemon and strawberry flavoured sparkling drink.", 3.00, Type.DRINK);
+     
+
 
         subManagers.putIfAbsent("reservationManager", new ReservationManager());
 
