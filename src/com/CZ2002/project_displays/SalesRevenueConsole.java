@@ -1,8 +1,8 @@
 package com.CZ2002.project_displays;
 import com.CZ2002.project_boundaries.RestaurantManager;
 import com.CZ2002.project_boundaries.SalesRevenueManager;
-import com.CZ2002.project_commands.PrintRevenueByDay;
-import com.CZ2002.project_commands.PrintRevenueByMonth;
+import com.CZ2002.project_commands.revenue.reservations.PrintRevenueByDay;
+import com.CZ2002.project_commands.revenue.reservations.PrintRevenueByMonth;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_interfaces.ICommand;

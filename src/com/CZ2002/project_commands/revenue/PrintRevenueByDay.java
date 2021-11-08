@@ -1,11 +1,10 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.revenue.reservations;
 
 import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_interfaces.IDateFormatter;
 
 import java.text.ParseException;
-import java.util.Date;
 import java.util.Date;
 import java.util.NoSuchElementException;
 

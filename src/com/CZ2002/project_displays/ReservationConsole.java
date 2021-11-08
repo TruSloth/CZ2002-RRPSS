@@ -7,13 +7,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-import com.CZ2002.project_commands.AddReservationCommand;
-import com.CZ2002.project_commands.FindReservationCommand;
-import com.CZ2002.project_commands.RemoveReservationCommand;
-import com.CZ2002.project_commands.UpdateReservationCommand;
+import com.CZ2002.project_commands.revenue.reservations.AddReservationCommand;
+import com.CZ2002.project_commands.revenue.reservations.FindReservationCommand;
+import com.CZ2002.project_commands.revenue.reservations.RemoveReservationCommand;
+import com.CZ2002.project_commands.revenue.reservations.UpdateReservationCommand;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
-import com.CZ2002.project_displays.ConsoleDisplay;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_boundaries.ReservationManager;
 import com.CZ2002.project_boundaries.RestaurantManager;

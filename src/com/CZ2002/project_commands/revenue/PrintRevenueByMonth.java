@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.revenue.reservations;
 
 import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_interfaces.ICommand;

@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.revenue.reservations;
 
 import java.util.GregorianCalendar;
 import java.util.Scanner;

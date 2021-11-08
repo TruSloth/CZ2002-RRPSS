@@ -4,7 +4,7 @@ package com.CZ2002.project_entities;
  * An Entity class representing a MenuItem
  */
 
-public class MenuItem extends RestaurantEntity{
+public class MenuItem extends RestaurantEntity {
     private String name;
     private String description;
     private double price;

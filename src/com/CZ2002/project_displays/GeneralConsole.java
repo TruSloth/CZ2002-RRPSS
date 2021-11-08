@@ -32,10 +32,9 @@ public class GeneralConsole extends ConsoleDisplay {
 
         super.sc = sc;
         reservationConsole = new ReservationConsole(restaurantManager, sc);
-        menuConsole = new MenuConsole();
-        orderConsole = new OrderConsole();
+        menuConsole = new MenuConsole(restaurantManager, sc);
+        orderConsole = new OrderConsole(restaurantManager, sc);
         salesRevenueConsole = new SalesRevenueConsole(restaurantManager, sc);
-
     }
 
 
@@ -54,12 +53,18 @@ public class GeneralConsole extends ConsoleDisplay {
             case 1:
                 // Menu Items
                 view = MenuView.MENU_ITEMS;
-                menuConsole.menuConsole();
+                do {
+                    menuConsole.displayConsoleOptions();
+                    view = menuConsole.handleConsoleOptions();
+                } while (view != MenuView.PREVIOUS_MENU);
                 break;
             case 2:
                 // Orders
                 view = MenuView.ORDERS;
-                orderConsole.orderConsole();
+                do {
+                    orderConsole.displayConsoleOptions();
+                    view = orderConsole.handleConsoleOptions();
+                } while (view != MenuView.PREVIOUS_MENU);
                 break;
             case 3:
                 // Reservations
