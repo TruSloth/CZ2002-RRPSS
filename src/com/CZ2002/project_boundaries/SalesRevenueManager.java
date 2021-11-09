@@ -15,8 +15,6 @@ import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
  * A Control class to execute the logics of SalesRevenue - Print and Calculate
  */
 public class SalesRevenueManager extends Manager<SalesRevenue>{
-    // Attributes
-
     // Constructor
     public SalesRevenueManager(){
         int numDays = Year.of(2021).length();
@@ -69,10 +67,10 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
                 Order tempOrder = tempOrderList.get(i);
                 for (int j=0; j<tempOrder.ordered.size(); j++){
                     if(tempOrder.ordered.get(j) instanceof PackageItem){
-                        System.out.println(tempOrderList.get(i).ordered.get(j) + " (Package)");
+                        System.out.println(tempOrderList.get(i).ordered.get(j).getName() + " (Package)");
                     }
                     else {
-                        System.out.println(tempOrderList.get(i).ordered.get(j) + " (Ala Carte)");
+                        System.out.println(tempOrderList.get(i).ordered.get(j).getName() + " (Ala Carte)");
                     }
                 }
             }
@@ -119,4 +117,3 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
         return calendar.getTime();
     }
 }
-

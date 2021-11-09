@@ -3,12 +3,15 @@ import com.CZ2002.project_boundaries.*;
 import com.CZ2002.project_commands.order.*;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.*;
+import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
+import com.CZ2002.project_exceptions.order.InvalidDeleteOrderException;
+import com.CZ2002.project_exceptions.order.InvalidPrintOrderException;
+import com.CZ2002.project_exceptions.order.InvalidSetMembership;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_utils.MenuBuilder;
 
 import java.text.ParseException;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * A boundary class that takes in inputs from user
@@ -79,7 +82,6 @@ public class OrderConsole extends ConsoleDisplay{
                 sc.nextLine(); // throw away \n in buffer
                 System.out.printf("What item to add to order: ");
                 addItem = sc.nextLine();
-                System.out.println("Adding Item to Order for Table " + tableAdd);
 
                 ICommand<Void, InvalidAddItemOrderException> addItemOrder = new AddItemOrderCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
@@ -104,7 +106,6 @@ public class OrderConsole extends ConsoleDisplay{
 
                 System.out.printf("Which item to remove from order: ");
                 removeItem = sc.nextLine();
-                System.out.println("Removing Item from Order for Table " + tableRemove);
 
                 ICommand<Void , InvalidRemoveItemOrderException> removeItemOrder = new RemoveItemOrderCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
@@ -123,7 +124,7 @@ public class OrderConsole extends ConsoleDisplay{
                 // Print Order for Table xx
                 sc.nextLine();
                 int tablePrint;
-                System.out.print("Print order for which table: ");
+                System.out.print("Print Order for Which Table: ");
                 tablePrint = sc.nextInt();
 
                 ICommand<Void , InvalidPrintOrderException> printOrder = new PrintOrderCommand(
@@ -141,7 +142,7 @@ public class OrderConsole extends ConsoleDisplay{
                 // Delete Order
                 sc.nextLine();
                 int tableClose;
-                System.out.print("Close order for which table: ");
+                System.out.print("Close Order for Which Table: ");
                 tableClose = sc.nextInt();
 
                 ICommand<Void , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
@@ -159,10 +160,12 @@ public class OrderConsole extends ConsoleDisplay{
                 break;
             case 6:
                 int membership;
-                System.out.println("Enter 1 for have membership, 0 for no membership ");
+                System.out.println("1: Membership\n0: No Membership\nEnter Choice: ");
+                sc.nextLine();
                 membership= sc.nextInt();
 
                 int tableSetMembership;
+                System.out.println("Set Membership for which table");
                 tableSetMembership = sc.nextInt();
                 ICommand<Void , InvalidSetMembership>  setMembership = new SetMembershipOrderCommand(
                         mainManager.getSubManager("orderManager", OrderManager.class) ,

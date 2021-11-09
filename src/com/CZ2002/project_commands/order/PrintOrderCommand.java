@@ -1,7 +1,7 @@
 package com.CZ2002.project_commands.order;
 
 import com.CZ2002.project_boundaries.OrderManager;
-import com.CZ2002.project_exceptions.InvalidPrintOrderException;
+import com.CZ2002.project_exceptions.order.InvalidPrintOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
 import java.util.NoSuchElementException;
@@ -33,7 +33,6 @@ public class PrintOrderCommand implements ICommand<Void , InvalidPrintOrderExcep
         } catch (NoSuchElementException e) {
             throw new InvalidPrintOrderException("Invalid table");
         }
-
         return null;
     }
 }
