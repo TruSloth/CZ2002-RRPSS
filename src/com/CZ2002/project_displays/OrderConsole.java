@@ -8,6 +8,7 @@ import com.CZ2002.project_utils.MenuBuilder;
 
 import java.text.ParseException;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  * A boundary class that takes in inputs from user
@@ -26,6 +27,7 @@ public class OrderConsole extends ConsoleDisplay{
                 "Remove Item from order",
                 "Print Order",
                 "Close Order",
+                "Set Membership",
                 "Back"
         };
         String title = "Order";
@@ -156,6 +158,24 @@ public class OrderConsole extends ConsoleDisplay{
                 }
                 break;
             case 6:
+                int membership;
+                System.out.println("Enter 1 for have membership, 0 for no membership ");
+                membership= sc.nextInt();
+
+                int tableSetMembership;
+                tableSetMembership = sc.nextInt();
+                ICommand<Void , InvalidSetMembership>  setMembership = new SetMembershipOrderCommand(
+                        mainManager.getSubManager("orderManager", OrderManager.class) ,
+                         membership , tableSetMembership
+                );
+                try {
+                    setMembership.execute();
+                } catch (InvalidSetMembership | ParseException e) {
+                    System.out.println(e.getMessage());
+                }
+                break;
+
+            case 7:
                 view = MenuView.PREVIOUS_MENU;
                 break;
             default:
