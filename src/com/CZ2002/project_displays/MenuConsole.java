@@ -100,12 +100,11 @@ public class MenuConsole extends ConsoleDisplay{
         ArrayList<AlaCarteItem> componentList = new ArrayList<>();
 
         //Scanner sc = new Scanner(System.in);
-        displayConsoleOptions();
-        System.out.println("Enter choice: ");
-        choice = sc.nextInt();
-        dummy= sc.nextLine();
+        do {
+            System.out.println("Enter choice: ");
+            choice = sc.nextInt();
+            dummy= sc.nextLine();
 
-        while (choice != 8) {
             if (choice == 1) {	// add an ala carte item
 
                 //input for the required params
@@ -308,12 +307,7 @@ public class MenuConsole extends ConsoleDisplay{
             } else {
                 System.out.println("Enter valid choice!");
             }
-
-            displayConsoleOptions();
-            System.out.println("Enter choice: ");
-            choice = sc.nextInt();
-            dummy= sc.nextLine();
-        }
+        }  while (choice != 8);
 
         view = MenuView.PREVIOUS_MENU;
         return view;
