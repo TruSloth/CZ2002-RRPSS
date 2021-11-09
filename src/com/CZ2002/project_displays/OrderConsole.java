@@ -157,6 +157,7 @@ public class OrderConsole extends ConsoleDisplay{
                 break;
             case 6:
                 view = MenuView.PREVIOUS_MENU;
+                break;
             default:
                 System.out.println("Invalid operation! Please enter again");
         }
