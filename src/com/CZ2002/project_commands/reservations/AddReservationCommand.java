@@ -54,7 +54,9 @@ public class AddReservationCommand implements ICommand<Void, InvalidReservationE
             }
 
             int bookedTableNo = tableManager.getAvailableTable(unavailableTableNos, pax);
-            reservationManager.createNewReservation(reservationPeriod, pax, name, contact, bookedTableNo);
+            reservationManager.createNewReservation(reservationPeriod, pax, name, contact, bookedTableNo); 
+        } catch (IllegalArgumentException e) {
+            throw new InvalidReservationException(e.getMessage());
         } catch (NullPointerException e) {
             throw new InvalidReservationException("There are no suitable tables available at this time");
         }
