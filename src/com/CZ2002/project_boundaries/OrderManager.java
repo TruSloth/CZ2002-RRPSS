@@ -85,6 +85,41 @@ public class OrderManager extends Manager<Order>{
         }
     }
 
-  
+    /** 
+     * Returns the {@link Order} instance found at index position {@code index} in {@code entities}. 
+     *  
+     * @param index the index of the {@code Order} instance in {@code entities} 
+     * @return the {@code Order} instance desired 
+     */ 
+    public Order getOrderByIndex(int index) { 
+        return entities.get(index); 
+    } 
+ 
+    /** 
+     * Returns the number of active {@link Order} instances found in {@code entities}. 
+     *  
+     * @return the number of active {@code Order} instances 
+     */ 
+    public int getNumOfOrders() { 
+        return entities.size(); 
+    }
+    /**
+     * Setting membership status
+     * @param tableNumber An integer representing the table number which the Order belongs to
+     * @param tableSetMembership An integer value denoting membership(1) or not (0)
+     */
+    
+    public void setMembership ( int tableNumber , int tableSetMembership){
+        for ( int i  = 0 ; i < entities.size() ; i++ ){
+            if ( entities.get(i).getTable() == tableNumber ){
+                if ( tableSetMembership == 1 ){
+                    entities.get(i).setMembership( true );
+                }
+                else if ( tableSetMembership == 0 ){
+                    entities.get(i).setMembership( false );
+                }
+                break;
+            }
+        }
     }
 }
