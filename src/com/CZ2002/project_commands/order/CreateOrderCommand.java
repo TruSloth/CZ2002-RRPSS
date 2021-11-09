@@ -1,12 +1,12 @@
 package com.CZ2002.project_commands.order;
 
+import java.util.NoSuchElementException;
+
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_boundaries.StaffManager;
 import com.CZ2002.project_entities.Staff;
 import com.CZ2002.project_exceptions.InvalidStaffException;
 import com.CZ2002.project_interfaces.ICommand;
-
-import java.util.NoSuchElementException;
 
 /**
  * This class implements {@link ICommand} to complete the 'Create a new Order' action.

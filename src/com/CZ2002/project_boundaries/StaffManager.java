@@ -5,9 +5,9 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
-import com.CZ2002.project_exceptions.InvalidStaffException;
 import com.CZ2002.project_entities.Staff;
 import com.CZ2002.project_enums.Gender;
+import com.CZ2002.project_exceptions.InvalidStaffException;
 
 /**
  * The {@link Manager} class that maintains the state of and handles all

@@ -1,7 +1,5 @@
 package com.CZ2002.project_entities;
 import com.CZ2002.project_utils.MenuBuilder;
-import com.CZ2002.project_entities.MenuItem;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
