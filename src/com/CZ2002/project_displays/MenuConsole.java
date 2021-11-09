@@ -4,6 +4,7 @@ import com.CZ2002.project_boundaries.RestaurantManager;
 import com.CZ2002.project_commands.menu.*;
 import com.CZ2002.project_entities.AlaCarteItem;
 import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_entities.PackageItem;
 import com.CZ2002.project_utils.MenuBuilder;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_enums.Type;
@@ -77,10 +78,26 @@ public class MenuConsole extends ConsoleDisplay{
 
     public int displayMenu(ArrayList<MenuItem> menu) {
         for (MenuItem item : menu) {
-            String title = item.getName();
-            String[] optionHeaders = {"Price", "Description"};
-            String[] options = {String.format("%.2f", item.getPrice()), item.getDescription()};
-            System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, 40));
+        	if (item instanceof AlaCarteItem ) {
+        		String title = item.getName();
+                String[] optionHeaders = {"Price", "Description"};
+                String[] options = {String.format("%.2f", item.getPrice()), item.getDescription()};
+                System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, 40));
+        	} else {
+        		PackageItem dummyPack = (PackageItem)item;
+        		String[] optionHeaders = {"Price", "Description","Includes"};
+        		String title = item.getName();
+        		String components ="";
+        		for (AlaCarteItem component: dummyPack.getList()) {
+        			components+= component.getName() + ", ";
+        		}
+                String[] options = {String.format("%.2f", item.getPrice()), item.getDescription(),components};
+                System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, 40));
+        	}
+            
+            
+           
+            
         }
 
         return menu.size();
@@ -98,16 +115,14 @@ public class MenuConsole extends ConsoleDisplay{
         double price;
         Type type;
         ArrayList<AlaCarteItem> componentList = new ArrayList<>();
-
-        //Scanner sc = new Scanner(System.in);
-        do {
-            System.out.println("Enter choice: ");
-            choice = sc.nextInt();
-            dummy= sc.nextLine();
-
-            if (choice == 1) {	// add an ala carte item
-
-                //input for the required params
+        
+        System.out.println("Enter choice: ");
+        choice = sc.nextInt();
+        dummy= sc.nextLine();
+        
+        switch (choice) {
+        	case 1: 
+        		//input for the required params
                 System.out.println("Enter ala carte item's name:");
                 name = sc.nextLine();
 
@@ -135,11 +150,10 @@ public class MenuConsole extends ConsoleDisplay{
 
                 //item successfully added
                 System.out.println("Ala carte item added!");
-
-
-            } else if (choice == 2) {	//add a package item
-
-                //input for the required params
+                view = MenuView.MENU_ITEMS;
+                break;
+        	case 2:
+        		 //input for the required params
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
 
@@ -177,12 +191,12 @@ public class MenuConsole extends ConsoleDisplay{
                 //item successfully added
                 System.out.println("Package added!");
                 System.out.println();
-
-
-
-            } else if (choice ==3) {	//update an item
-
-                //input for the required params
+         
+                
+                view = MenuView.MENU_ITEMS;
+                break;
+        	case 3:
+        		 //input for the required params
                 System.out.println("Enter item to be changed:");
                 name = sc.nextLine();
                 while (true) {
@@ -213,11 +227,11 @@ public class MenuConsole extends ConsoleDisplay{
                 //item successfully updated
                 System.out.println(name + " was changed!");
                 System.out.println();
-
-
-            } else if (choice ==4) {	//remove an item (does not remove components from package)
-
-                //input for the required params
+        		
+                view = MenuView.MENU_ITEMS;
+                break;
+        	case 4:
+        		//input for the required params
                 System.out.println("Enter item to be removed:");
                 name = sc.nextLine();
                 while (true) {
@@ -234,11 +248,11 @@ public class MenuConsole extends ConsoleDisplay{
                 //item successfully removed
                 System.out.println(name + " was removed!");
                 System.out.println();
-
-
-            } else if (choice == 5) {	//add ala carte to package
-
-                //input for the required params
+                
+                view = MenuView.MENU_ITEMS;
+                break;
+        	case 5:
+        		//input for the required params
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
                 while (true) {
@@ -266,11 +280,11 @@ public class MenuConsole extends ConsoleDisplay{
                 //item successfully added to package
                 System.out.println( subName + " was added to " + name);
                 System.out.println();
-
-
-            } else if (choice == 6) {	//remove ala carte from item
-
-                //input for the required params
+                
+                view = MenuView.MENU_ITEMS;
+                break;
+        	case 6:
+        		 //input for the required params
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
                 while (true) {
@@ -298,18 +312,26 @@ public class MenuConsole extends ConsoleDisplay{
                 //item successfully added to package
                 System.out.println( subName + " was removed from " + name);
                 System.out.println();
-
-            } else if (choice == 7) {
-                getMenuCommand = new GetMenuCommand(mainManager.getSubManager("menuManager", MenuManager.class));
+                
+                view = MenuView.MENU_ITEMS;
+                break;
+        	case 7:
+        		getMenuCommand = new GetMenuCommand(mainManager.getSubManager("menuManager", MenuManager.class));
                 ArrayList<MenuItem> menu = getMenuCommand.execute();
                 displayMenu(menu);
                 //mainManager.getSubManager("menuManager", MenuManager.class).printMenu();
-            } else {
-                System.out.println("Enter valid choice!");
-            }
-        }  while (choice != 8);
+                view = MenuView.MENU_ITEMS;
+                break;
+        	case 8: 
+        		// Back
+                view = MenuView.PREVIOUS_MENU;
+                break;
+        		
+        }
+        
 
-        view = MenuView.PREVIOUS_MENU;
+        //Scanner sc = new Scanner(System.in);
+
         return view;
 
     }
