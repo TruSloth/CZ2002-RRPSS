@@ -65,7 +65,7 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
 
         if (tempOrderList != null) {
             for (int i=0; i<tempOrderList.size(); i++){
-                System.out.printf("Order %d\n", ++count);
+                System.out.printf("Order %d\n", count++);
                 Order tempOrder = tempOrderList.get(i);
                 for (int j=0; j<tempOrder.ordered.size(); j++){
                     if(tempOrder.ordered.get(j) instanceof PackageItem){

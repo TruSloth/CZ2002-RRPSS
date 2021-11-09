@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * OrderManager will only keep track of active orders
  */
 public class OrderManager extends Manager<Order>{
-    public OrderManager(){
+    public OrderManager() {
         entities = new ArrayList<Order>();
     }
     
@@ -83,5 +83,24 @@ public class OrderManager extends Manager<Order>{
                 break;
             }
         }
+    }
+
+    /**
+     * Returns the {@link Order} instance found at index position {@code index} in {@code entities}.
+     * 
+     * @param index the index of the {@code Order} instance in {@code entities}
+     * @return the {@code Order} instance desired
+     */
+    public Order getOrderByIndex(int index) {
+        return entities.get(index);
+    }
+
+    /**
+     * Returns the number of active {@link Order} instances found in {@code entities}.
+     * 
+     * @return the number of active {@code Order} instances
+     */
+    public int getNumOfOrders() {
+        return entities.size();
     }
 }

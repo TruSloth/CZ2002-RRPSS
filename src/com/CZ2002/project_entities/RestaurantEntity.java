@@ -1,5 +1,7 @@
 package com.CZ2002.project_entities;
 
-public class RestaurantEntity {
+import java.io.Serializable;
+
+public class RestaurantEntity implements Serializable {
 
 }
