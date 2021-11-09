@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * OrderManager will only keep track of active orders
  */
 public class OrderManager extends Manager<Order>{
-    public OrderManager(){
+    public OrderManager() {
         entities = new ArrayList<Order>();
     }
     
@@ -85,22 +85,6 @@ public class OrderManager extends Manager<Order>{
         }
     }
 
-    /**
-     * Setting membership status
-     * @param tableNumber An integer representing the table number which the Order belongs to
-     * @param tableSetMembership An integer value denoting membership(1) or not (0)
-     */
-    public void setMembership ( int tableNumber , int tableSetMembership){
-        for ( int i  = 0 ; i < entities.size() ; i++ ){
-            if ( entities.get(i).getTable() == tableNumber ){
-                if ( tableSetMembership == 1 ){
-                    entities.get(i).setMembership( true );
-                }
-                else if ( tableSetMembership == 0 ){
-                    entities.get(i).setMembership( false );
-                }
-                break;
-            }
-        }
+  
     }
 }

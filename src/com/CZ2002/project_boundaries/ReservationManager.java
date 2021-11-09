@@ -274,6 +274,13 @@ public class ReservationManager extends Manager<Reservation> {
         return true;
     }
 
+    public void startAllReservationFutures() {
+        // Called on start up when loading from data storage to restart all ReservationFutures.
+        for (Reservation reservation : entities) {
+            setReservationExpiry(reservation);
+        }
+    }
+
     /**
      * Cancels the existing {@link java.util.concurrent.ScheduledFuture} instances found in the {@code expiry}
      * field of all {@link Reservation} instances stored in {@code entities}.

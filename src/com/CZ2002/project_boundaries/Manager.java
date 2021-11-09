@@ -1,5 +1,6 @@
 package com.CZ2002.project_boundaries;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.CZ2002.project_entities.RestaurantEntity;
@@ -16,12 +17,12 @@ import com.CZ2002.project_entities.RestaurantEntity;
  * The {@code Manager} class is designed to maintain the state of all instances of a particular {@code RestaurantEntity}
  * in the Restaurant and implement all logic surrounding that {@code RestaurantEntity} as required.
  */
-public abstract class Manager<T extends RestaurantEntity> {
+public abstract class Manager<T extends RestaurantEntity> implements Serializable {
     /**
      * The {@link List} of all {@link RestaurantEntity} of type {@code T} found in the Restaurant.
      * <p>
      * Within the context of the Restaurant, {@code entities} should be the only access point for all {@code RestaurantEntity}
      * of type T.
      */
-    public List<T> entities; //TODO: PROTECTED->PUBLIC
+    protected List<T> entities; 
 }

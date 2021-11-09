@@ -23,6 +23,7 @@ public class MenuManager extends Manager<MenuItem>{
     public MenuManager() {
     	entities = new ArrayList<MenuItem>();
     }
+    
     public MenuItem getItem(String name) {
         for (MenuItem item: entities) {
             if (item.getName().equals(name)) {
