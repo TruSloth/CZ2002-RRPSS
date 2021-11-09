@@ -29,14 +29,16 @@ public class OrderManager extends Manager<Order>{
      * @param tableNumber An integer representing the table number which the Order belongs to
      */
     public void printOrder ( int tableNumber ){
+        boolean found = false;
         for ( int i  = 0 ; i < entities.size() ; i++){
             if ( entities.get(i).getTable() == tableNumber ){
-                System.out.println("Table number: " + tableNumber);
                 entities.get(i).printOrdered();
-                System.out.print("Total Bill:");
-                System.out.println(entities.get(i).getBill());
+                found = true;
                 break;
             }
+        }
+        if (!found) {
+            System.out.println("Table Does Not Exist");
         }
     }
 
@@ -49,7 +51,11 @@ public class OrderManager extends Manager<Order>{
     {
         for ( int i  = 0 ; i < entities.size() ; i++) {
             if (entities.get(i).getTable() == tableNumber) {
-                entities.get(i).addItem(menuItem);
+                if (menuItem != null) {
+                    entities.get(i).addItem(menuItem);
+                } else {
+                    System.out.println("No Such Item");
+                }
                 break;
             }
         }
@@ -64,7 +70,11 @@ public class OrderManager extends Manager<Order>{
     {
         for ( int i  = 0 ; i < entities.size() ; i++) {
             if (entities.get(i).getTable() == tableNumber) {
-                entities.get(i).removeItem(menuItem);
+                if (menuItem != null) {
+                    entities.get(i).removeItem(menuItem);
+                } else {
+                    System.out.println("No Such Item");
+                }
                 break;
             }
         }
@@ -75,13 +85,18 @@ public class OrderManager extends Manager<Order>{
      * @param tableNumber An integer representing the table number which the Order belongs to
      */
     public void deleteOrder ( int tableNumber ){
+        boolean found = false;
+
         for ( int i  = 0 ; i < entities.size() ; i++ ){
             if ( entities.get(i).getTable() == tableNumber ){
-                System.out.println("Bill for Table " + tableNumber);
                 printOrder(tableNumber);
                 entities.remove(i);
+                found = true;
                 break;
             }
+        }
+        if (!found) {
+            System.out.println("Table Does Not Exists");
         }
     }
 
@@ -108,18 +123,23 @@ public class OrderManager extends Manager<Order>{
      * @param tableNumber An integer representing the table number which the Order belongs to
      * @param tableSetMembership An integer value denoting membership(1) or not (0)
      */
-    
-    public void setMembership ( int tableNumber , int tableSetMembership){
+
+    public void setMembership (int tableNumber, int tableSetMembership){
+        boolean found = false;
         for ( int i  = 0 ; i < entities.size() ; i++ ){
             if ( entities.get(i).getTable() == tableNumber ){
-                if ( tableSetMembership == 1 ){
-                    entities.get(i).setMembership( true );
+                found = true;
+                if (tableSetMembership == 1){
+                    entities.get(i).setMembership(true);
                 }
-                else if ( tableSetMembership == 0 ){
-                    entities.get(i).setMembership( false );
+                else if (tableSetMembership == 0){
+                    entities.get(i).setMembership(false);
                 }
                 break;
             }
+        }
+        if (!found) {
+            System.out.println("Table Does Not Exists");
         }
     }
 }

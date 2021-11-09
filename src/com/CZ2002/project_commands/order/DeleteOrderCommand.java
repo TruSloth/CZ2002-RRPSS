@@ -3,7 +3,7 @@ package com.CZ2002.project_commands.order;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_boundaries.TableManager;
-import com.CZ2002.project_exceptions.InvalidDeleteOrderException;
+import com.CZ2002.project_exceptions.order.InvalidDeleteOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
 import java.util.NoSuchElementException;
@@ -25,9 +25,9 @@ public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderExc
      */
     public DeleteOrderCommand(OrderManager orderManager, TableManager tableManager, SalesRevenueManager salesRevenueManager, int tableClose){
         this.orderManager = orderManager;
+        this.tableManager = tableManager;
         this.salesRevenueManager = salesRevenueManager;
         this.tableClose = tableClose;
-        this.tableManager = tableManager;
     }
 
     /**

@@ -40,15 +40,10 @@ public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemO
     public Void execute() throws InvalidRemoveItemOrderException{
         try {
             this.menuItem = menuManager.getItem(item);
-        } catch (NoSuchElementException e){
-            throw new InvalidRemoveItemOrderException("invalid item");
-        }
-        try {
             orderManager.removeItemOrder( menuItem , tableRemove );
-        } catch (NoSuchElementException e) {
-            throw new InvalidRemoveItemOrderException("Invalid table");
+        } catch (NoSuchElementException e){
+            throw new InvalidRemoveItemOrderException("Invalid Item");
         }
-
         return null;
     }
 }
