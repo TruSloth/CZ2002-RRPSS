@@ -75,15 +75,21 @@ public class MenuConsole extends ConsoleDisplay{
 
         return options.length;
     }
-    /**
-     * function to print out menu
-     */
+
     public int displayMenu(ArrayList<MenuItem> menu) {
         for (MenuItem item : menu) {
         	if (item instanceof AlaCarteItem ) {
         		String title = item.getName();
-                String[] optionHeaders = {"Price", "Description"};
-                String[] options = {String.format("%.2f", item.getPrice()), item.getDescription()};
+                String[] optionHeaders = {"Price", "Description","Category"};
+                String type ="";
+                if (((AlaCarteItem) item).getType()== Type.MAIN) {
+                	type = "Main";
+                } else if (((AlaCarteItem) item).getType()== Type.DESSERT) {
+                	type = "Dessert";
+                } else {
+                	type = "Drink";
+                }
+                String[] options = {String.format("%.2f", item.getPrice()), item.getDescription(),type};
                 System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, 40));
         	} else {
         		PackageItem dummyPack = (PackageItem)item;
@@ -173,7 +179,8 @@ public class MenuConsole extends ConsoleDisplay{
                     System.out.println("Enter ala carte item no " + i +  " name:");
                     subName= sc.nextLine();
                     while (true) {
-                        if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null) {
+                        if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null
+                        	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) instanceof PackageItem ) {
                             System.out.println("Item does not exist! Try again: ");
                             subName= sc.nextLine();
                         } else {
@@ -258,9 +265,10 @@ public class MenuConsole extends ConsoleDisplay{
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
                 while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) == null) {
+                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) == null
+                    	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) instanceof AlaCarteItem) {
                         System.out.println("Item does not exist! Try again: ");
-                        subName= sc.nextLine();
+                        name= sc.nextLine();
                     } else {
                         break;
                     }
@@ -269,7 +277,8 @@ public class MenuConsole extends ConsoleDisplay{
                 System.out.println("Enter name of ala carte to be added:");
                 subName = sc.nextLine();
                 while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null) {
+                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null
+                    	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) instanceof PackageItem) {
                         System.out.println("Item does not exist! Try again: ");
                         subName= sc.nextLine();
                     } else {
@@ -290,9 +299,10 @@ public class MenuConsole extends ConsoleDisplay{
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
                 while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) == null) {
+                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) == null
+                    	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) instanceof AlaCarteItem) {
                         System.out.println("Item does not exist! Try again: ");
-                        subName= sc.nextLine();
+                        name= sc.nextLine();
                     } else {
                         break;
                     }
@@ -301,7 +311,8 @@ public class MenuConsole extends ConsoleDisplay{
                 System.out.println("Enter name of ala carte to be removed:");
                 subName = sc.nextLine();
                 while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null) {
+                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null
+                    	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) instanceof PackageItem) {
                         System.out.println("Item does not exist! Try again: ");
                         subName= sc.nextLine();
                     } else {
