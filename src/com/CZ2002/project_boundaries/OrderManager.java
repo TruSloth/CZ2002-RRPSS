@@ -14,7 +14,6 @@ public class OrderManager extends Manager<Order>{
         entities = new ArrayList<Order>();
     }
     
-    
     /** To Create new active Order object to add into the ArrayList of active orders
      * @param tableNumber The Table Number ( 1 to 20 ) which diners are seated at
      * @param pax Number of diners seated at table

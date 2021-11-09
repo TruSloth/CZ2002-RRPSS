@@ -3,3 +3,5 @@
 **/.idea/*
 **/out/*
 CZ2002 Project.iml
+**/bin/*
+**/data/*
