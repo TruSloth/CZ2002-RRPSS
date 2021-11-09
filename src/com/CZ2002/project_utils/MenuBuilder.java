@@ -114,6 +114,7 @@ public class MenuBuilder {
          *
          * ================================
          * |         Reservations         |
+         * ================================
          * |1. Create Reservation Booking |
          * |2. Check Reservation Booking  |
          * |3. Update Reservation Booking |

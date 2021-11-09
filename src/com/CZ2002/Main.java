@@ -1,14 +1,15 @@
 package com.CZ2002;
 
+
+import java.text.ParseException;
+import java.util.Scanner;
+
 import com.CZ2002.project_boundaries.RestaurantManager;
 import com.CZ2002.project_displays.GeneralConsole;
 import com.CZ2002.project_entities.Restaurant;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_exceptions.InvalidStaffException;
-
-import java.text.ParseException;
-import java.util.Scanner;
 
 public class Main {
     public static  void main(String[] args) throws InvalidStaffException, ParseException, InvalidSalesRevenueQueryException {

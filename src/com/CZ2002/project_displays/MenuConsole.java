@@ -1,13 +1,9 @@
 package com.CZ2002.project_displays;
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.RestaurantManager;
-import com.CZ2002.project_commands.menu.AddAlaCarteCommand;
-import com.CZ2002.project_commands.menu.AddPackageCommand;
-import com.CZ2002.project_commands.menu.RemoveMenuItemCommand;
-import com.CZ2002.project_commands.menu.UpdateMenuItemCommand;
-import com.CZ2002.project_commands.menu.AddToPackageCommand;
-import com.CZ2002.project_commands.menu.RemoveFromPackageCommand;
+import com.CZ2002.project_commands.menu.*;
 import com.CZ2002.project_entities.AlaCarteItem;
+import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_utils.MenuBuilder;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_enums.Type;
@@ -26,6 +22,7 @@ public class MenuConsole extends ConsoleDisplay{
     private RemoveMenuItemCommand removeMenuItemCommand;
     private AddToPackageCommand addToPackageCommand;
     private RemoveFromPackageCommand removeFromPackageCommand;
+    private GetMenuCommand getMenuCommand;
 
     /**
      * function to print out the console
@@ -49,7 +46,7 @@ public class MenuConsole extends ConsoleDisplay{
                 "Add an ala carte item to a package",
                 "Remove an ala carte item from a package",
                 "Print menu",
-                "Exit"
+                "Back"
 
         };
 
@@ -78,14 +75,23 @@ public class MenuConsole extends ConsoleDisplay{
         return options.length;
     }
 
+    public int displayMenu(ArrayList<MenuItem> menu) {
+        for (MenuItem item : menu) {
+            String title = item.getName();
+            String[] optionHeaders = {"Price", "Description"};
+            String[] options = {String.format("%.2f", item.getPrice()), item.getDescription()};
+            System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, 40));
+        }
+
+        return menu.size();
+    }
+
     @Override
     /**
      * Accepts input from the user surrounding the possible actions the user can take
      * in relation to {@link MenuItem,AlaCarteItem, PackageItem} instances.
      */
     public MenuView handleConsoleOptions() {
-
-        //
         MenuView view = MenuView.MENU_ITEMS;
         int choice, subChoice, packageSize,i;
         String name,subName, des, dummy;
@@ -295,7 +301,10 @@ public class MenuConsole extends ConsoleDisplay{
                 System.out.println();
 
             } else if (choice == 7) {
-                mainManager.getSubManager("menuManager", MenuManager.class).printMenu();
+                getMenuCommand = new GetMenuCommand(mainManager.getSubManager("menuManager", MenuManager.class));
+                ArrayList<MenuItem> menu = getMenuCommand.execute();
+                displayMenu(menu);
+                //mainManager.getSubManager("menuManager", MenuManager.class).printMenu();
             } else {
                 System.out.println("Enter valid choice!");
             }

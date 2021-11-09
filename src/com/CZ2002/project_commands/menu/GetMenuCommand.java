@@ -8,13 +8,13 @@ import com.CZ2002.project_entities.MenuItem;
 /**
  * This class completes the 'print menu' action.
  */
-public class PrintMenuCommand {
+public class GetMenuCommand {
 	private MenuManager menuManager;
 	
 	 /**
      * Constructor for {@code execute} to successfully complete.
      */
-	public PrintMenuCommand(MenuManager menuManager) {
+	public GetMenuCommand(MenuManager menuManager) {
 		this.menuManager = menuManager;
 	}
 	
