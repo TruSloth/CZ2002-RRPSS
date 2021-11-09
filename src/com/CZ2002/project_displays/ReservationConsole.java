@@ -149,7 +149,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                     addReservationCommand.execute();
                 } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
-                }
+                } 
 
                 view = MenuView.RESERVATIONS;
                 break;
