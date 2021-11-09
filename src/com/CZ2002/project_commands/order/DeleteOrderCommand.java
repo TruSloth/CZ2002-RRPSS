@@ -39,10 +39,10 @@ public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderExc
     @Override
     public Void execute() throws InvalidDeleteOrderException{
         try {
-            for ( int i  = 0 ; i < orderManager.entities.size() ; i++)
+            for ( int i  = 0 ; i < orderManager.getNumOfOrders(); i++)
             {
-                if ( orderManager.entities.get(i).getTable() == tableClose ){
-                    salesRevenueManager.addOrder(orderManager.entities.get(i));
+                if ( orderManager.getOrderByIndex(i).getTable() == tableClose ){
+                    salesRevenueManager.addOrder(orderManager.getOrderByIndex(i));
                     tableManager.unoccupyTable(tableClose);
                     orderManager.deleteOrder(tableClose);
                 }
