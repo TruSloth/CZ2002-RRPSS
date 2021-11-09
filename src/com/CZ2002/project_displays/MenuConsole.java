@@ -75,7 +75,9 @@ public class MenuConsole extends ConsoleDisplay{
 
         return options.length;
     }
-
+    /**
+     * function to print out menu
+     */
     public int displayMenu(ArrayList<MenuItem> menu) {
         for (MenuItem item : menu) {
         	if (item instanceof AlaCarteItem ) {
