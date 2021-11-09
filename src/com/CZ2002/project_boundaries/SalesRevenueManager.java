@@ -20,7 +20,7 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
     // Constructor
     public SalesRevenueManager(){
         int numDays = Year.of(2021).length();
-        entities = new ArrayList<>(numDays); //ArrayList revenueList
+        entities = new ArrayList<SalesRevenue>(numDays); //ArrayList revenueList
 
         // Prepopulate List of Revenue
         for (int i=0; i<numDays; i++){

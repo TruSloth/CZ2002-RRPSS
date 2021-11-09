@@ -41,10 +41,8 @@ public class OrderConsole extends ConsoleDisplay{
             case 1:
                 // Create Order
                 sc.nextLine();
-                int tableCreateOrder, pax;
+                int pax;
                 int serverId;
-                System.out.printf("Table: ");
-                tableCreateOrder = sc.nextInt();
 
                 System.out.printf("Pax: ");
                 pax = sc.nextInt();
@@ -55,7 +53,10 @@ public class OrderConsole extends ConsoleDisplay{
                 ICommand<Void,InvalidStaffException> createOrderCommand  = new CreateOrderCommand(
                         mainManager.getSubManager("staffManager", StaffManager.class),
                         mainManager.getSubManager("orderManager", OrderManager.class),
-                        tableCreateOrder, pax, serverId
+                        mainManager.getSubManager("reservationManager", ReservationManager.class),
+                        mainManager.getSubManager("tableManager", TableManager.class),
+                        pax, serverId
+
                 );
 
                 try {
@@ -73,6 +74,7 @@ public class OrderConsole extends ConsoleDisplay{
                 System.out.print("Add item to order for which table: ");
                 tableAdd = sc.nextInt();
 
+                sc.nextLine(); // throw away \n in buffer
                 System.out.printf("What item to add to order: ");
                 addItem = sc.nextLine();
                 System.out.println("Adding Item to Order for Table " + tableAdd);

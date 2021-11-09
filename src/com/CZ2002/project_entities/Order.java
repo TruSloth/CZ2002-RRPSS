@@ -15,7 +15,7 @@ public class Order extends RestaurantEntity {
     private Staff server;
     private double bill;
     private double discountTotal;
-    public ArrayList<MenuItem> ordered = new ArrayList<MenuItem>();
+    public ArrayList<MenuItem> ordered;  // TODO: Why is this public?
     Calendar cal;
 
     /** Creates an Order object with arguments provided
@@ -30,6 +30,7 @@ public class Order extends RestaurantEntity {
         this.membership = false;
         this.bill= 0.00;
         this.discountTotal = 0.00;
+        this.ordered = new ArrayList<MenuItem>();
         cal = Calendar.getInstance();
     }
 
@@ -150,21 +151,22 @@ public class Order extends RestaurantEntity {
      * Printing out the Table's Bill with information such as Item ordered and its price
      */
     public void printOrdered(){
-        MenuBuilder bill = new MenuBuilder();
+        // TODO: extract to order console
         String title = "Bill";
-        int longestwidth = 20;
-        String[] optionHeader = new String[ordered.size() + 3];
-        String[] option = new String[ordered.size() + 3];
-        optionHeader[0] = "Table " + this.table;
-        option[0] = "";
+        int longestWidth = 40;
+        String[] optionHeaders = new String[ordered.size() + 3];
+        String[] options = new String[ordered.size() + 3];
+        optionHeaders[0] = "Table";
+        options[0] = String.format("%d", table);
         for ( int i = 1 ;  i < ordered.size() + 1 ; i++ ){
-            optionHeader[i] = ordered.get(i).getName();
-            option[i] = String.valueOf(ordered.get(i).getPrice());
-            System.out.println( ordered.get(i) );
+            optionHeaders[i] = ordered.get(i - 1).getName();
+            options[i] = String.valueOf(ordered.get(i - 1).getPrice());
+            //System.out.println( ordered.get(i - 1) );
         }
-        optionHeader[ordered.size()+1] = "Total Discount applied: ";
-        option[ordered.size()+1] = String.valueOf(this.getDiscountTotal());
-        optionHeader[ordered.size()+2] = "Total Bill: ";
-        option[ordered.size()+2] = String.valueOf(this.getBill());
+        optionHeaders[ordered.size()+1] = "Total Discount applied: ";
+        options[ordered.size()+1] = String.valueOf(this.getDiscountTotal());
+        optionHeaders[ordered.size()+2] = "Total Bill: ";
+        options[ordered.size()+2] = String.valueOf(this.getBill());
+        System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, longestWidth));
     }
 }
