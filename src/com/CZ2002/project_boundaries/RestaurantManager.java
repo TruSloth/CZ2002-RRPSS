@@ -1,7 +1,11 @@
 package com.CZ2002.project_boundaries;
 
+import java.util.ArrayList;
+
 import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_entities.Restaurant;
+import com.CZ2002.project_entities.Staff;
+import com.CZ2002.project_enums.Gender;
 import com.CZ2002.project_enums.Type;
 import com.CZ2002.project_interfaces.IMainManager;
 
@@ -28,7 +32,12 @@ public class RestaurantManager implements IMainManager {
 
         // (2,4,6,8,10-seater proportions in 20%, 40%, 20%, 10%, 10%)
         subManagers.putIfAbsent("tableManager", new TableManager(numOfTables, numOfTables / 5, numOfTables / 5 * 2 , numOfTables / 5, numOfTables / 10, numOfTables / 10));
+
         subManagers.putIfAbsent("staffManager", new StaffManager());
+        getSubManager("staffManager", StaffManager.class).addStaff("Cindy", Gender.FEMALE, "Waiter");
+        getSubManager("staffManager", StaffManager.class).addStaff("John", Gender.MALE, "Waiter");
+
+
         getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Battered Fish & Chips", "Battered fish fillets lightly seasoned, fried to a crisp golden brown and served with creamy tartar sauce.", 12.5, Type.MAIN);
         getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Battered Fish & Chips", "Battered fish fillets lightly seasoned, fried to a crisp golden brown and served with creamy tartar sauce.", 12.5, Type.MAIN);
         getSubManager("menuManager", MenuManager.class).addAlaCarteItem("BBQ Chicken", "Super tender juicy grilled chicken generously brushed with our in-house guava BBQ sauce.", 12.50, Type.MAIN);

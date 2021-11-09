@@ -95,25 +95,30 @@ public class TableManager extends Manager<Table> {
 
 
     /**
-     * Filters through and returns all {@link Table} instances that are currently occupied.
+     * Filters through and returns the table number  of all {@link Table} instances that are currently occupied.
      *
-     * @return  the array of {@code Table} instances that are currently occupied
+     * @return  the array of table numbers that are currently occupied
      */
-    public Table[] getOccupiedTables() {
-        return (Table[]) entities
+    public int[] getOccupiedTableNos() {
+        return entities
                 .stream()
                 .filter(Table::isOccupied)
+                .mapToInt(table -> table.getTableNumber())
                 .toArray();
     }
 
 
     /**
-     * Filters through and returns all {@link Table} instances that are currently unoccupied.
+     * Filters through and returns the table number of all {@link Table} instances that are currently unoccupied.
      *
-     * @return  the array of {@code Table} instances that are currently unoccupied
+     * @return  the array of table numbers that are currently unoccupied
      */
-    public Table[] getUnoccupiedTables() {
-        return (Table[]) entities.stream().filter(table -> !table.isOccupied()).toArray();
+    public int[] getUnoccupiedTables() {
+        return entities
+                .stream()
+                .filter(table -> !table.isOccupied())
+                .mapToInt(table -> table.getTableNumber())
+                .toArray();
     }
 
 
@@ -123,7 +128,6 @@ public class TableManager extends Manager<Table> {
      * @param tableNumber  the table number of the {@code Table} to be occupied
      */
     public void occupyTable(int tableNumber) {
-        //tables[tableNumber - 1].occupyTable();
         entities.get(tableNumber - 1).occupyTable();
     }
 

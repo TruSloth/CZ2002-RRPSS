@@ -1,16 +1,15 @@
 package com.CZ2002.project_boundaries;
 
-import com.CZ2002.project_entities.AlaCarteItem;
-import com.CZ2002.project_entities.Order;
-import com.CZ2002.project_entities.PackageItem;
-import com.CZ2002.project_entities.SalesRevenue;
-import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
-
 import java.text.ParseException;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import com.CZ2002.project_entities.Order;
+import com.CZ2002.project_entities.PackageItem;
+import com.CZ2002.project_entities.SalesRevenue;
+import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 
 /**
  * A Control class to execute the logics of SalesRevenue - Print and Calculate
@@ -21,7 +20,7 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
     // Constructor
     public SalesRevenueManager(){
         int numDays = Year.of(2021).length();
-        entities = new ArrayList<>(numDays); //ArrayList revenueList
+        entities = new ArrayList<SalesRevenue>(numDays); //ArrayList revenueList
 
         // Prepopulate List of Revenue
         for (int i=0; i<numDays; i++){

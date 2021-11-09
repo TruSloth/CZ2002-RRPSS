@@ -1,8 +1,6 @@
 package com.CZ2002.project_interfaces;
 
 import com.CZ2002.project_displays.ConsoleDisplay;
-import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
-
 import java.text.ParseException;
 
 /**

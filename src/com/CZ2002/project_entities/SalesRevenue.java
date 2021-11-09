@@ -9,6 +9,7 @@ public class SalesRevenue extends RestaurantEntity{
 
     public SalesRevenue(){
         this.revenue = 0.0;
+        orderList = new ArrayList<Order>();
     }
 
     public double getRevenue() {
