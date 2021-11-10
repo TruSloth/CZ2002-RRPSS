@@ -235,8 +235,9 @@ public class MenuBuilder {
     }
 
     public static String buildMenu(int longestWidth,String[] options, String[] optionHeaders, String sepChar) {
-        // Returns a formatted menu for displaying menu options without a title as a string
+        // Returns a formatted menu for displaying menu options with option headers but without a title as a string
         // Used to append to a fully formatted menu to create a compound menu
+        // The ending line seperator may be specified using sepChar
 
         /*  Example Menu Output
          *

@@ -49,84 +49,82 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
         entities.set(dayOfYear, temp);
     }
 
+    public SalesRevenue getSalesRevenueByDay(Date date, boolean monthly) throws InvalidSalesRevenueQueryException {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int dayOfYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
+        try {
+            return entities.get(dayOfYear);
+        } catch (IndexOutOfBoundsException e) {
+            throw new InvalidSalesRevenueQueryException("There is no sales revenue data for this date yet.");
+        }
+    } 
+
     /**
      * To print the sales revenue by the date given
      * @param date GregorianCalender of the SalesRevenue
      */
-    public void printByDay(Date date, boolean monthly) throws ParseException, InvalidSalesRevenueQueryException {
-        // Tabulate by Day
-        // System.out.println("Date: " + date);
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yy");
-        String dateAsString = fmt.format(date);
-        int count = 1;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int dayOfYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
-        SalesRevenue queryRevenue = entities.get(dayOfYear);
-        ArrayList<Order> tempOrderList = queryRevenue.getOrderList();
+    // public void printByDay(Date date, boolean monthly) throws ParseException, InvalidSalesRevenueQueryException {
+    //     // Tabulate by Day
+    //     SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yy");
+    //     String dateAsString = fmt.format(date);
+    //     int count = 1;
+    //     Calendar cal = Calendar.getInstance();
+    //     cal.setTime(date);
+    //     int dayOfYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
+    //     SalesRevenue queryRevenue = entities.get(dayOfYear);
+    //     ArrayList<Order> tempOrderList = queryRevenue.getOrderList();
 
-        String title = "Daily Revenue Report";
-        ArrayList<String> options = new ArrayList<String>();
-        ArrayList<String> optionHeaders = new ArrayList<String>();
-        String[] optionsArr = new String[options.size()];
-        String[] optionHeadersArr = new String[optionHeaders.size()];
-        int LONGEST_WIDTH = 40;
+    //     String title = "Daily Revenue Report";
+    //     ArrayList<String> options = new ArrayList<String>();
+    //     ArrayList<String> optionHeaders = new ArrayList<String>();
+    //     String[] optionsArr = new String[options.size()];
+    //     String[] optionHeadersArr = new String[optionHeaders.size()];
+    //     int LONGEST_WIDTH = 40;
 
-        if (tempOrderList != null) {
-            System.out.printf(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
-            options.add(dateAsString);
-            optionHeaders.add("Date");
-            optionsArr = new String[options.size()];
-            optionHeadersArr = new String[optionHeaders.size()];
-            System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, options.toArray(optionsArr), optionHeaders.toArray(optionHeadersArr), "-"));
-            for (int i=0; i<tempOrderList.size(); i++){
-                //System.out.printf("Order %d\n", count++);
-                options.clear();
-                optionHeaders.clear();
-                Order tempOrder = tempOrderList.get(i);
-                optionHeaders.add("Order");
-                options.add(String.format("%d", count++));
-                for (int j=0; j<tempOrder.ordered.size(); j++){
-                    if(tempOrder.ordered.get(j) instanceof PackageItem){
-                        options.add("Package");
-                        //System.out.println(tempOrderList.get(i).ordered.get(j).getName() + " (Package)");
-                    }
-                    else {
-                        options.add("Ala Carte");
-                        //System.out.println(tempOrderList.get(i).ordered.get(j).getName() + " (Ala Carte)");
-                    }
-                    optionHeaders.add(tempOrder.ordered.get(j).getName());
-                }
-                optionsArr = new String[options.size()];
-                optionHeadersArr = new String[optionHeaders.size()];
-                System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, options.toArray(optionsArr), optionHeaders.toArray(optionHeadersArr), "-"));
-            }
+    //     if (tempOrderList != null) {
+    //         System.out.printf(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
+    //         options.add(dateAsString);
+    //         optionHeaders.add("Date");
+    //         optionsArr = new String[options.size()];
+    //         optionHeadersArr = new String[optionHeaders.size()];
+    //         System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, options.toArray(optionsArr), optionHeaders.toArray(optionHeadersArr), "-"));
+    //         for (int i=0; i<tempOrderList.size(); i++){
+    //             //System.out.printf("Order %d\n", count++);
+    //             options.clear();
+    //             optionHeaders.clear();
+    //             Order tempOrder = tempOrderList.get(i);
+    //             optionHeaders.add("Order");
+    //             options.add(String.format("%d", count++));
+    //             for (int j=0; j<tempOrder.ordered.size(); j++){
+    //                 if(tempOrder.ordered.get(j) instanceof PackageItem){
+    //                     options.add("Package");
+    //                 }
+    //                 else {
+    //                     options.add("Ala Carte");
+    //                 }
+    //                 optionHeaders.add(tempOrder.ordered.get(j).getName());
+    //             }
+    //             optionsArr = new String[options.size()];
+    //             optionHeadersArr = new String[optionHeaders.size()];
+    //             System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, options.toArray(optionsArr), optionHeaders.toArray(optionHeadersArr), "-"));
+    //         }
             
-        } else {
-            System.out.println("No Orders On " + date);
-        }
+    //     } else {
+    //         System.out.println("No Orders On " + date);
+    //     }
 
 
-        if (!monthly){
-            double bill;
-            bill = entities.get(dayOfYear).getRevenue();
-            String[] revenue = {String.format("%.2f", bill)};
-            String[] revenueHeader = {"Daily Total Revenue"};
-            System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, revenue, revenueHeader, "="));
-        }
-    }
+    //     if (!monthly){
+    //         double bill;
+    //         bill = entities.get(dayOfYear).getRevenue();
+    //         String[] revenue = {String.format("%.2f", bill)};
+    //         String[] revenueHeader = {"Daily Total Revenue"};
+    //         System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, revenue, revenueHeader, "="));
+    //     }
+    // }
 
-    /**
-     * To print the sales revenue by month given
-     * @param startDate GregorianCalender of the start of the month
-     * @param endDate GregorianCalender of the end of the month
-     */
-    public void printByMonth(Date startDate, Date endDate) throws ParseException, InvalidSalesRevenueQueryException {
-        // Tabulate by Month
-        int LONGEST_WIDTH = 40;
-
-
-        System.out.println("Period: " + startDate + " - " + endDate);
+    public ArrayList<SalesRevenue> getSalesRevenueByMonth(Date startDate, Date endDate) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(startDate);
         int startDayOfTheYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
@@ -134,28 +132,54 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
         cal.setTime(endDate);
         int endDayOfTheYear = cal.get(Calendar.DAY_OF_YEAR);
 
-        String title = "Monthly Revenue Report";
-        System.out.printf(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
+        ArrayList<SalesRevenue> monthlySalesRevenues = new ArrayList<SalesRevenue>();
 
-        double tabulatedBill = 0;
-        for(int i=startDayOfTheYear; i<endDayOfTheYear; i++){
-            tabulatedBill += entities.get(i).getRevenue();
-            System.out.println();
-            printByDay(startDate, true);
-            startDate = addDate(startDate);
+        for (int i = startDayOfTheYear; i < endDayOfTheYear; i++) {
+            monthlySalesRevenues.add(entities.get(i));
         }
-        System.out.println();
-        System.out.println("=".repeat(LONGEST_WIDTH + 5));
-        String[] revenue = {String.format("%.2f", tabulatedBill)};
-        String[] revenueHeader = {"Total Revenue"};
-        System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, revenue, revenueHeader, "="));
-        //System.out.println("Total Revenue is: " + tabulatedBill);
+
+        return monthlySalesRevenues;
     }
 
-    public static Date addDate(Date date){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DATE,1);
-        return calendar.getTime();
-    }
+    /**
+     * To print the sales revenue by month given
+     * @param startDate GregorianCalender of the start of the month
+     * @param endDate GregorianCalender of the end of the month
+     */
+    // public void printByMonth(Date startDate, Date endDate) throws ParseException, InvalidSalesRevenueQueryException {
+    //     // Tabulate by Month
+    //     int LONGEST_WIDTH = 40;
+
+
+    //     System.out.println("Period: " + startDate + " - " + endDate);
+    //     Calendar cal = Calendar.getInstance();
+    //     cal.setTime(startDate);
+    //     int startDayOfTheYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
+
+    //     cal.setTime(endDate);
+    //     int endDayOfTheYear = cal.get(Calendar.DAY_OF_YEAR);
+
+    //     String title = "Monthly Revenue Report";
+    //     System.out.printf(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
+
+    //     double tabulatedBill = 0;
+    //     for(int i=startDayOfTheYear; i<endDayOfTheYear; i++){
+    //         tabulatedBill += entities.get(i).getRevenue();
+    //         System.out.println();
+    //         printByDay(startDate, true);
+    //         startDate = addDate(startDate);
+    //     }
+    //     System.out.println();
+    //     System.out.println("=".repeat(LONGEST_WIDTH + 5));
+    //     String[] revenue = {String.format("%.2f", tabulatedBill)};
+    //     String[] revenueHeader = {"Total Revenue"};
+    //     System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, revenue, revenueHeader, "="));
+    // }
+
+    // public static Date addDate(Date date){
+    //     Calendar calendar = Calendar.getInstance();
+    //     calendar.setTime(date);
+    //     calendar.add(Calendar.DATE,1);
+    //     return calendar.getTime();
+    // }
 }

@@ -5,13 +5,13 @@ import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.*;
 import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
+import com.CZ2002.project_exceptions.order.InvalidCreateOrderException;
 import com.CZ2002.project_exceptions.order.InvalidDeleteOrderException;
 import com.CZ2002.project_exceptions.order.InvalidPrintOrderException;
 import com.CZ2002.project_exceptions.order.InvalidSetMembership;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_utils.MenuBuilder;
 
-import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.Scanner;
 
@@ -102,7 +102,7 @@ public class OrderConsole extends ConsoleDisplay{
                 System.out.printf("Server's ID: ");
                 serverId = sc.nextInt();
 
-                ICommand<Void,InvalidStaffException> createOrderCommand  = new CreateOrderCommand(
+                ICommand<Void, InvalidCreateOrderException> createOrderCommand  = new CreateOrderCommand(
                         mainManager.getSubManager("staffManager", StaffManager.class),
                         mainManager.getSubManager("orderManager", OrderManager.class),
                         mainManager.getSubManager("reservationManager", ReservationManager.class),
@@ -113,7 +113,7 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     createOrderCommand.execute();
-                } catch (InvalidStaffException | ParseException e) {
+                } catch (InvalidCreateOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -197,7 +197,7 @@ public class OrderConsole extends ConsoleDisplay{
                         mainManager.getSubManager("orderManager", OrderManager.class),
                         mainManager.getSubManager("tableManager", TableManager.class)
                         , mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class)
-                        , tableClose
+                        , tableClose          
                 );
 
                 try {
