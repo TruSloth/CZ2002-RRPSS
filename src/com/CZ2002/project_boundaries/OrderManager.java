@@ -2,8 +2,8 @@ package com.CZ2002.project_boundaries;
 import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_entities.Staff;
-
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * A Control class to execute the logics of Order - Create Read Update Destruction
@@ -25,21 +25,31 @@ public class OrderManager extends Manager<Order>{
         System.out.println("New Order for Table " + tableNumber + " Created");
     }
 
-    /** To Read in the Order to show a summary of Order for the table
-     * @param tableNumber An integer representing the table number which the Order belongs to
-     */
-    public void printOrder ( int tableNumber ){
-        boolean found = false;
-        for ( int i  = 0 ; i < entities.size() ; i++){
-            if ( entities.get(i).getTable() == tableNumber ){
-                entities.get(i).printOrdered();
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            System.out.println("Table Does Not Exist");
-        }
+    // REMOVED AND REPLACED WITH DISPLAY_ORDER(ORDER) IN ORDER_CONSOLE
+    // /** To Read in the Order to show a summary of Order for the table
+    //  * @param tableNumber An integer representing the table number which the Order belongs to
+    //  */
+    // public void printOrder ( int tableNumber ){
+    //     boolean found = false;
+    //     for ( int i  = 0 ; i < entities.size() ; i++){
+    //         if ( entities.get(i).getTable() == tableNumber ){
+    //             entities.get(i).printOrdered();
+    //             found = true;
+    //             break;
+    //         }
+    //     }
+    //     if (!found) {
+    //         System.out.println("Table Does Not Exist");
+    //     }
+    // }
+
+    public Order getOrder(int tableNumber) throws NoSuchElementException {
+        Order order = entities
+                        .stream()
+                        .filter(o -> o.getTable() == tableNumber)
+                        .findFirst()
+                        .get();
+        return order;
     }
 
     /**
@@ -84,12 +94,14 @@ public class OrderManager extends Manager<Order>{
      * To delete the Order from the ArrayList of active Orders
      * @param tableNumber An integer representing the table number which the Order belongs to
      */
-    public void deleteOrder ( int tableNumber ){
+    public Order deleteOrder ( int tableNumber ){
         boolean found = false;
+        Order order = null;
 
         for ( int i  = 0 ; i < entities.size() ; i++ ){
             if ( entities.get(i).getTable() == tableNumber ){
-                printOrder(tableNumber);
+                //printOrder(tableNumber);
+                order = entities.get(i);
                 entities.remove(i);
                 found = true;
                 break;
@@ -98,6 +110,7 @@ public class OrderManager extends Manager<Order>{
         if (!found) {
             System.out.println("Table Does Not Exists");
         }
+        return order;
     }
 
     /** 

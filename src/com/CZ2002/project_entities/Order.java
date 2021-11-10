@@ -173,26 +173,5 @@ public class Order extends RestaurantEntity {
     /**
      * Printing out the Table's Bill with information such as Item ordered and its price
      */
-    public void printOrdered(){
-        // TODO: extract to order console
-        String title = "Bill";
-        int longestWidth = 40;
-        String[] optionHeaders = new String[ordered.size() + 4];
-        String[] options = new String[ordered.size() + 4];
-        optionHeaders[0] = "Table";
-        options[0] = String.format("%d", table);
-
-        for ( int i = 1 ;  i < ordered.size() + 1 ; i++ ){
-            optionHeaders[i] = ordered.get(i - 1).getName();
-            options[i] = String.valueOf(ordered.get(i - 1).getPrice());
-        }
-
-        optionHeaders[ordered.size()+1] = "Total Discount Applied: ";
-        options[ordered.size()+1] = String.valueOf(this.getDiscountTotal());
-        optionHeaders[ordered.size()+2] = "Tax: ";
-        options[ordered.size()+2] = String.valueOf(this.getTax());
-        optionHeaders[ordered.size()+3] = "Total Bill: ";
-        options[ordered.size()+3] = String.valueOf(this.getBill());
-        System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, longestWidth));
-    }
+    
 }
