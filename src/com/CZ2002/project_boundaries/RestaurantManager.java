@@ -46,7 +46,6 @@ public class RestaurantManager implements IMainManager {
         }
 
         // Load SalesRevenueManager
-        // TODO: ASK LUCAS HOW THIS WORKS
         try {
             Path salesRevenueDataPath = Paths.get(DataStore.getDataDirPath().toString(), "salesRevenueData.txt");
             subManagers.putIfAbsent("salesRevenueManager", DataStore.loadManagerFromFile(salesRevenueDataPath));

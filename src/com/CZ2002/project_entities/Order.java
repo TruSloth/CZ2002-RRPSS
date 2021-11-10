@@ -195,5 +195,4 @@ public class Order extends RestaurantEntity {
         options[ordered.size()+3] = String.valueOf(this.getBill());
         System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, longestWidth));
     }
-    
 }

@@ -1,10 +1,12 @@
 package com.CZ2002.project_commands.revenue;
 
 import com.CZ2002.project_boundaries.SalesRevenueManager;
+import com.CZ2002.project_entities.SalesRevenue;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_interfaces.IDateFormatter;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
@@ -13,7 +15,7 @@ import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 /**
  * This class implements {@link ICommand} to complete the 'print revenue by month' action.
  */
-public class PrintRevenueByMonth implements ICommand<Void, InvalidSalesRevenueQueryException>, IDateFormatter {
+public class PrintRevenueByMonth implements ICommand<ArrayList<SalesRevenue>, InvalidSalesRevenueQueryException>, IDateFormatter {
     private SalesRevenueManager salesRevenueManager;
     private Date startDate;
     private Date endDate;
@@ -39,12 +41,7 @@ public class PrintRevenueByMonth implements ICommand<Void, InvalidSalesRevenueQu
      * @throws InvalidSalesRevenueQueryException  if an error is reached while parsing
      */
     @Override
-    public Void execute() throws InvalidSalesRevenueQueryException {
-        try {
-            salesRevenueManager.printByMonth(startDate, endDate);
-        } catch (NoSuchElementException | ParseException e){
-            throw new InvalidSalesRevenueQueryException("The requested period is invalid.");
-        }
-        return null;
+    public ArrayList<SalesRevenue> execute() {
+        return salesRevenueManager.getSalesRevenueByMonth(startDate, endDate);
     }
 }
