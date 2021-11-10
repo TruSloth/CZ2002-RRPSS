@@ -193,7 +193,7 @@ public class OrderConsole extends ConsoleDisplay{
                 System.out.print("Close Order For Table: ");
                 tableClose = sc.nextInt();
 
-                ICommand<Order , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
+                ICommand<Void , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
                         mainManager.getSubManager("orderManager", OrderManager.class),
                         mainManager.getSubManager("tableManager", TableManager.class)
                         , mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class)
@@ -201,12 +201,7 @@ public class OrderConsole extends ConsoleDisplay{
                 );
 
                 try {
-                    Order order = deleteOrder.execute();
-                    if (order != null) {
-                        displayOrder(order);
-                    } else {
-                        System.out.println("Table Does Not Exists");
-                    }
+                    deleteOrder.execute();
                 } catch (InvalidDeleteOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
@@ -220,15 +215,18 @@ public class OrderConsole extends ConsoleDisplay{
                 int tableSetMembership;
                 System.out.println("Set Membership For Table: ");
                 tableSetMembership = sc.nextInt();
-                ICommand<Void , InvalidSetMembership>  setMembership = new SetMembershipOrderCommand(
-                        mainManager.getSubManager("orderManager", OrderManager.class) ,
-                         membership , tableSetMembership
+
+
+                ICommand<Void, InvalidSetMembership> setMembership = new SetMembershipOrderCommand(
+                        mainManager.getSubManager("orderManager", OrderManager.class),
+                        membership, tableSetMembership
                 );
                 try {
                     setMembership.execute();
                 } catch (InvalidSetMembership | ParseException e) {
                     System.out.println(e.getMessage());
                 }
+
                 break;
 
             case 7:

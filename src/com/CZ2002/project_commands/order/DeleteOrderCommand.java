@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 /**
  * This class implements {@link ICommand} to complete the 'Delete Order' action.
  */
-public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderException> {
+public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderException> {
     private SalesRevenueManager salesRevenueManager;
     private TableManager tableManager;
     private OrderManager orderManager;
@@ -42,21 +42,16 @@ public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderEx
      * @throws InvalidDeleteOrderException If table could not be located
      */
     @Override
-    public Order execute() throws InvalidDeleteOrderException{
-        Order order = null;
-        try {
-            for ( int i  = 0 ; i < orderManager.getNumOfOrders(); i++)
-            {
-                if ( orderManager.getOrderByIndex(i).getTable() == tableClose ){
-                    salesRevenueManager.addOrder(orderManager.getOrderByIndex(i));
-                    tableManager.unoccupyTable(tableClose);
-                    order = orderManager.deleteOrder(tableClose);
-                }
+    public Void execute() throws InvalidDeleteOrderException{
+        for ( int i  = 0 ; i < orderManager.getNumOfOrders(); i++)
+        {
+            if ( orderManager.getOrderByIndex(i).getTable() == tableClose ){
+                salesRevenueManager.addOrder(orderManager.getOrderByIndex(i));
+                tableManager.unoccupyTable(tableClose);
+                orderManager.deleteOrder(tableClose);
+                return null;
             }
-        } catch (NoSuchElementException e) {
-            throw new InvalidDeleteOrderException("Order Not Found for Table " + tableClose );
         }
-
-        return order;
+        throw new InvalidDeleteOrderException("Table not found" );
     }
 }

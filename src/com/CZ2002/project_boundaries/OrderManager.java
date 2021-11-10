@@ -21,9 +21,17 @@ public class OrderManager extends Manager<Order>{
      * @param server Staff who is/was serving them
      */
     public void createNewOrder( int tableNumber , int pax , Staff server ){
-        Order newOrder = new Order( tableNumber , pax , server );
-        entities.add(newOrder);
-        System.out.println("New Order for Table " + tableNumber + " Created");
+        System.out.println(pax);
+        if ( pax < 1 ){
+            System.out.println("Invalid pax");
+            return;
+        }
+        else{
+            Order newOrder = new Order( tableNumber , pax , server );
+            entities.add(newOrder);
+            System.out.println("New Order for Table " + tableNumber + " Created");
+        }
+
     }
 
     /**
@@ -62,55 +70,63 @@ public class OrderManager extends Manager<Order>{
      * Removes an Item from the Order based on table number
      * @param menuItem The MenuItem Object that is to be deleted from the Order
      * @param tableNumber An integer representing the table number which the Order belongs to
+     * @return An Integer value to indicate if Item is successfully added
      */
-    public void addItemOrder ( MenuItem menuItem , int tableNumber )
+    public int addItemOrder ( MenuItem menuItem , int tableNumber )
     {
         for ( int i  = 0 ; i < entities.size() ; i++) {
             if (entities.get(i).getTable() == tableNumber) {
                 if (menuItem != null) {
                     entities.get(i).addItem(menuItem);
-                } else {
-                    System.out.println("No Such Item");
+                    return 1; // item added
                 }
-                break;
+                else {
+                    return 0; // invalid item , but this will not run since Command will catch it
+                }
             }
         }
+        return -1;  // item exist but table not found
     }
 
     /**
      * Adds an Item from the Order based on table number
      * @param menuItem A MenuItem Object that is to be added to the Order
      * @param tableNumber An integer representing the table number which the Order belongs to
+     * @return An Integer value to indicate if an Item is successfully removed
      */
-    public void removeItemOrder ( MenuItem menuItem , int tableNumber )
+    public int removeItemOrder ( MenuItem menuItem , int tableNumber )
     {
+        MenuItem temp;
         for ( int i  = 0 ; i < entities.size() ; i++) {
             if (entities.get(i).getTable() == tableNumber) {
                 if (menuItem != null) {
-                    entities.get(i).removeItem(menuItem);
-                } else {
-                    System.out.println("No Such Item");
+                    temp = entities.get(i).removeItem(menuItem);
+                    if (temp == null) {
+                        return 0;  // item exist but not found
+                    } else {
+                        return 1; // item exist and found
+                    }
                 }
-                break;
             }
         }
+        return -1; // item exist and table not found
     }
 
     /**
      * To delete the Order from the ArrayList of active Orders
      * @param tableNumber An integer representing the table number which the Order belongs to
+     * @return An Integer value to indicate if Order is successfully deleted
      */
-    public Order deleteOrder ( int tableNumber ){
-        Order order = null;
+    public int deleteOrder ( int tableNumber ){
 
         for ( int i  = 0 ; i < entities.size() ; i++ ){
             if ( entities.get(i).getTable() == tableNumber ){
-                order = entities.get(i);
+                entities.get(i).printOrdered(); // print the Order before deleting it
                 entities.remove(i);
-                break;
+                return 1; // deleted
             }
         }
-        return order;
+        return 0;
     }
 
     /** 
@@ -136,23 +152,20 @@ public class OrderManager extends Manager<Order>{
      * Setting membership status
      * @param tableNumber An integer representing the table number which the Order belongs to
      * @param tableSetMembership An integer value denoting membership(1) or not (0)
+     * @return An Integer value to indicate if membership is successfully set
      */
-    public void setMembership (int tableNumber, int tableSetMembership){
-        boolean found = false;
+    public int setMembership (int tableNumber, int tableSetMembership){
         for ( int i  = 0 ; i < entities.size() ; i++ ){
             if ( entities.get(i).getTable() == tableNumber ){
-                found = true;
                 if (tableSetMembership == 1){
                     entities.get(i).setMembership(true);
                 }
                 else if (tableSetMembership == 0){
                     entities.get(i).setMembership(false);
                 }
-                break;
+                return 1; // table found and value is set
             }
         }
-        if (!found) {
-            System.out.println("Table Does Not Exists");
-        }
+        return -1; // table not found
     }
 }
