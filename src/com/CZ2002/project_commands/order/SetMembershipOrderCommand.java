@@ -1,6 +1,7 @@
 package com.CZ2002.project_commands.order;
 
 import com.CZ2002.project_boundaries.OrderManager;
+import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
 import com.CZ2002.project_exceptions.order.InvalidSetMembership;
 import com.CZ2002.project_interfaces.ICommand;
 
@@ -15,7 +16,7 @@ public class SetMembershipOrderCommand implements ICommand<Void , InvalidSetMemb
     int membership;
 
     /**
-     * To set the Membership value
+     * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
      * @param orderManager The OrderManager object that controls Order objects
      * @param membership The boolean value to which if customer is a member
      * @param tableSetMembership The table Number which Membership is to be set
@@ -27,7 +28,10 @@ public class SetMembershipOrderCommand implements ICommand<Void , InvalidSetMemb
     }
 
     /**
-     * Setting membership for the table
+     * Completes the 'Set Membership' action.
+     *
+     * @return Void
+     * @throws InvalidSetMembership if the table could not be located
      */
     @Override
     public Void execute() throws InvalidSetMembership {

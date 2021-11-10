@@ -26,6 +26,12 @@ public class OrderManager extends Manager<Order>{
         System.out.println("New Order for Table " + tableNumber + " Created");
     }
 
+    /**
+     *
+     * @param tableNumber An integer representing the table number which the Order belongs to
+     * @return The Order based on tableNumber
+     * @throws NoSuchElementException Throws exception when Table is not found
+     */
     public Order getOrder(int tableNumber) throws NoSuchElementException {
         Order order = entities
                 .stream()
@@ -125,12 +131,12 @@ public class OrderManager extends Manager<Order>{
     public int getNumOfOrders() { 
         return entities.size(); 
     }
+
     /**
      * Setting membership status
      * @param tableNumber An integer representing the table number which the Order belongs to
      * @param tableSetMembership An integer value denoting membership(1) or not (0)
      */
-
     public void setMembership (int tableNumber, int tableSetMembership){
         boolean found = false;
         for ( int i  = 0 ; i < entities.size() ; i++ ){
