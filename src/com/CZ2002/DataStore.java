@@ -34,16 +34,15 @@ public class DataStore {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends RestaurantEntity> Manager<T> loadManagerFromFile(Path filePath) throws FileNotFoundException {
+    public static <T extends RestaurantEntity> Manager<T> loadManagerFromFile(Path filePath) throws FileNotFoundException, IOException {
         FileInputStream fin = new FileInputStream(filePath.toString());
         try {
             ObjectInputStream ois = new ObjectInputStream(fin);
             return (Manager<T>) ois.readObject();
         } catch (ClassNotFoundException e) {
             System.out.println("Could not find the class to cast to");
-        } catch (IOException e) {
-            System.out.println("IO exception occurred!");
         }
+
         return null;
     }
 
@@ -63,7 +62,7 @@ public class DataStore {
      * @param fileName
      */
     public static <T extends RestaurantEntity> void saveManagerToFile(Manager<T> manager, String fileName) {
-            Path filePath = createDataFile(fileName);
+        Path filePath = createDataFile(fileName);
     
         try {    
             FileOutputStream fout = new FileOutputStream(filePath.toString());

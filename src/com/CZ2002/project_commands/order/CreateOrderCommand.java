@@ -12,12 +12,13 @@ import com.CZ2002.project_boundaries.ReservationManager;
 import com.CZ2002.project_entities.Staff;
 import com.CZ2002.project_exceptions.InvalidStaffException;
 import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
+import com.CZ2002.project_exceptions.order.InvalidCreateOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
 /**
  * This class implements {@link ICommand} to complete the 'Create a new Order' action.
  */
-public class CreateOrderCommand implements ICommand<Void , InvalidStaffException>  {
+public class CreateOrderCommand implements ICommand<Void , InvalidCreateOrderException>  {
     private StaffManager staffManager;
     private OrderManager orderManager;
     private ReservationManager reservationManager;
@@ -50,33 +51,38 @@ public class CreateOrderCommand implements ICommand<Void , InvalidStaffException
      * Completes the 'Create Order' action.
      *
      * @return Void
-     * @throws InvalidStaffException  if the staff could not be located
+     * @throws InvalidCreateOrderException  if the order could not be created
      */
     @Override
-    public Void execute() throws InvalidStaffException {
+    public Void execute() throws InvalidCreateOrderException {
         try{
             this.server = staffManager.findStaffById(serverId);
-        } catch (NoSuchElementException e){
-            throw new InvalidStaffException("Invalid Staff ID");
-        };
-        // Get the table numbers that are reserved for the current time
-        Integer[] reservedTables = Arrays.stream(reservationManager.getUnavailableTables(new GregorianCalendar())).boxed().toArray(Integer[]::new);
-                                       
-        // Get the table numbers that are occupied for the current time
-        Integer[] occupiedTables = Arrays.stream(tableManager.getOccupiedTableNos()).boxed().toArray(Integer[]::new);
 
-        // Create a set to remove duplicate table numbers
-        HashSet<Integer> set = new HashSet<Integer>();
-        set.addAll(Arrays.asList(reservedTables));
-        set.addAll(Arrays.asList(occupiedTables));
+            // Get the table numbers that are reserved for the current time
+            Integer[] reservedTables = Arrays.stream(reservationManager.getUnavailableTables(new GregorianCalendar())).boxed().toArray(Integer[]::new);
+                                        
+            // Get the table numbers that are occupied for the current time
+            Integer[] occupiedTables = Arrays.stream(tableManager.getOccupiedTableNos()).boxed().toArray(Integer[]::new);
 
-        int[] unavailableTableNos = set.stream().mapToInt(Integer::intValue).toArray();
+            // Create a set to remove duplicate table numbers
+            HashSet<Integer> set = new HashSet<Integer>();
+            set.addAll(Arrays.asList(reservedTables));
+            set.addAll(Arrays.asList(occupiedTables));
 
-        int tableNumber = tableManager.getAvailableTable(unavailableTableNos, pax);
+            int[] unavailableTableNos = set.stream().mapToInt(Integer::intValue).toArray();
 
-        tableManager.occupyTable(tableNumber);
+            int tableNumber = tableManager.getAvailableTable(unavailableTableNos, pax);
 
-        orderManager.createNewOrder(tableNumber,pax,server);
+            tableManager.occupyTable(tableNumber);
+
+            orderManager.createNewOrder(tableNumber,pax,server);
+
+        } catch (InvalidStaffException e){
+            throw new InvalidCreateOrderException("There is no staff with that ID.");
+        } catch (IllegalArgumentException e) {
+            throw new InvalidCreateOrderException(e.getMessage());
+        }
+        
         return null;
     }
 }

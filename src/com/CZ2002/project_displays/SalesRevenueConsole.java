@@ -112,8 +112,10 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
             options.clear();
             optionHeaders.clear();
             Order tempOrder = tempOrderList.get(i);
-            optionHeaders.add("Order");
-            options.add(String.format("%d", count++));
+            optionHeaders.add("ORDER");
+            options.add(String.format("#%d", count++));
+            optionHeaders.add(""); // For Formatting
+            options.add(""); // For Formatting
             for (int j=0; j<tempOrder.ordered.size(); j++){
                 if(tempOrder.ordered.get(j) instanceof PackageItem){
                     options.add("Package");
@@ -148,19 +150,21 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
         cal.setTime(startDate);
         int startDayOfTheYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
 
-
-
         String title = "Monthly Revenue Report";
         System.out.printf(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
+        
+        String[] spacerOption = {""};
+        String[] spacerOptionHeader = {""};
 
         double tabulatedBill = 0;
         for(int i=startDayOfTheYear; i<endDayOfTheYear; i++){
-            tabulatedBill += monthlySalesRevenue.get(i).getRevenue();
-            System.out.println();
-            displayDailySalesRevenue(monthlySalesRevenue.get(i), cal.getTime());
+            tabulatedBill += monthlySalesRevenue.get(i - startDayOfTheYear).getRevenue();
+            System.out.printf(MenuBuilder.buildMenu(LONGEST_WIDTH, spacerOption, spacerOptionHeader, ""));
+            displayDailySalesRevenue(monthlySalesRevenue.get(i - startDayOfTheYear), cal.getTime());
             cal.add(Calendar.DAY_OF_YEAR, 1);
         }
-        System.out.println();
+        
+        System.out.printf(MenuBuilder.buildMenu(LONGEST_WIDTH, spacerOption, spacerOptionHeader, ""));
         System.out.println("=".repeat(LONGEST_WIDTH + 5));
         String[] revenue = {String.format("%.2f", tabulatedBill)};
         String[] revenueHeader = {"Total Revenue"};

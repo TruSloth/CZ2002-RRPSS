@@ -1,6 +1,7 @@
 package com.CZ2002.project_boundaries;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -30,7 +31,7 @@ public class RestaurantManager implements IMainManager {
         try {
             Path menuDataPath = Paths.get(DataStore.getDataDirPath().toString(), "menuData.txt");
             subManagers.putIfAbsent("menuManager", DataStore.loadManagerFromFile(menuDataPath));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             subManagers.putIfAbsent("menuManager", new MenuManager());
 
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Battered Fish & Chips", "Battered fish fillets lightly seasoned, fried to a crisp golden brown and served with creamy tartar sauce.", 12.5, Type.MAIN);
@@ -49,15 +50,16 @@ public class RestaurantManager implements IMainManager {
         try {
             Path salesRevenueDataPath = Paths.get(DataStore.getDataDirPath().toString(), "salesRevenueData.txt");
             subManagers.putIfAbsent("salesRevenueManager", DataStore.loadManagerFromFile(salesRevenueDataPath));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             subManagers.putIfAbsent("salesRevenueManager", new SalesRevenueManager());
+            System.out.println(subManagers.get("salesRevenueManager"));
         }
 
         // Load OrderManager
         try {
             Path orderDataPath = Paths.get(DataStore.getDataDirPath().toString(), "orderData.txt");
             subManagers.putIfAbsent("orderManager", DataStore.loadManagerFromFile(orderDataPath));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             subManagers.putIfAbsent("orderManager", new OrderManager());
         }
 
@@ -66,7 +68,7 @@ public class RestaurantManager implements IMainManager {
             Path reservationDataPath = Paths.get(DataStore.getDataDirPath().toString(), "reservationData.txt");
             subManagers.putIfAbsent("reservationManager", DataStore.loadManagerFromFile(reservationDataPath));
             getSubManager("reservationManager", ReservationManager.class).startAllReservationFutures(); // Restart all Reservation Futures
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             subManagers.putIfAbsent("reservationManager", new ReservationManager());
         }
 
@@ -74,7 +76,7 @@ public class RestaurantManager implements IMainManager {
         try {
             Path tableDataPath = Paths.get(DataStore.getDataDirPath().toString(), "tableData.txt");
             subManagers.putIfAbsent("tableManager", DataStore.loadManagerFromFile(tableDataPath));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             // (2,4,6,8,10-seater proportions in 20%, 40%, 20%, 10%, 10%)
             subManagers.putIfAbsent("tableManager",  new TableManager(numOfTables, numOfTables / 5, numOfTables / 5 * 2 , numOfTables / 5, numOfTables / 10, numOfTables / 10));
         }
@@ -83,7 +85,7 @@ public class RestaurantManager implements IMainManager {
         try {
             Path staffDataPath = Paths.get(DataStore.getDataDirPath().toString(), "staffData.txt");
             subManagers.putIfAbsent("staffManager", DataStore.loadManagerFromFile(staffDataPath));
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             subManagers.putIfAbsent("staffManager",  new StaffManager());
 
             getSubManager("staffManager", StaffManager.class).addStaff("Cindy", Gender.FEMALE, "Waiter");
