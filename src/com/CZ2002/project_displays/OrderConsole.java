@@ -11,6 +11,7 @@ import com.CZ2002.project_exceptions.order.InvalidSetMembership;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_utils.MenuBuilder;
 
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.Scanner;
 
@@ -31,17 +32,18 @@ public class OrderConsole extends ConsoleDisplay{
         optionHeaders[0] = "Table";
         options[0] = String.format("%d", order.getTable());
 
+
         for ( int i = 1 ;  i < order.ordered.size() + 1 ; i++ ){
             optionHeaders[i] = order.ordered.get(i - 1).getName();
-            options[i] = String.valueOf(order.ordered.get(i - 1).getPrice());
+            options[i] = String.format("%.2f", order.ordered.get(i - 1).getPrice());
         }
 
         optionHeaders[order.ordered.size()+1] = "Total Discount Applied: ";
-        options[order.ordered.size()+1] = String.valueOf(order.getDiscountTotal());
+        options[order.ordered.size()+1] =  String.format("%.2f", order.getDiscountTotal());
         optionHeaders[order.ordered.size()+2] = "Tax: ";
-        options[order.ordered.size()+2] = String.valueOf(order.getTax());
+        options[order.ordered.size()+2] =  String.format("%.2f", order.getTax());
         optionHeaders[order.ordered.size()+3] = "Total Bill: ";
-        options[order.ordered.size()+3] = String.valueOf(order.getBill());
+        options[order.ordered.size()+3] =  String.format("%.2f", order.getBill());
         System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, longestWidth));
 
         return options.length;
@@ -101,11 +103,11 @@ public class OrderConsole extends ConsoleDisplay{
                 sc.nextLine();
                 int tableAdd;
                 String addItem;
-                System.out.print("Add item to order for which table: ");
+                System.out.print("Table to Add Item To Order: ");
                 tableAdd = sc.nextInt();
 
                 sc.nextLine(); // throw away \n in buffer
-                System.out.printf("What item to add to order: ");
+                System.out.printf("Item to Add To Order: ");
                 addItem = sc.nextLine();
 
                 ICommand<Void, InvalidAddItemOrderException> addItemOrder = new AddItemOrderCommand(
@@ -123,13 +125,13 @@ public class OrderConsole extends ConsoleDisplay{
 
             case 3:
                 //  Remove item from order
-                sc.nextLine();
                 int tableRemove;
                 String removeItem;
-                System.out.printf("Remove item from order for which table: ");
+                System.out.printf("Table to Remove Item From Order: ");
                 tableRemove = sc.nextInt();
 
-                System.out.printf("Which item to remove from order: ");
+                System.out.printf("Item to Remove From Order: ");
+                sc.nextLine();
                 removeItem = sc.nextLine();
 
                 ICommand<Void , InvalidRemoveItemOrderException> removeItemOrder = new RemoveItemOrderCommand(
@@ -149,7 +151,7 @@ public class OrderConsole extends ConsoleDisplay{
                 // Print Order for Table xx
                 sc.nextLine();
                 int tablePrint;
-                System.out.print("Print Order for Which Table: ");
+                System.out.print("Print Order For Table: ");
                 tablePrint = sc.nextInt();
 
                 ICommand<Order, InvalidPrintOrderException> printOrder = new PrintOrderCommand(
@@ -168,7 +170,7 @@ public class OrderConsole extends ConsoleDisplay{
                 // Delete Order
                 sc.nextLine();
                 int tableClose;
-                System.out.print("Close Order for Which Table: ");
+                System.out.print("Close Order For Table: ");
                 tableClose = sc.nextInt();
 
                 ICommand<Order , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
@@ -196,7 +198,7 @@ public class OrderConsole extends ConsoleDisplay{
                 membership= sc.nextInt();
 
                 int tableSetMembership;
-                System.out.println("Set Membership for which table");
+                System.out.println("Set Membership For Table: ");
                 tableSetMembership = sc.nextInt();
                 ICommand<Void , InvalidSetMembership>  setMembership = new SetMembershipOrderCommand(
                         mainManager.getSubManager("orderManager", OrderManager.class) ,

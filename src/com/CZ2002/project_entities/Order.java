@@ -27,10 +27,10 @@ public class Order extends RestaurantEntity {
      * @param pax Number of diners seated at table
      * @param serverName name of staff who is/was serving them
      */
-    public Order( int table , int pax , Staff serverName ){
+    public Order( int table , int pax , Staff server ){
         this.table = table;
         this.pax = pax;
-        this.server = serverName;
+        this.server = server;
         this.membership = false;
         this.bill= 0.00;
         this.discountTotal = 0.00;
@@ -103,6 +103,7 @@ public class Order extends RestaurantEntity {
         }
         if (membership){
             double temp = 0.1 * bill;
+            df.setRoundingMode(RoundingMode.UP);
             df.setRoundingMode(RoundingMode.UP);
             discountTotal = Double.parseDouble(df.format(temp));
             bill -= discountTotal;
