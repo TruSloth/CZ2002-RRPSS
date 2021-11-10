@@ -1,7 +1,6 @@
 package com.CZ2002.project_displays;
 import com.CZ2002.project_boundaries.*;
 import com.CZ2002.project_commands.order.*;
-import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.*;
 import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
@@ -21,30 +20,6 @@ public class OrderConsole extends ConsoleDisplay{
     public OrderConsole(RestaurantManager restaurantManager, Scanner sc){
         super.mainManager = restaurantManager;
         super.sc = sc;
-    }
-
-    private int displayOrder(Order order) {
-        String title = "Bill";
-        int longestWidth = 40;
-        String[] optionHeaders = new String[order.ordered.size() + 4];
-        String[] options = new String[order.ordered.size() + 4];
-        optionHeaders[0] = "Table";
-        options[0] = String.format("%d", order.getTable());
-
-        for ( int i = 1 ;  i < order.ordered.size() + 1 ; i++ ){
-            optionHeaders[i] = order.ordered.get(i - 1).getName();
-            options[i] = String.valueOf(order.ordered.get(i - 1).getPrice());
-        }
-
-        optionHeaders[order.ordered.size()+1] = "Total Discount Applied: ";
-        options[order.ordered.size()+1] = String.valueOf(order.getDiscountTotal());
-        optionHeaders[order.ordered.size()+2] = "Tax: ";
-        options[order.ordered.size()+2] = String.valueOf(order.getTax());
-        optionHeaders[order.ordered.size()+3] = "Total Bill: ";
-        options[order.ordered.size()+3] = String.valueOf(order.getBill());
-        System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, longestWidth));
-
-        return options.length;
     }
 
     @Override
@@ -152,13 +127,12 @@ public class OrderConsole extends ConsoleDisplay{
                 System.out.print("Print Order for Which Table: ");
                 tablePrint = sc.nextInt();
 
-                ICommand<Order, InvalidPrintOrderException> printOrder = new PrintOrderCommand(
+                ICommand<Void , InvalidPrintOrderException> printOrder = new PrintOrderCommand(
                         mainManager.getSubManager("orderManager", OrderManager.class)
                         , tablePrint
                 );
                 try {
-                    Order order = printOrder.execute();
-                    displayOrder(order);
+                    printOrder.execute();
                 } catch (InvalidPrintOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
@@ -171,7 +145,7 @@ public class OrderConsole extends ConsoleDisplay{
                 System.out.print("Close Order for Which Table: ");
                 tableClose = sc.nextInt();
 
-                ICommand<Order , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
+                ICommand<Void , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
                         mainManager.getSubManager("orderManager", OrderManager.class),
                         mainManager.getSubManager("tableManager", TableManager.class)
                         , mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class)
@@ -179,8 +153,7 @@ public class OrderConsole extends ConsoleDisplay{
                 );
 
                 try {
-                    Order order = deleteOrder.execute();
-                    displayOrder(order);
+                    deleteOrder.execute();
                 } catch (InvalidDeleteOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }

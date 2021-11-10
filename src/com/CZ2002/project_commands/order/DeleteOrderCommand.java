@@ -3,7 +3,6 @@ package com.CZ2002.project_commands.order;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_boundaries.TableManager;
-import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_exceptions.order.InvalidDeleteOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
@@ -12,7 +11,7 @@ import java.util.NoSuchElementException;
 /**
  * This class implements {@link ICommand} to complete the 'Delete Order' action.
  */
-public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderException> {
+public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderException> {
     private SalesRevenueManager salesRevenueManager;
     private TableManager tableManager;
     private OrderManager orderManager;
@@ -38,21 +37,20 @@ public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderEx
      * Executes the method to deleteOrder in OrderManager
      */
     @Override
-    public Order execute() throws InvalidDeleteOrderException{
-        Order order = null;
+    public Void execute() throws InvalidDeleteOrderException{
         try {
             for ( int i  = 0 ; i < orderManager.getNumOfOrders(); i++)
             {
                 if ( orderManager.getOrderByIndex(i).getTable() == tableClose ){
                     salesRevenueManager.addOrder(orderManager.getOrderByIndex(i));
                     tableManager.unoccupyTable(tableClose);
-                    order = orderManager.deleteOrder(tableClose);
+                    orderManager.deleteOrder(tableClose);
                 }
             }
         } catch (NoSuchElementException e) {
             throw new InvalidDeleteOrderException("Order not found for Table " + tableClose );
         }
 
-        return order;
+        return null;
     }
 }

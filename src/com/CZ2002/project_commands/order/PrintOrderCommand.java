@@ -1,7 +1,6 @@
 package com.CZ2002.project_commands.order;
 
 import com.CZ2002.project_boundaries.OrderManager;
-import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_exceptions.order.InvalidPrintOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
@@ -10,7 +9,7 @@ import java.util.NoSuchElementException;
 /**
  * This class implements {@link ICommand} to complete the 'Print Order' action.
  */
-public class PrintOrderCommand implements ICommand<Order , InvalidPrintOrderException> {
+public class PrintOrderCommand implements ICommand<Void , InvalidPrintOrderException> {
     private OrderManager orderManager;
     private int tablePrint;
 
@@ -28,12 +27,12 @@ public class PrintOrderCommand implements ICommand<Order , InvalidPrintOrderExce
      * Executes the method to printOrder in OrderManager
      */
     @Override
-    public Order execute() throws InvalidPrintOrderException{
+    public Void execute() throws InvalidPrintOrderException{
         try {
-            Order order = orderManager.getOrder(tablePrint);
-            return order;
+            orderManager.printOrder(tablePrint);
         } catch (NoSuchElementException e) {
-            throw new InvalidPrintOrderException("This table has no order.");
+            throw new InvalidPrintOrderException("Invalid table");
         }
+        return null;
     }
 }

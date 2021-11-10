@@ -101,7 +101,11 @@ public class MenuConsole extends ConsoleDisplay{
         		}
                 String[] options = {String.format("%.2f", item.getPrice()), item.getDescription(),components};
                 System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, 40));
-        	}  
+        	}
+            
+            
+           
+            
         }
 
         return menu.size();
