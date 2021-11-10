@@ -50,7 +50,7 @@ public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderEx
                 }
             }
         } catch (NoSuchElementException e) {
-            throw new InvalidDeleteOrderException("Order not found for Table " + tableClose );
+            throw new InvalidDeleteOrderException("Order Not Found for Table " + tableClose );
         }
 
         return order;

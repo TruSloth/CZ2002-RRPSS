@@ -180,7 +180,11 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     Order order = deleteOrder.execute();
-                    displayOrder(order);
+                    if (order != null) {
+                        displayOrder(order);
+                    } else {
+                        System.out.println("Table Does Not Exists");
+                    }
                 } catch (InvalidDeleteOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
