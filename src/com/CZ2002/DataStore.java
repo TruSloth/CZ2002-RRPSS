@@ -33,6 +33,7 @@ public class DataStore {
         return filePath;
     }
 
+    @SuppressWarnings("unchecked")
     public static <T extends RestaurantEntity> Manager<T> loadManagerFromFile(Path filePath) throws FileNotFoundException {
         FileInputStream fin = new FileInputStream(filePath.toString());
         try {
