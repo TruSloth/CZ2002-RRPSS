@@ -4,6 +4,7 @@ import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
+import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
 import java.util.NoSuchElementException;
@@ -19,7 +20,7 @@ public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemO
     private int tableRemove;
 
     /**
-     * To obtain the MenuItem object to be removed from the Order
+     * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
      * @param menuManager The MenuManager object that controls MenuItem objects
      * @param orderManager The OrderManager object that controls Order objects
      * @param tableRemove The table Number which the item is to be remove from the Order
@@ -34,7 +35,10 @@ public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemO
     }
 
     /**
-     * Executes the method to removeItem from Order in OrderManager
+     * Completes the 'Remove Item From Order' action.
+     *
+     * @return Void
+     * @throws InvalidRemoveItemOrderException  if the item could not be located
      */
     @Override
     public Void execute() throws InvalidRemoveItemOrderException{

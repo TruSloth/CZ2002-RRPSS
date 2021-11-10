@@ -4,6 +4,7 @@ import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_entities.Order;
+import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
 import com.CZ2002.project_exceptions.order.InvalidDeleteOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
@@ -19,6 +20,7 @@ public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderEx
     private int tableClose;
 
     /**
+     * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
      * @param orderManager The OrderManager object that controls Orders objects
      * @param salesRevenueManager The SalesRevenueManager object that controls SaleRevenue objects
      * @param tableClose The table Number which the Order is being closed
@@ -32,10 +34,12 @@ public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderEx
     }
 
     /**
+     * Completes the following actions:
      * Adds the order to SalesRevenue Manager for archive
      * Removing an order from the ArrayList of active orders
      * Indicate/Unoccupy table in TableManager
-     * Executes the method to deleteOrder in OrderManager
+     * @return Void
+     * @throws InvalidDeleteOrderException If table could not be located
      */
     @Override
     public Order execute() throws InvalidDeleteOrderException{

@@ -16,14 +16,26 @@ import java.text.ParseException;
 import java.util.Scanner;
 
 /**
- * A boundary class that takes in inputs from user
+ * The interface that the user interacts with for {@link Order} instances.
  */
 public class OrderConsole extends ConsoleDisplay{
+
+    /**
+     * Initalises this {@code ReservationConsole} with the reference to the {@link RestaurantManager}.
+     *
+     * @param restaurantManager  the reference to the {@code RestaurantManager} to be used
+     * @param sc  the {@link Scanner} instance used by the boundary layer
+     */
     public OrderConsole(RestaurantManager restaurantManager, Scanner sc){
         super.mainManager = restaurantManager;
         super.sc = sc;
     }
 
+    /**
+     * Formats and output information enclosed in given {@link Order} instances.
+     * @param order the {@code Order} whose details are to be shown
+     * @return The number of options used
+     */
     private int displayOrder(Order order) {
         String title = "Bill";
         int longestWidth = 40;
@@ -49,6 +61,10 @@ public class OrderConsole extends ConsoleDisplay{
         return options.length;
     }
 
+    /**
+     * Formats and outputs the possible actions that can be taken on this {@code ReservationConsole}.
+     * @see  ConsoleDisplay
+     */
     @Override
     public int displayConsoleOptions() {
         String[] options = new String[]{
@@ -65,6 +81,10 @@ public class OrderConsole extends ConsoleDisplay{
         return options.length;
     }
 
+    /**
+     * Formats and outputs the possible ways to update a {@link Order} instance.
+     * @return  the number of options to be displayed
+     */
     @Override
     public MenuView handleConsoleOptions() {
         int choice = sc.nextInt();
