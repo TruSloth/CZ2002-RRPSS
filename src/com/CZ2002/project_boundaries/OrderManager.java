@@ -4,6 +4,7 @@ import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_entities.Staff;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 /**
  * A Control class to execute the logics of Order - Create Read Update Destruction
@@ -23,6 +24,21 @@ public class OrderManager extends Manager<Order>{
         Order newOrder = new Order( tableNumber , pax , server );
         entities.add(newOrder);
         System.out.println("New Order for Table " + tableNumber + " Created");
+    }
+
+    /**
+     *
+     * @param tableNumber An integer representing the table number which the Order belongs to
+     * @return The Order based on tableNumber
+     * @throws NoSuchElementException Throws exception when Table is not found
+     */
+    public Order getOrder(int tableNumber) throws NoSuchElementException {
+        Order order = entities
+                .stream()
+                .filter(o -> o.getTable() == tableNumber)
+                .findFirst()
+                .get();
+        return order;
     }
 
     /** To Read in the Order to show a summary of Order for the table
@@ -84,20 +100,17 @@ public class OrderManager extends Manager<Order>{
      * To delete the Order from the ArrayList of active Orders
      * @param tableNumber An integer representing the table number which the Order belongs to
      */
-    public void deleteOrder ( int tableNumber ){
-        boolean found = false;
+    public Order deleteOrder ( int tableNumber ){
+        Order order = null;
 
         for ( int i  = 0 ; i < entities.size() ; i++ ){
             if ( entities.get(i).getTable() == tableNumber ){
-                printOrder(tableNumber);
+                order = entities.get(i);
                 entities.remove(i);
-                found = true;
                 break;
             }
         }
-        if (!found) {
-            System.out.println("Table Does Not Exists");
-        }
+        return order;
     }
 
     /** 
@@ -118,12 +131,12 @@ public class OrderManager extends Manager<Order>{
     public int getNumOfOrders() { 
         return entities.size(); 
     }
+
     /**
      * Setting membership status
      * @param tableNumber An integer representing the table number which the Order belongs to
      * @param tableSetMembership An integer value denoting membership(1) or not (0)
      */
-
     public void setMembership (int tableNumber, int tableSetMembership){
         boolean found = false;
         for ( int i  = 0 ; i < entities.size() ; i++ ){

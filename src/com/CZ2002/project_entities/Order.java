@@ -19,18 +19,18 @@ public class Order extends RestaurantEntity {
     private Staff server;
     private double bill;
     private double discountTotal;
-    public ArrayList<MenuItem> ordered;  // TODO: Why is this public?
+    public ArrayList<MenuItem> ordered;  
     Calendar cal;
 
     /** Creates an Order object with arguments provided
      * @param table The Table Number ( 1 to 20 ) which diners are seated at
      * @param pax Number of diners seated at table
-     * @param serverName name of staff who is/was serving them
+     * @param server Staff who is/was serving them
      */
-    public Order( int table , int pax , Staff serverName ){
+    public Order( int table , int pax , Staff server ){
         this.table = table;
         this.pax = pax;
-        this.server = serverName;
+        this.server = server;
         this.membership = false;
         this.bill= 0.00;
         this.discountTotal = 0.00;
@@ -69,7 +69,7 @@ public class Order extends RestaurantEntity {
 
     /**
      * Find out the amount of discount applied
-     * @return double value of actual discount from membership
+     * @return A double value of actual discount from membership
      */
     public double getDiscountTotal() {
         return discountTotal;
@@ -77,14 +77,14 @@ public class Order extends RestaurantEntity {
 
     /**
      * Find total tax applied
-     * @return double value of tax of bill
+     * @return A double value of tax of bill
      */
     public double getTax(){
         return tax;
     }
 
-    /** Gets Name of Staff who is/was serving the diners
-     * @return A String of the name of Staff who is/was serving the diners
+    /** Gets the Staff object who is/was serving the diners
+     * @return Staff who is/was serving the diners
      */
     public Staff getServer() {
         return this.server;
@@ -103,6 +103,7 @@ public class Order extends RestaurantEntity {
         }
         if (membership){
             double temp = 0.1 * bill;
+            df.setRoundingMode(RoundingMode.UP);
             df.setRoundingMode(RoundingMode.UP);
             discountTotal = Double.parseDouble(df.format(temp));
             bill -= discountTotal;
@@ -146,15 +147,15 @@ public class Order extends RestaurantEntity {
         this.updateBill();
     }
 
-    /** Sets the updated name of Staff serving the diners
-     * @param server A String containing the Staff's name
+    /** Sets the updated Staff serving the diners
+     * @param server Staff who is/was serving the diners
      */
     public void setServer(Staff server) {
         this.server = server;
     }
 
     /** Add a new item to the Order
-     * @param item The name of the Class Object ( MenuItem ) that would be added to the Order
+     * @param item The MenuItem object that would be added to the Order
      */
     public void addItem (MenuItem item){
         ordered.add(item);
@@ -163,7 +164,7 @@ public class Order extends RestaurantEntity {
     }
 
     /** Removing an item from the Order
-     * @param item The name of the Class Object ( MenuItem ) that would be removed from the Order
+     * @param item The MenuItem object that would be removed from the Order
      */
     public void removeItem ( MenuItem item){
         ordered.remove(item);
@@ -174,7 +175,6 @@ public class Order extends RestaurantEntity {
      * Printing out the Table's Bill with information such as Item ordered and its price
      */
     public void printOrdered(){
-        // TODO: extract to order console
         String title = "Bill";
         int longestWidth = 40;
         String[] optionHeaders = new String[ordered.size() + 4];

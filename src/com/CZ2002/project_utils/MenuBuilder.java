@@ -136,6 +136,38 @@ public class MenuBuilder {
         return menu.toString();
     }
 
+    public static String buildMenu(String title, int longestWidth) {
+        return formatMenuTitle(longestWidth, title);
+    }
+
+    public static String buildMenu(String title, String[] options, int longestWidth) {
+        // Returns a formatted menu for displaying menu options as a string
+
+        /* Example Menu Output
+         *
+         * ================================
+         * |         Reservations         |
+         * ================================
+         * |1. Create Reservation Booking |
+         * |2. Check Reservation Booking  |
+         * |3. Update Reservation Booking |
+         * |4. Remove Reservation Booking |
+         * |5. Back                       |
+         * ================================
+         *
+         *
+         */
+
+        StringBuilder menu = new StringBuilder();
+
+        menu.append(formatMenuTitle(longestWidth, title));
+        for (int i = 0; i < options.length; i++) {
+            menu.append(formatMenuOption(longestWidth, i + 1, options[i]) + '\n');
+        }
+        menu.append("=".repeat(longestWidth + 5));
+        return menu.toString();
+    }
+
     public static String buildMenu(int longestWidth, String[] options) {
         // Returns a formatted menu for displaying menu options without a title as a string
         // Used to append to a fully formatted menu to create a compound menu
@@ -199,6 +231,36 @@ public class MenuBuilder {
         }
         menu.append(formatMenuOption(longestWidth, optionHeaders[optionHeaders.length - 1], options[options.length - 1]) + "\n");
         menu.append("=".repeat(longestWidth + 5));
+        return menu.toString();
+    }
+
+    public static String buildMenu(int longestWidth,String[] options, String[] optionHeaders, String sepChar) {
+        // Returns a formatted menu for displaying menu options without a title as a string
+        // Used to append to a fully formatted menu to create a compound menu
+
+        /*  Example Menu Output
+         *
+         *  =========================
+         *  |         Steak         |
+         *  =========================
+         *  | Price          $10.99 |
+         *  |-----------------------|
+         *  | Description           |
+         *  |                       |
+         *  | test test             |
+         *  =========================
+         *  |1. Edit Name           | <--- Output from here
+         *  |2. Edit Price          |
+         *  |3. Edit Description    |
+         *  |4. Back                |
+         *  ========================= <--- to here
+         */
+        StringBuilder menu = new StringBuilder();
+
+        for (int i = 0; i < options.length; i++) {
+            menu.append(formatMenuOption(longestWidth, optionHeaders[i], options[i]) + '\n');
+        }
+        menu.append(sepChar.repeat(longestWidth + 5));
         return menu.toString();
     }
 

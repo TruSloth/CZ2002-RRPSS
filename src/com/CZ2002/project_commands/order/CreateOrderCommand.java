@@ -11,6 +11,7 @@ import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_boundaries.ReservationManager;
 import com.CZ2002.project_entities.Staff;
 import com.CZ2002.project_exceptions.InvalidStaffException;
+import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
 /**
@@ -26,6 +27,7 @@ public class CreateOrderCommand implements ICommand<Void , InvalidStaffException
     private int serverId;
 
     /**
+     * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
      * @param staffManager The StaffManager object that controls Staff objects
      * @param orderManager The OrderManager object that controls Order objects
      * @param pax Number of diners seated at table
@@ -45,8 +47,10 @@ public class CreateOrderCommand implements ICommand<Void , InvalidStaffException
     }
 
     /**
-     * Creating a new active Order to add into the ArrayList of active orders
-     * Executes the method to createNewOrder in OrderManager
+     * Completes the 'Create Order' action.
+     *
+     * @return Void
+     * @throws InvalidStaffException  if the staff could not be located
      */
     @Override
     public Void execute() throws InvalidStaffException {

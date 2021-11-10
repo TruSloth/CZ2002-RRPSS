@@ -47,12 +47,12 @@ public class RestaurantManager implements IMainManager {
 
         // Load SalesRevenueManager
         // TODO: ASK LUCAS HOW THIS WORKS
-//        try {
-//            Path salesRevenueDataPath = Paths.get(DataStore.getDataDirPath().toString(), "salesRevenueData.txt");
-//            subManagers.putIfAbsent("salesRevenueManager", DataStore.loadManagerFromFile(salesRevenueDataPath));
-//        } catch (FileNotFoundException e) {
+        try {
+            Path salesRevenueDataPath = Paths.get(DataStore.getDataDirPath().toString(), "salesRevenueData.txt");
+            subManagers.putIfAbsent("salesRevenueManager", DataStore.loadManagerFromFile(salesRevenueDataPath));
+        } catch (FileNotFoundException e) {
             subManagers.putIfAbsent("salesRevenueManager", new SalesRevenueManager());
-//        }
+        }
 
         // Load OrderManager
         try {

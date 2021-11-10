@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
@@ -20,7 +21,7 @@ public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderE
 
 
     /**
-     * To obtain the MenuItem object to be added to the Order
+     * Constructor that accepts the necessary parameters for {@code execute} to successfully complete.
      * @param menuManager The MenuManager object that controls MenuItem objects
      * @param orderManager The OrderManager object that controls Order objects
      * @param tableAdd The table Number which the item is to be added to the Order
@@ -35,7 +36,10 @@ public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderE
     }
 
     /**
-     * Executes the method to addItem to Order in OrderManager
+     * Completes the 'Add Item To Order' action.
+     *
+     * @return Void
+     * @throws InvalidAddItemOrderException  if the item could not be located
      */
     @Override
     public Void execute() throws InvalidAddItemOrderException{
