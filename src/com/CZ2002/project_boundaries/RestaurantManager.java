@@ -1,21 +1,27 @@
 package com.CZ2002.project_boundaries;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.CZ2002.DataStore;
+import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_entities.Order;
+import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_entities.Restaurant;
+import com.CZ2002.project_entities.SalesRevenue;
+import com.CZ2002.project_entities.Staff;
+import com.CZ2002.project_entities.Table;
 import com.CZ2002.project_enums.Gender;
 import com.CZ2002.project_enums.Type;
 import com.CZ2002.project_interfaces.IMainManager;
+import com.CZ2002.project_utils.DataStore;
 
 /**
  * The {@code RestaurantManager} class provides the access point to all {@link Manager} classes the Restaurant uses.
+ * 
+ * {@code RestaurantManager} additionally saves and loads the {@code Manager} instances upon start up and shutdown.
  */
 public class RestaurantManager implements IMainManager {
-    // TODO: Documentation
     private Restaurant restaurant;
 
     // Persists all managers in subManagers to their data files
@@ -23,23 +29,27 @@ public class RestaurantManager implements IMainManager {
         for (Manager<?> manager : subManagers.values()) {
             String fileName = manager.getClass().getSimpleName();
             fileName = fileName.substring(0, 1).toLowerCase() + fileName.substring(1).replace("Manager", "") + "Data";
-            DataStore.saveManagerToFile(manager, fileName);
+            DataStore.saveToFile(manager, fileName);
         }
     }
 
     /**
      * Initialises this {@code RestaurantManager} and the {@link Manager} instances it handles.
+     * 
+     * Loads the {@code Manager} instances from data files located at {@code data/} if they can be found.
+     * Otherwise, the {@code Manager} instances are initialised with default {@code entities}.
      *
      * @param restaurant  the reference to the {@link Restaurant} instance
      */
+    @SuppressWarnings("unchecked")
     public RestaurantManager(Restaurant restaurant) {
         this.restaurant = restaurant;
         int numOfTables = restaurant.getNumOfTables();
 
-        // Called when option to quit is selected or when the program is terminated (Ctrl + c).
+        // Initializes a Thread with a run method that gets called when option to quit is 
+        // selected or when the program is terminated (Ctrl + c).
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
-                //getSubManager("reservationManager", ReservationManager.class).cancelAllReservationFutures();
                 saveManagers();
             }
         });
@@ -47,7 +57,7 @@ public class RestaurantManager implements IMainManager {
         // Load MenuManager
         try {
             Path menuDataPath = Paths.get(DataStore.getDataDirPath().toString(), "menuData.txt");
-            subManagers.putIfAbsent("menuManager", DataStore.loadManagerFromFile(menuDataPath));
+            subManagers.putIfAbsent("menuManager",(Manager<MenuItem>) DataStore.loadFromFile(menuDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("menuManager", new MenuManager());
 
@@ -66,7 +76,7 @@ public class RestaurantManager implements IMainManager {
         // Load SalesRevenueManager
         try {
             Path salesRevenueDataPath = Paths.get(DataStore.getDataDirPath().toString(), "salesRevenueData.txt");
-            subManagers.putIfAbsent("salesRevenueManager", DataStore.loadManagerFromFile(salesRevenueDataPath));
+            subManagers.putIfAbsent("salesRevenueManager", (Manager<SalesRevenue>) DataStore.loadFromFile(salesRevenueDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("salesRevenueManager", new SalesRevenueManager());
         }
@@ -74,7 +84,7 @@ public class RestaurantManager implements IMainManager {
         // Load OrderManager
         try {
             Path orderDataPath = Paths.get(DataStore.getDataDirPath().toString(), "orderData.txt");
-            subManagers.putIfAbsent("orderManager", DataStore.loadManagerFromFile(orderDataPath));
+            subManagers.putIfAbsent("orderManager", (Manager<Order>) DataStore.loadFromFile(orderDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("orderManager", new OrderManager());
         }
@@ -82,7 +92,7 @@ public class RestaurantManager implements IMainManager {
         // Load ReservationManager
         try {
             Path reservationDataPath = Paths.get(DataStore.getDataDirPath().toString(), "reservationData.txt");
-            subManagers.putIfAbsent("reservationManager", DataStore.loadManagerFromFile(reservationDataPath));
+            subManagers.putIfAbsent("reservationManager", (Manager<Reservation>) DataStore.loadFromFile(reservationDataPath));
             getSubManager("reservationManager", ReservationManager.class).startAllReservationFutures(); // Restart all Reservation Futures
         } catch (IOException e) {
             subManagers.putIfAbsent("reservationManager", new ReservationManager());
@@ -91,7 +101,7 @@ public class RestaurantManager implements IMainManager {
         // Load TableManager
         try {
             Path tableDataPath = Paths.get(DataStore.getDataDirPath().toString(), "tableData.txt");
-            subManagers.putIfAbsent("tableManager", DataStore.loadManagerFromFile(tableDataPath));
+            subManagers.putIfAbsent("tableManager", (Manager<Table>) DataStore.loadFromFile(tableDataPath));
         } catch (IOException e) {
             // (2,4,6,8,10-seater proportions in 20%, 40%, 20%, 10%, 10%)
             subManagers.putIfAbsent("tableManager",  new TableManager(numOfTables, numOfTables / 5, numOfTables / 5 * 2 , numOfTables / 5, numOfTables / 10, numOfTables / 10));
@@ -100,7 +110,7 @@ public class RestaurantManager implements IMainManager {
         // Load StaffManager
         try {
             Path staffDataPath = Paths.get(DataStore.getDataDirPath().toString(), "staffData.txt");
-            subManagers.putIfAbsent("staffManager", DataStore.loadManagerFromFile(staffDataPath));
+            subManagers.putIfAbsent("staffManager", (Manager<Staff>) DataStore.loadFromFile(staffDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("staffManager",  new StaffManager());
 
