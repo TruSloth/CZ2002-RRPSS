@@ -18,6 +18,15 @@ public class RestaurantManager implements IMainManager {
     // TODO: Documentation
     private Restaurant restaurant;
 
+    // Persists all managers in subManagers to their data files
+    private void saveManagers() {
+        for (Manager<?> manager : subManagers.values()) {
+            String fileName = manager.getClass().getSimpleName();
+            fileName = fileName.substring(0, 1).toLowerCase() + fileName.substring(1).replace("Manager", "") + "Data";
+            DataStore.saveManagerToFile(manager, fileName);
+        }
+    }
+
     /**
      * Initialises this {@code RestaurantManager} and the {@link Manager} instances it handles.
      *
@@ -26,6 +35,14 @@ public class RestaurantManager implements IMainManager {
     public RestaurantManager(Restaurant restaurant) {
         this.restaurant = restaurant;
         int numOfTables = restaurant.getNumOfTables();
+
+        // Called when option to quit is selected or when the program is terminated (Ctrl + c).
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                //getSubManager("reservationManager", ReservationManager.class).cancelAllReservationFutures();
+                saveManagers();
+            }
+        });
 
         // Load MenuManager
         try {
@@ -52,7 +69,6 @@ public class RestaurantManager implements IMainManager {
             subManagers.putIfAbsent("salesRevenueManager", DataStore.loadManagerFromFile(salesRevenueDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("salesRevenueManager", new SalesRevenueManager());
-            System.out.println(subManagers.get("salesRevenueManager"));
         }
 
         // Load OrderManager
@@ -98,20 +114,11 @@ public class RestaurantManager implements IMainManager {
      * <p>
      * This method must be called for the program to shutdown successfully.
      */
+    @Override
     public void shutdown() {
         // Called when option to quit is selected.
         getSubManager("reservationManager", ReservationManager.class).cancelAllReservationFutures();
-
-        // Serialize Managers
-        DataStore.saveManagerToFile(getSubManager("reservationManager", ReservationManager.class), "reservationData");
-        DataStore.saveManagerToFile(getSubManager("orderManager", OrderManager.class), "orderData");
-        DataStore.saveManagerToFile(getSubManager("staffManager", StaffManager.class), "staffData");
-        DataStore.saveManagerToFile(getSubManager("menuManager", MenuManager.class), "menuData");
-        DataStore.saveManagerToFile(getSubManager("tableManager", TableManager.class), "tableData");
-        DataStore.saveManagerToFile(getSubManager("salesRevenueManager", SalesRevenueManager.class), "salesRevenueData");
     }
-
-
 
     @Override
     public <T> T getSubManager(String manager, Class<? extends T> type) {

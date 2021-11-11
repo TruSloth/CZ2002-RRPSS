@@ -1,6 +1,8 @@
 package com.CZ2002.project_displays;
 
 import java.text.ParseException;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.CZ2002.project_boundaries.RestaurantManager;
@@ -47,46 +49,52 @@ public class GeneralConsole extends ConsoleDisplay {
     public MenuView handleConsoleOptions() throws InvalidStaffException, ParseException, InvalidSalesRevenueQueryException {
         MenuView view = MenuView.CURRENT_MENU;
 
-        int choice = sc.nextInt();
+        try {
+            int choice = sc.nextInt();
+        
+            switch (choice) {
+                case 1:
+                    // Menu Items
+                    view = MenuView.MENU_ITEMS;
+                    do {
+                        menuConsole.displayConsoleOptions();
+                        view = menuConsole.handleConsoleOptions();
+                    } while (view != MenuView.PREVIOUS_MENU);
+                    break;
+                case 2:
+                    // Orders
+                    view = MenuView.ORDERS;
+                    do {
+                        orderConsole.displayConsoleOptions();
+                        view = orderConsole.handleConsoleOptions();
+                    } while (view != MenuView.PREVIOUS_MENU);
+                    break;
+                case 3:
+                    // Reservations
+                    view = MenuView.RESERVATIONS;
+                    do {
+                        reservationConsole.displayConsoleOptions();
+                        view = reservationConsole.handleConsoleOptions();
+                    } while (view != MenuView.PREVIOUS_MENU);
 
-        switch (choice) {
-            case 1:
-                // Menu Items
-                view = MenuView.MENU_ITEMS;
-                do {
-                    menuConsole.displayConsoleOptions();
-                    view = menuConsole.handleConsoleOptions();
-                } while (view != MenuView.PREVIOUS_MENU);
-                break;
-            case 2:
-                // Orders
-                view = MenuView.ORDERS;
-                do {
-                    orderConsole.displayConsoleOptions();
-                    view = orderConsole.handleConsoleOptions();
-                } while (view != MenuView.PREVIOUS_MENU);
-                break;
-            case 3:
-                // Reservations
-                view = MenuView.RESERVATIONS;
-                do {
-                    reservationConsole.displayConsoleOptions();
-                    view = reservationConsole.handleConsoleOptions();
-                } while (view != MenuView.PREVIOUS_MENU);
-
-                break;
-            case 4:
-                // Sales Revenue Report
-                view = MenuView.SALES_REVENUE;
-                do {
-                    salesRevenueConsole.displayConsoleOptions();
-                    view = salesRevenueConsole.handleConsoleOptions();
-                } while (view != MenuView.PREVIOUS_MENU);
-                break;
-            case 5:
-                // Quit
-                view = MenuView.PROGRAM_END;
-                break;
+                    break;
+                case 4:
+                    // Sales Revenue Report
+                    view = MenuView.SALES_REVENUE;
+                    do {
+                        salesRevenueConsole.displayConsoleOptions();
+                        view = salesRevenueConsole.handleConsoleOptions();
+                    } while (view != MenuView.PREVIOUS_MENU);
+                    break;
+                case 5:
+                    // Quit
+                    view = MenuView.PROGRAM_END;
+                    break;
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input!");
+        } catch (NoSuchElementException e) {
+            view = MenuView.PROGRAM_END; // Scanner has closed.
         }
 
         return view;
