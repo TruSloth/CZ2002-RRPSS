@@ -2,11 +2,13 @@ package com.CZ2002.project_commands.menu;
 
 
 import com.CZ2002.project_boundaries.MenuManager;
+import com.CZ2002.project_exceptions.InvalidMenuItemException;
+import com.CZ2002.project_interfaces.ICommand;
 
 /**
  * This class completes the 'Update item' action.
  */
-public class UpdateMenuItemCommand {
+public class UpdateMenuItemCommand implements ICommand<Void, InvalidMenuItemException>{
     private MenuManager menuManager;
     private String name;
     private String subName;
@@ -35,7 +37,17 @@ public class UpdateMenuItemCommand {
     /**
      * Completes the 'Update item' action.
      */
-    public void execute() {
-        menuManager.updateItem(name, subName, des, price);
+    public Void execute() throws InvalidMenuItemException {
+    	try {
+    		menuManager.updateItem(name, subName, des, price);
+    		if(menuManager.getItem(name)==null) {
+    			throw new InvalidMenuItemException("Requested Menu Item does not exist");
+    		}
+    	} finally{
+    		
+    	}
+    	
+    	return null;
+        
     }
 }
