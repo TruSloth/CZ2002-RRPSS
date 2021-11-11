@@ -1,4 +1,5 @@
 package com.CZ2002.project_entities;
+import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
 import com.CZ2002.project_utils.MenuBuilder;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -108,8 +109,6 @@ public class Order extends RestaurantEntity {
             discountTotal = Double.parseDouble(df.format(temp));
             bill -= discountTotal;
             temp = 0.17* bill;
-            tax = Double.parseDouble(df.format(temp));
-            bill += tax;
         }
         double temp1 = 0.17* bill;
         tax = Double.parseDouble(df.format(temp1));
@@ -156,19 +155,26 @@ public class Order extends RestaurantEntity {
 
     /** Add a new item to the Order
      * @param item The MenuItem object that would be added to the Order
+     * @return A MenuItem object that is added to Order , otherwise Null is returned
      */
     public void addItem (MenuItem item){
         ordered.add(item);
         this.updateBill();
-        System.out.println( "Item has been added to Order for table " + table );
     }
 
     /** Removing an item from the Order
      * @param item The MenuItem object that would be removed from the Order
+     * @return A MenuItem object that is removed from Order , otherwise Null is returned
      */
-    public void removeItem ( MenuItem item){
-        ordered.remove(item);
-        this.updateBill();
+    public MenuItem removeItem ( MenuItem item){
+
+        if ( ordered.remove(item) ) {
+            this.updateBill();
+            return item;
+        }
+        else{
+            return null;
+        }
     }
 
     /**

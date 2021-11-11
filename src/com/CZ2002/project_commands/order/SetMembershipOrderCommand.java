@@ -35,12 +35,14 @@ public class SetMembershipOrderCommand implements ICommand<Void , InvalidSetMemb
      */
     @Override
     public Void execute() throws InvalidSetMembership {
-        try {
-            orderManager.setMembership( tableSetMembership , membership );
-        } catch (NoSuchElementException e) {
-            throw new InvalidSetMembership("Order not found for Table " + tableSetMembership);
+        if ( membership < 0 ||  membership > 1 ){
+            throw new InvalidSetMembership("Invalid Options");
         }
-
+        int temp;
+        temp = orderManager.setMembership( tableSetMembership , membership );
+        if ( temp == -1 ){
+            throw new InvalidSetMembership("Table Not Found" );
+        }
         return null;
     }
 }

@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
 import com.CZ2002.project_interfaces.ICommand;
@@ -43,13 +44,15 @@ public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderE
      */
     @Override
     public Void execute() throws InvalidAddItemOrderException{
-        try {
-            this.menuItem = menuManager.getItem(item);
-            orderManager.addItemOrder( menuItem , tableAdd );
-        } catch (NoSuchElementException e){
-            throw new InvalidAddItemOrderException("Invalid Item");
+        int temp;
+        this.menuItem = menuManager.getItem(item);
+        if ( menuItem == null ){
+            throw new InvalidAddItemOrderException("Item not found in Menu!");
         }
-
+        temp = orderManager.addItemOrder( menuItem , tableAdd );
+        if ( temp == -1 ){
+            throw new InvalidAddItemOrderException("Table Not found!");
+        }
         return null;
     }
 }
