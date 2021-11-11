@@ -8,7 +8,10 @@ import com.CZ2002.project_entities.PackageItem;
 import com.CZ2002.project_utils.MenuBuilder;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_enums.Type;
+import com.CZ2002.project_exceptions.InvalidMenuItemException;
+import com.CZ2002.project_interfaces.ICommand;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,16 +20,16 @@ import java.util.Scanner;
  * A boundary class that takes in inputs from user to interact with MenuItem
  */
 public class MenuConsole extends ConsoleDisplay{
-    private AddAlaCarteCommand addAlaCarteCommand;
-    private AddPackageCommand addPackageCommand;
-    private UpdateMenuItemCommand updateMenuItemCommand;
-    private RemoveMenuItemCommand removeMenuItemCommand;
-    private AddToPackageCommand addToPackageCommand;
-    private RemoveFromPackageCommand removeFromPackageCommand;
+    private ICommand<Void, InvalidMenuItemException> addAlaCarteCommand;
+    private ICommand<Void, InvalidMenuItemException> addPackageCommand;
+    private ICommand<Void, InvalidMenuItemException> updateMenuItemCommand;
+    private ICommand<Void, InvalidMenuItemException> removeMenuItemCommand;
+    private ICommand<Void, InvalidMenuItemException> addToPackageCommand;
+    private ICommand<Void, InvalidMenuItemException> removeFromPackageCommand;
     private GetMenuCommand getMenuCommand;
 
     /**
-     * function to print out the console
+     * Function to print out the console
      */
     public MenuConsole(RestaurantManager restaurantManager, Scanner sc) {
         super.sc = sc;
@@ -75,7 +78,24 @@ public class MenuConsole extends ConsoleDisplay{
 
         return options.length;
     }
+    
+    public int displayEditOptions() {
+    	String[] options = new String[] {
+                "Name",
+                "Description",
+                "Price",
+        };
 
+        String title = "Edit Options";
+
+        System.out.println(MenuBuilder.buildMenu(title, options));
+
+        return options.length;
+    }
+    
+    /**
+     * Function to print out the menu
+     */
     public int displayMenu(ArrayList<MenuItem> menu) {
         for (MenuItem item : menu) {
         	if (item instanceof AlaCarteItem ) {
@@ -126,7 +146,7 @@ public class MenuConsole extends ConsoleDisplay{
         
         switch (choice) {
         	case 1: 
-        		//input for the required params
+        		//Add Ala Carte Item
                 System.out.println("Enter ala carte item's name:");
                 name = sc.nextLine();
 
@@ -150,14 +170,19 @@ public class MenuConsole extends ConsoleDisplay{
                 addAlaCarteCommand = new AddAlaCarteCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
                         name,price,des,type);
-                addAlaCarteCommand.execute();
+				try {
+					addAlaCarteCommand.execute();
+	                System.out.println("Ala carte item added!");
+	                System.out.println();
+				} catch (InvalidMenuItemException | ParseException e) {
+					System.out.println(e.getMessage());
+				}
 
-                //item successfully added
-                System.out.println("Ala carte item added!");
+                
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 2:
-        		 //input for the required params
+        		//Add Package Item
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
 
@@ -173,162 +198,116 @@ public class MenuConsole extends ConsoleDisplay{
                 dummy= sc.nextLine();
                 for (i= 1; i<= packageSize; i++) {
                     System.out.println("Enter ala carte item no " + i +  " name:");
-                    subName= sc.nextLine();
+                    subName= sc.nextLine();                    
                     while (true) {
-                        if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null
-                        	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) instanceof PackageItem ) {
+                        if (!(mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) instanceof MenuItem) ) {
                             System.out.println("Item does not exist! Try again: ");
                             subName= sc.nextLine();
                         } else {
                             break;
                         }
                     }
-                    componentList.add((AlaCarteItem)mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName));
+                    componentList.add((AlaCarteItem)mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName));                  
                 }
 
                 addPackageCommand = new AddPackageCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
                         name,price,des,componentList);
-                addPackageCommand.execute();
+				try {
+					addPackageCommand.execute();
+	                System.out.println("Package added!");
+	                System.out.println();
+				} catch (InvalidMenuItemException | ParseException e) {
+					System.out.println(e.getMessage());
+				}
 
-                componentList.clear();
-
-                //item successfully added
-                System.out.println("Package added!");
-                System.out.println();
-         
-                
+                componentList.clear();               
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 3:
-        		 //input for the required params
+        		//Update Menu Item
                 System.out.println("Enter item to be changed:");
                 name = sc.nextLine();
-                while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) == null) {
-                        System.out.println("Item does not exist! Try again: ");
-                        name= sc.nextLine();
-                    } else {
-                        break;
-                    }
-                }
+              
                 System.out.println("Enter new name: ");
                 subName = sc.nextLine();
 
                 System.out.println("Enter new description: ");
-                System.out.println("(Current description: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getDescription() +  ")");
+                //System.out.println("(Current description: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getDescription() +  ")");
                 des = sc.nextLine();
 
                 System.out.println("Enter new price:");
-                System.out.println("(Current price: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getPrice() +  ")");
+                //System.out.println("(Current price: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getPrice() +  ")");
                 price = sc.nextDouble();
                 dummy= sc.nextLine();
 
                 updateMenuItemCommand = new UpdateMenuItemCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
                         name,subName,price,des);
-                updateMenuItemCommand.execute();
-
-                //item successfully updated
-                System.out.println(name + " was changed!");
-                System.out.println();
-        		
+                try {
+                	updateMenuItemCommand.execute();
+                	System.out.println(name + " was changed!");
+                	System.out.println();
+                } catch (InvalidMenuItemException | ParseException e) {
+					System.out.println(e.getMessage());
+				}   		
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 4:
-        		//input for the required params
+        		//Remove Menu Item
                 System.out.println("Enter item to be removed:");
                 name = sc.nextLine();
-                while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) == null) {
-                        System.out.println("Item does not exist! Try again: ");
-                        name= sc.nextLine();
-                    } else {
-                        break;
-                    }
-                }
                 removeMenuItemCommand = new RemoveMenuItemCommand(mainManager.getSubManager("menuManager", MenuManager.class), name);
-                removeMenuItemCommand.execute();
-
-                //item successfully removed
-                System.out.println(name + " was removed!");
-                System.out.println();
-                
-                view = MenuView.MENU_ITEMS;
+				try {
+					removeMenuItemCommand.execute();
+					System.out.println(name + " was removed!");
+	                System.out.println();
+				} catch (InvalidMenuItemException | ParseException e) {
+					System.out.println(e.getMessage());
+				}
+				view = MenuView.MENU_ITEMS;
                 break;
         	case 5:
-        		//input for the required params
+        		//Add Ala carte to package
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
-                while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) == null
-                    	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) instanceof AlaCarteItem) {
-                        System.out.println("Item does not exist! Try again: ");
-                        name= sc.nextLine();
-                    } else {
-                        break;
-                    }
-                }
-
+                
                 System.out.println("Enter name of ala carte to be added:");
                 subName = sc.nextLine();
-                while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null
-                    	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) instanceof PackageItem) {
-                        System.out.println("Item does not exist! Try again: ");
-                        subName= sc.nextLine();
-                    } else {
-                        break;
-                    }
-                }
-                addToPackageCommand = new AddToPackageCommand(mainManager.getSubManager("menuManager", MenuManager.class), name, subName);
-                addToPackageCommand.execute();
-
-                //item successfully added to package
-                System.out.println( subName + " was added to " + name);
-                System.out.println();
                 
+                addToPackageCommand = new AddToPackageCommand(mainManager.getSubManager("menuManager", MenuManager.class), name, subName);
+				try {
+					addToPackageCommand.execute();
+					System.out.println( subName + " was added to " + name);
+	                System.out.println();
+				} catch (InvalidMenuItemException | ParseException e) {
+					System.out.println(e.getMessage());
+				}
+
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 6:
-        		 //input for the required params
+        		//Remove ala carte from package
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
-                while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) == null
-                    	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) instanceof AlaCarteItem) {
-                        System.out.println("Item does not exist! Try again: ");
-                        name= sc.nextLine();
-                    } else {
-                        break;
-                    }
-                }
 
                 System.out.println("Enter name of ala carte to be removed:");
                 subName = sc.nextLine();
-                while (true) {
-                    if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) == null
-                    	|| mainManager.getSubManager("menuManager", MenuManager.class).getItem(subName) instanceof PackageItem) {
-                        System.out.println("Item does not exist! Try again: ");
-                        subName= sc.nextLine();
-                    } else {
-                        break;
-                    }
-                }
                 removeFromPackageCommand = new RemoveFromPackageCommand(mainManager.getSubManager("menuManager", MenuManager.class), name, subName);
-                removeFromPackageCommand.execute();
-
-                //item successfully added to package
-                System.out.println( subName + " was removed from " + name);
-                System.out.println();
-                
+				try {
+					removeFromPackageCommand.execute();
+					 System.out.println( subName + " was removed from " + name);
+		             System.out.println();
+				} catch (InvalidMenuItemException | ParseException e) {
+					System.out.println(e.getMessage());
+				}            
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 7:
+        		//Print Menu
         		getMenuCommand = new GetMenuCommand(mainManager.getSubManager("menuManager", MenuManager.class));
                 ArrayList<MenuItem> menu = getMenuCommand.execute();
                 displayMenu(menu);
-                //mainManager.getSubManager("menuManager", MenuManager.class).printMenu();
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 8: 
@@ -337,10 +316,6 @@ public class MenuConsole extends ConsoleDisplay{
                 break;
         		
         }
-        
-
-        //Scanner sc = new Scanner(System.in);
-
         return view;
 
     }

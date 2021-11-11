@@ -87,19 +87,22 @@ public class MenuManager extends Manager<MenuItem>{
      * @param aName name of the AlaCarteItem that needs to be added
      */
     public void addItemToPackage(String pName, String aName) {
-        AlaCarteItem newItem = new AlaCarteItem("name", "description", 1.00, Type.MAIN); //dummy declaration
+        AlaCarteItem newItem = null;
         for (MenuItem aItem: entities) {
-            if (aItem.getName().equals(aName)) {
+            if (aItem.getName().equals(aName) && aItem instanceof AlaCarteItem) {
                 newItem = (AlaCarteItem)aItem;	//ala carte item assigned
             }
         }
-        for (MenuItem item: entities) {
-            if (item.getName().equals(pName)) {
+        if (newItem != null) {
+        	for (MenuItem item: entities) {
+            if (item.getName().equals(pName) && item instanceof PackageItem) {
                 PackageItem newPackage = (PackageItem)item;
                 newPackage.addItem(newItem);
                 item = newPackage;
             }
+        	}
         }
+        
     }
 
     /** Removes an AlaCarteItem from a PackageItem
@@ -107,14 +110,14 @@ public class MenuManager extends Manager<MenuItem>{
      * @param aName name of the AlaCarteItem that needs to be removed
      */
     public void removeItemFromPackage(String pName, String aName) {
-        AlaCarteItem newItem = new AlaCarteItem("name", "description", 1.00, Type.MAIN); //dummy declaration
+        AlaCarteItem newItem = null;
         for (MenuItem aItem: entities) {
-            if (aItem.getName().equals(aName)) {
+            if (aItem.getName().equals(aName) && aItem instanceof AlaCarteItem) {
                 newItem = (AlaCarteItem)aItem;	//ala carte item assigned
             }
         }
         for (MenuItem item: entities) {
-            if (item.getName().equals(pName)) {
+            if (item.getName().equals(pName) && item instanceof PackageItem) {
                 PackageItem newPackage = (PackageItem)item;
                 newPackage.removeItem(newItem);
                 item = newPackage;
