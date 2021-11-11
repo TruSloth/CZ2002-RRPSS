@@ -2,12 +2,14 @@ package com.CZ2002.project_commands.menu;
 
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_enums.Type;
+import com.CZ2002.project_exceptions.InvalidMenuItemException;
+import com.CZ2002.project_interfaces.ICommand;
 
 
 /**
  * This class completes the 'Add an ala carte item' action.
  */
-public class AddAlaCarteCommand {
+public class AddAlaCarteCommand implements ICommand<Void, InvalidMenuItemException> {
     private MenuManager menuManager;
     private String name;
     private double price;
@@ -34,7 +36,17 @@ public class AddAlaCarteCommand {
     /**
      * Completes the 'Add an ala carte item' action.
      */
-    public void execute() {
-        menuManager.addAlaCarteItem(name, des, price, type);
+    public Void execute() throws InvalidMenuItemException {
+    	try {    		
+    		if(menuManager.getItem(name) != null) {
+    			throw new InvalidMenuItemException("Menu Item of the same name already exists");		
+    		}
+    		menuManager.addAlaCarteItem(name, des, price, type);
+    		
+    	} finally{
+    		
+    	}
+    	
+    	return null;
     }
 }
