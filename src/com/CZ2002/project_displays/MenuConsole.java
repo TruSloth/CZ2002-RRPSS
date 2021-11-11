@@ -20,8 +20,8 @@ import java.util.Scanner;
  * A boundary class that takes in inputs from user to interact with MenuItem
  */
 public class MenuConsole extends ConsoleDisplay{
-    private AddAlaCarteCommand addAlaCarteCommand;
-    private AddPackageCommand addPackageCommand;
+    private ICommand<Void, InvalidMenuItemException> addAlaCarteCommand;
+    private ICommand<Void, InvalidMenuItemException> addPackageCommand;
     private ICommand<Void, InvalidMenuItemException> updateMenuItemCommand;
     private ICommand<Void, InvalidMenuItemException> removeMenuItemCommand;
     private ICommand<Void, InvalidMenuItemException> addToPackageCommand;
@@ -29,7 +29,7 @@ public class MenuConsole extends ConsoleDisplay{
     private GetMenuCommand getMenuCommand;
 
     /**
-     * function to print out the console
+     * Function to print out the console
      */
     public MenuConsole(RestaurantManager restaurantManager, Scanner sc) {
         super.sc = sc;
@@ -78,7 +78,24 @@ public class MenuConsole extends ConsoleDisplay{
 
         return options.length;
     }
+    
+    public int displayEditOptions() {
+    	String[] options = new String[] {
+                "Name",
+                "Description",
+                "Price",
+        };
 
+        String title = "Edit Options";
+
+        System.out.println(MenuBuilder.buildMenu(title, options));
+
+        return options.length;
+    }
+    
+    /**
+     * Function to print out the menu
+     */
     public int displayMenu(ArrayList<MenuItem> menu) {
         for (MenuItem item : menu) {
         	if (item instanceof AlaCarteItem ) {
@@ -153,10 +170,15 @@ public class MenuConsole extends ConsoleDisplay{
                 addAlaCarteCommand = new AddAlaCarteCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
                         name,price,des,type);
-                addAlaCarteCommand.execute();
+				try {
+					addAlaCarteCommand.execute();
+	                System.out.println("Ala carte item added!");
+	                System.out.println();
+				} catch (InvalidMenuItemException | ParseException e) {
+					System.out.println(e.getMessage());
+				}
 
-                //item successfully added
-                System.out.println("Ala carte item added!");
+                
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 2:
@@ -191,15 +213,15 @@ public class MenuConsole extends ConsoleDisplay{
                 addPackageCommand = new AddPackageCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),
                         name,price,des,componentList);
-                addPackageCommand.execute();
+				try {
+					addPackageCommand.execute();
+	                System.out.println("Package added!");
+	                System.out.println();
+				} catch (InvalidMenuItemException | ParseException e) {
+					System.out.println(e.getMessage());
+				}
 
-                componentList.clear();
-
-                //item successfully added
-                System.out.println("Package added!");
-                System.out.println();
-         
-                
+                componentList.clear();               
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 3:
