@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_entities.AlaCarteItem;
+import com.CZ2002.project_exceptions.InvalidMenuItemException;
+import com.CZ2002.project_interfaces.ICommand;
 
 /**
  * This class completes the 'Add a package item' action.
  */
-public class AddPackageCommand {
+public class AddPackageCommand implements ICommand<Void, InvalidMenuItemException> {
     private MenuManager menuManager;
     private String name;
     private double price;
@@ -35,8 +37,18 @@ public class AddPackageCommand {
 
     /**
      * Completes the 'Add an package item' action.
-     */
-    public void execute() {
-        menuManager.addPackageItem(name, des, price, componentList);
+     */ 
+    public Void execute() throws InvalidMenuItemException {
+    	try {   		
+    		if(menuManager.getItem(name) != null) {
+    			throw new InvalidMenuItemException("Menu Item of the same name already exists");
+    		}
+    		menuManager.addPackageItem(name, des, price, componentList);
+    		
+    	} finally{
+    		
+    	}
+    	
+    	return null;
     }
 }
