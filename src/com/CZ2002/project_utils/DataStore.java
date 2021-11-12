@@ -1,4 +1,4 @@
-package com.CZ2002;
+package com.CZ2002.project_utils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

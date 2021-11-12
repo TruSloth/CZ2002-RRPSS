@@ -1,12 +1,8 @@
 package com.CZ2002.project_commands.order;
 
-import java.util.NoSuchElementException;
-
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
-import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
-import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 

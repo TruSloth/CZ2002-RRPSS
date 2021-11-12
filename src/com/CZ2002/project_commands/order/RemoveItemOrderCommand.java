@@ -4,10 +4,7 @@ import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
-import com.CZ2002.project_exceptions.order.InvalidAddItemOrderException;
 import com.CZ2002.project_interfaces.ICommand;
-
-import java.util.NoSuchElementException;
 
 /**
  * This class implements {@link ICommand} to complete the 'Remove item from order' action.

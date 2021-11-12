@@ -3,7 +3,6 @@ package com.CZ2002.project_boundaries;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 import java.util.concurrent.Callable;
@@ -59,7 +58,7 @@ public class ReservationManager extends Manager<Reservation> {
         long timeDifference = reservation.getReservationPeriod().getTimeInMillis() - System.currentTimeMillis() + EXPIRYTIME_MS;
 
         Callable<Void> removeExpiredReservation = () -> {
-            System.out.println("Removing reservation at " + new Date());
+            //System.out.println("Removing reservation at " + new Date());
             executors.remove(entities.indexOf(reservation));
             entities.remove(reservation);
             return null;

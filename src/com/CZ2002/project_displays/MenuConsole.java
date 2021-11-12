@@ -135,14 +135,14 @@ public class MenuConsole extends ConsoleDisplay{
     public MenuView handleConsoleOptions() {
         MenuView view = MenuView.MENU_ITEMS;
         int choice, subChoice, packageSize,i;
-        String name,subName, des, dummy;
+        String name,subName, des;
         double price;
         Type type;
         ArrayList<AlaCarteItem> componentList = new ArrayList<>();
         
         System.out.println("Enter choice: ");
         choice = sc.nextInt();
-        dummy= sc.nextLine();
+        sc.nextLine(); // throw away \n in buffer
         
         switch (choice) {
         	case 1: 
@@ -152,7 +152,7 @@ public class MenuConsole extends ConsoleDisplay{
 
                 System.out.println("Enter ala carte item's price:");
                 price = sc.nextDouble();
-                dummy= sc.nextLine();
+                sc.nextLine(); // throw away \n in buffer
 
                 System.out.println("Enter ala carte item's description:");
                 des = sc.nextLine();
@@ -188,14 +188,14 @@ public class MenuConsole extends ConsoleDisplay{
 
                 System.out.println("Enter package price:");
                 price = sc.nextDouble();
-                dummy= sc.nextLine();
+                sc.nextLine(); // throw away \n in buffer
 
                 System.out.println("Enter package description: ");
                 des = sc.nextLine();
 
                 System.out.println("Enter no of items in package: ");
                 packageSize = sc.nextInt();
-                dummy= sc.nextLine();
+                sc.nextLine(); // throw away \n in buffer
                 for (i= 1; i<= packageSize; i++) {
                     System.out.println("Enter ala carte item no " + i +  " name:");
                     subName= sc.nextLine();                    
@@ -239,7 +239,7 @@ public class MenuConsole extends ConsoleDisplay{
                 System.out.println("Enter new price:");
                 //System.out.println("(Current price: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getPrice() +  ")");
                 price = sc.nextDouble();
-                dummy= sc.nextLine();
+                sc.nextLine(); // throw away \n in buffer
 
                 updateMenuItemCommand = new UpdateMenuItemCommand(
                         mainManager.getSubManager("menuManager", MenuManager.class),

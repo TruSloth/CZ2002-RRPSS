@@ -7,7 +7,6 @@ public class Restaurant {
     private int numStaff;
     private int numMenuItems; // Do we need this?
     private int occupancy;
-    //private ArrayList<SalesRevenue> salesRevenueList;
 
     public Restaurant(String name, int maxCapacity, int numStaff, int numMenuItems) {
         this.name = name;
