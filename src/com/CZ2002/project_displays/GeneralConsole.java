@@ -115,7 +115,11 @@ public class GeneralConsole extends ConsoleDisplay {
                     view = MenuView.PROGRAM_END;
                     break;
             }
-        } catch (NoSuchElementException e) {
+        } catch (InputMismatchException e){
+            System.out.println("Invalid Input!");
+            sc.nextLine();
+        }
+        catch (NoSuchElementException e) {
             view = MenuView.PROGRAM_END; // Scanner has closed.
         }
 
