@@ -23,7 +23,7 @@ public class Order extends RestaurantEntity {
     Calendar cal;
 
     /** Creates an Order object with arguments provided
-     * @param table The Table Number ( 1 to 20 ) which diners are seated at
+     * @param table The Table Number which diners are seated at
      * @param pax Number of diners seated at table
      * @param server Staff who is/was serving them
      */
