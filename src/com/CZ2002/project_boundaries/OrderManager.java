@@ -21,16 +21,9 @@ public class OrderManager extends Manager<Order>{
      * @param server Staff who is/was serving them
      */
     public void createNewOrder( int tableNumber , int pax , Staff server ){
-        if ( pax < 1 ){
-            System.out.println("Invalid pax");
-            return;
-        }
-        else{
-            Order newOrder = new Order( tableNumber , pax , server );
-            entities.add(newOrder);
-            System.out.println("New Order for Table " + tableNumber + " Created");
-        }
-
+        Order newOrder = new Order( tableNumber , pax , server );
+        entities.add(newOrder);
+        System.out.println("New Order for Table " + tableNumber + " Created");
     }
 
     /**
