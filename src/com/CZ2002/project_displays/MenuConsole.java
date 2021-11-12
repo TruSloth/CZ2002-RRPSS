@@ -79,19 +79,6 @@ public class MenuConsole extends ConsoleDisplay{
         return options.length;
     }
     
-    public int displayEditOptions() {
-    	String[] options = new String[] {
-                "Name",
-                "Description",
-                "Price",
-        };
-
-        String title = "Edit Options";
-
-        System.out.println(MenuBuilder.buildMenu(title, options));
-
-        return options.length;
-    }
     
     /**
      * Function to print out the menu
@@ -182,7 +169,7 @@ public class MenuConsole extends ConsoleDisplay{
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 2:
-        		//Add Package Item
+        	//Add Package Item
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
 
@@ -225,19 +212,23 @@ public class MenuConsole extends ConsoleDisplay{
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 3:
-        		//Update Menu Item
+        	//Update Menu Item
                 System.out.println("Enter item to be changed:");
                 name = sc.nextLine();
+                if (mainManager.getSubManager("menuManager", MenuManager.class).getItem(name) ==null) {
+                	System.out.println("Requested Menu Item does not exist");
+                	break;
+                }
               
                 System.out.println("Enter new name: ");
                 subName = sc.nextLine();
 
                 System.out.println("Enter new description: ");
-                //System.out.println("(Current description: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getDescription() +  ")");
+                System.out.println("(Current description: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getDescription() +  ")");
                 des = sc.nextLine();
 
                 System.out.println("Enter new price:");
-                //System.out.println("(Current price: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getPrice() +  ")");
+                System.out.println("(Current price: " + mainManager.getSubManager("menuManager", MenuManager.class).getItem(name).getPrice() +  ")");
                 price = sc.nextDouble();
                 dummy= sc.nextLine();
 
@@ -268,7 +259,7 @@ public class MenuConsole extends ConsoleDisplay{
 				view = MenuView.MENU_ITEMS;
                 break;
         	case 5:
-        		//Add Ala carte to package
+        	//Add Ala carte to package
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
                 
@@ -287,7 +278,7 @@ public class MenuConsole extends ConsoleDisplay{
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 6:
-        		//Remove ala carte from package
+        	//Remove ala carte from package
                 System.out.println("Enter package name:");
                 name = sc.nextLine();
 
@@ -304,14 +295,14 @@ public class MenuConsole extends ConsoleDisplay{
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 7:
-        		//Print Menu
+        	//Print Menu
         		getMenuCommand = new GetMenuCommand(mainManager.getSubManager("menuManager", MenuManager.class));
                 ArrayList<MenuItem> menu = getMenuCommand.execute();
                 displayMenu(menu);
                 view = MenuView.MENU_ITEMS;
                 break;
         	case 8: 
-        		// Back
+        	// Back
                 view = MenuView.PREVIOUS_MENU;
                 break;
         		
