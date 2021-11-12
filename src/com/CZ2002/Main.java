@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) throws InvalidStaffException, ParseException, InvalidSalesRevenueQueryException {
         Scanner sc = new Scanner(System.in);
 
-        Restaurant restaurant = new Restaurant("RestaurantA", 40, 5, 10);
+        Restaurant restaurant = new Restaurant("RestaurantA", 40, 5);
         RestaurantManager restaurantManager = new RestaurantManager(restaurant);
         GeneralConsole mainMenuConsole = new GeneralConsole(restaurantManager, sc);
 

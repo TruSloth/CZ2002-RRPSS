@@ -23,10 +23,10 @@ public class OrderManager extends Manager<Order>{
     public void createNewOrder( int tableNumber , int pax , Staff server ){
         Order newOrder = new Order( tableNumber , pax , server );
         entities.add(newOrder);
-        System.out.println("New Order for Table " + tableNumber + " Created");
     }
 
     /**
+     * Returns the {@link Order} made by the {@link Table} identified by {@code tableNumber}.
      *
      * @param tableNumber An integer representing the table number which the Order belongs to
      * @return The Order based on tableNumber
@@ -41,22 +41,22 @@ public class OrderManager extends Manager<Order>{
         return order;
     }
 
-    /** To Read in the Order to show a summary of Order for the table
-     * @param tableNumber An integer representing the table number which the Order belongs to
-     */
-    public void printOrder ( int tableNumber ) {
-        boolean found = false;
-        for ( int i  = 0 ; i < entities.size() ; i++){
-            if ( entities.get(i).getTable() == tableNumber ){
-                entities.get(i).printOrdered();
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            System.out.println("Table Does Not Exist");
-        }
-    }
+    // /** To Read in the Order to show a summary of Order for the table
+    //  * @param tableNumber An integer representing the table number which the Order belongs to
+    //  */
+    // public void printOrder ( int tableNumber ) {
+    //     boolean found = false;
+    //     for ( int i  = 0 ; i < entities.size() ; i++){
+    //         if ( entities.get(i).getTable() == tableNumber ){
+    //             entities.get(i).printOrdered();
+    //             found = true;
+    //             break;
+    //         }
+    //     }
+    //     if (!found) {
+    //         System.out.println("Table Does Not Exist");
+    //     }
+    // }
 
     /**
      * Removes an Item from the Order based on table number
@@ -105,20 +105,22 @@ public class OrderManager extends Manager<Order>{
     }
 
     /**
-     * To delete the Order from the ArrayList of active Orders
+     * To delete the {@link Order} from the {@link ArrayList} of active Orders
+     * 
      * @param tableNumber An integer representing the table number which the Order belongs to
-     * @return An Integer value to indicate if Order is successfully deleted
+     * @return The {@code Order} that was deleted
      */
-    public int deleteOrder ( int tableNumber ){
+    public Order deleteOrder ( int tableNumber ){
 
         for ( int i  = 0 ; i < entities.size() ; i++ ){
             if ( entities.get(i).getTable() == tableNumber ){
-                entities.get(i).printOrdered(); // print the Order before deleting it
+                //entities.get(i).printOrdered(); // print the Order before deleting it
+                Order o = entities.get(i);
                 entities.remove(i);
-                return 1; // deleted
+                return o; // deleted
             }
         }
-        return 0;
+        return null;
     }
 
     /** 

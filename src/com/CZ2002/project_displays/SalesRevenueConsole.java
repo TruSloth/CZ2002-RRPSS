@@ -116,14 +116,14 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
             options.add(String.format("#%d", count++));
             optionHeaders.add(""); // For Formatting
             options.add(""); // For Formatting
-            for (int j=0; j<tempOrder.ordered.size(); j++){
-                if(tempOrder.ordered.get(j) instanceof PackageItem){
+            for (int j=0; j<tempOrder.getOrdered().size(); j++){
+                if(tempOrder.getOrdered().get(j) instanceof PackageItem){
                     options.add("Package");
                 }
                 else {
                     options.add("Ala Carte");
                 }
-                optionHeaders.add(tempOrder.ordered.get(j).getName());
+                optionHeaders.add(tempOrder.getOrdered().get(j).getName());
             }
             optionsArr = new String[options.size()];
             optionHeadersArr = new String[optionHeaders.size()];
