@@ -21,7 +21,6 @@ public class OrderManager extends Manager<Order>{
      * @param server Staff who is/was serving them
      */
     public void createNewOrder( int tableNumber , int pax , Staff server ){
-        System.out.println(pax);
         if ( pax < 1 ){
             System.out.println("Invalid pax");
             return;

@@ -99,14 +99,18 @@ public class ReservationManager extends Manager<Reservation> {
         // Assume that a reservation will take 2 hours. This means that a table reserved for 8PM will be unavailable for reservation from 6PM to 10PM.
         class ReservationPeriod {
             GregorianCalendar blockedReservationPeriod(GregorianCalendar reservationPeriod, int addHour) {
-                GregorianCalendar reservationPeriodClone = new GregorianCalendar(reservationPeriod.getTimeZone());
+                // Create a temporary GregorianCalendar set to reservationPeriod
+                GregorianCalendar reservationPeriodClone = new GregorianCalendar(
+                    reservationPeriod.get(Calendar.YEAR), reservationPeriod.get(Calendar.MONTH), reservationPeriod.get(Calendar.DAY_OF_MONTH),
+                    reservationPeriod.get(Calendar.HOUR_OF_DAY), reservationPeriod.get(Calendar.MINUTE), reservationPeriod.get(Calendar.SECOND)
+                    );
                 reservationPeriodClone.add(Calendar.HOUR, addHour);
                 return reservationPeriodClone;
             }
 
             boolean clash(GregorianCalendar existingReservationPeriod, GregorianCalendar newReservationPeriod) {
                 return (newReservationPeriod.after(blockedReservationPeriod(existingReservationPeriod, -2))
-                        || newReservationPeriod.before(blockedReservationPeriod(existingReservationPeriod, 2)));
+                        && newReservationPeriod.before(blockedReservationPeriod(existingReservationPeriod, 2)));
             }
         }
 
