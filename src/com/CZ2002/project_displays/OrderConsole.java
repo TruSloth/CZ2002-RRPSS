@@ -138,6 +138,7 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     addItemOrder.execute();
+                    System.out.println("Item successfully added.");
                 } catch (InvalidAddItemOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
@@ -162,6 +163,7 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     removeItemOrder.execute();
+                    System.out.println("Item successfully removed.");
                 } catch (InvalidRemoveItemOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
@@ -202,6 +204,7 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     deleteOrder.execute();
+                    System.out.printf("Order for Table %d has been paid!\n", tableClose);
                 } catch (InvalidDeleteOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }

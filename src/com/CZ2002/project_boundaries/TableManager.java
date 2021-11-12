@@ -45,13 +45,8 @@ public class TableManager extends Manager<Table> {
         Table[] tables = new Table[maxNumOfTables];
 
         // Sanity Check
-        try {
-            if (numOf2Seater + numOf4Seater + numOf6Seater + numOf8Seater + numOf10Seater > maxNumOfTables) {
-                throw new Exception(); // TODO: Create New Exception Class
-            }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        if (numOf2Seater + numOf4Seater + numOf6Seater + numOf8Seater + numOf10Seater > maxNumOfTables) {
+            throw new IllegalArgumentException("Number of tables exceeds maximum tables in Restaurant");
         }
 
         // Is there a better way to do this?

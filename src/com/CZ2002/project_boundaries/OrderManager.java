@@ -52,7 +52,7 @@ public class OrderManager extends Manager<Order>{
     /** To Read in the Order to show a summary of Order for the table
      * @param tableNumber An integer representing the table number which the Order belongs to
      */
-    public void printOrder ( int tableNumber ){
+    public void printOrder ( int tableNumber ) {
         boolean found = false;
         for ( int i  = 0 ; i < entities.size() ; i++){
             if ( entities.get(i).getTable() == tableNumber ){

@@ -1,5 +1,4 @@
 package com.CZ2002.project_entities;
-import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
 import com.CZ2002.project_utils.MenuBuilder;
 import java.util.ArrayList;
 import java.util.Calendar;

@@ -7,8 +7,6 @@ import com.CZ2002.project_interfaces.IDateFormatter;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.NoSuchElementException;
-
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 
 /**
@@ -38,6 +36,6 @@ public class PrintRevenueByDay implements ICommand<SalesRevenue, InvalidSalesRev
      */
     @Override
     public SalesRevenue execute() throws InvalidSalesRevenueQueryException, ParseException {
-        return salesRevenueManager.getSalesRevenueByDay(queryDate, false);
+        return salesRevenueManager.getSalesRevenueByDay(queryDate);
     }
 }
