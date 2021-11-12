@@ -92,7 +92,7 @@ public class RestaurantManager implements IMainManager {
         } catch (IOException e) {
             subManagers.putIfAbsent("salesRevenueManager", new SalesRevenueManager());
             
-            // FOR MONEY PURPOSES
+            //FOR MONEY PURPOSES
             // for (int i = 1; i <= 11; i++) {
             //     for (int tableNo = 1; tableNo <= 6; tableNo++) {
             //         Order o1 = new Order(tableNo, 2, getSubManager("staffManager", StaffManager.class).findStaffById(1), i);
