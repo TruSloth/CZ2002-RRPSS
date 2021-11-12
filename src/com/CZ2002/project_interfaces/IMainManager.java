@@ -31,6 +31,11 @@ public interface IMainManager {
     public <T> T getSubManager(String manager, Class<? extends T> type);
 
     /**
+     * Persists all {@link Manager} in {@code #subManagers} to their data files.
+     */
+    public void saveManagers();
+
+    /**
      * This method is called when the option to 'quit' is selected.
      * <p>
      * The method {@code shutdown()} should initiate all necessary data persistence procedures.

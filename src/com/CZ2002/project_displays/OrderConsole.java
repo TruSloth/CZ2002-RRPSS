@@ -39,24 +39,24 @@ public class OrderConsole extends ConsoleDisplay{
     private int displayOrder(Order order) {
         String title = "Bill";
         int longestWidth = 40;
-        String[] optionHeaders = new String[order.ordered.size() + 5];
-        String[] options = new String[order.ordered.size() + 5];
+        String[] optionHeaders = new String[order.getOrdered().size() + 5];
+        String[] options = new String[order.getOrdered().size() + 5];
         optionHeaders[0] = "Table";
         options[0] = String.format("%d", order.getTable());
         optionHeaders[1] = "Staff";
         options[1] = order.getServer().getName();
 
-        for ( int i = 1 ;  i < order.ordered.size() + 1 ; i++ ){
-            optionHeaders[i] = order.ordered.get(i - 1).getName();
-            options[i] = String.format("%.2f", order.ordered.get(i - 1).getPrice());
+        for ( int i = 1 ;  i < order.getOrdered().size() + 1 ; i++ ){
+            optionHeaders[i + 1] = order.getOrdered().get(i - 1).getName();
+            options[i + 1] = String.format("%.2f", order.getOrdered().get(i - 1).getPrice());
         }
 
-        optionHeaders[order.ordered.size()+2] = "Total Discount Applied: ";
-        options[order.ordered.size()+2] =  String.format("%.2f", order.getDiscountTotal());
-        optionHeaders[order.ordered.size()+3] = "Tax: ";
-        options[order.ordered.size()+3] =  String.format("%.2f", order.getTax());
-        optionHeaders[order.ordered.size()+4] = "Total Bill: ";
-        options[order.ordered.size()+4] =  String.format("%.2f", order.getBill());
+        optionHeaders[order.getOrdered().size()+2] = "Total Discount Applied: ";
+        options[order.getOrdered().size()+2] =  String.format("%.2f", order.getDiscountTotal());
+        optionHeaders[order.getOrdered().size()+3] = "Tax: ";
+        options[order.getOrdered().size()+3] =  String.format("%.2f", order.getTax());
+        optionHeaders[order.getOrdered().size()+4] = "Total Bill: ";
+        options[order.getOrdered().size()+4] =  String.format("%.2f", order.getBill());
         System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, longestWidth));
 
         return options.length;
@@ -103,7 +103,7 @@ public class OrderConsole extends ConsoleDisplay{
                 System.out.printf("Server's ID: ");
                 serverId = sc.nextInt();
 
-                ICommand<Void, InvalidCreateOrderException> createOrderCommand  = new CreateOrderCommand(
+                ICommand<Order, InvalidCreateOrderException> createOrderCommand  = new CreateOrderCommand(
                         mainManager.getSubManager("staffManager", StaffManager.class),
                         mainManager.getSubManager("orderManager", OrderManager.class),
                         mainManager.getSubManager("reservationManager", ReservationManager.class),
@@ -113,7 +113,9 @@ public class OrderConsole extends ConsoleDisplay{
                 );
 
                 try {
-                    createOrderCommand.execute();
+                    Order order = createOrderCommand.execute();
+                    System.out.println("New Order for Table " + order.getTable() + " Created");
+
                 } catch (InvalidCreateOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
@@ -196,7 +198,7 @@ public class OrderConsole extends ConsoleDisplay{
                 System.out.print("Close Order For Table: ");
                 tableClose = sc.nextInt();
 
-                ICommand<Void , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
+                ICommand<Order , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(
                         mainManager.getSubManager("orderManager", OrderManager.class),
                         mainManager.getSubManager("tableManager", TableManager.class)
                         , mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class)
@@ -204,7 +206,8 @@ public class OrderConsole extends ConsoleDisplay{
                 );
 
                 try {
-                    deleteOrder.execute();
+                    Order order = deleteOrder.execute();
+                    displayOrder(order);
                     System.out.printf("Order for Table %d Paid\n", tableClose);
                 } catch (InvalidDeleteOrderException | ParseException e) {
                     System.out.println(e.getMessage());

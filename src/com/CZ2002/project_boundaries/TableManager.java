@@ -108,7 +108,7 @@ public class TableManager extends Manager<Table> {
      *
      * @return  the array of table numbers that are currently unoccupied
      */
-    public int[] getUnoccupiedTables() {
+    public int[] getUnoccupiedTableNos() {
         return entities
                 .stream()
                 .filter(table -> !table.isOccupied())
@@ -133,7 +133,6 @@ public class TableManager extends Manager<Table> {
      * @param tableNumber  the table number of the {@code Table} to be unoccupied
      */
     public void unoccupyTable(int tableNumber) {
-        //tables[tableNumber - 1].unoccupyTable();
         entities.get(tableNumber - 1).unoccupyTable();
     }
 

@@ -16,7 +16,7 @@ public class Reservation extends RestaurantEntity {
     private int pax;
     private String name;
     private String contactNumber;
-    private int tableNo; // Might want to use a better datatype for hashing
+    private int tableNo;
     private ScheduledFuture<Void> expiry;
 
     /**

@@ -8,6 +8,7 @@ import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_boundaries.StaffManager;
 import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_boundaries.ReservationManager;
+import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_entities.Staff;
 import com.CZ2002.project_exceptions.InvalidStaffException;
 import com.CZ2002.project_exceptions.order.InvalidCreateOrderException;
@@ -16,7 +17,7 @@ import com.CZ2002.project_interfaces.ICommand;
 /**
  * This class implements {@link ICommand} to complete the 'Create a new Order' action.
  */
-public class CreateOrderCommand implements ICommand<Void , InvalidCreateOrderException>  {
+public class CreateOrderCommand implements ICommand<Order , InvalidCreateOrderException>  {
     private StaffManager staffManager;
     private OrderManager orderManager;
     private ReservationManager reservationManager;
@@ -48,11 +49,11 @@ public class CreateOrderCommand implements ICommand<Void , InvalidCreateOrderExc
     /**
      * Completes the 'Create Order' action.
      *
-     * @return Void
+     * @return the newly created {@link Order}
      * @throws InvalidCreateOrderException  if the order could not be created
      */
     @Override
-    public Void execute() throws InvalidCreateOrderException {
+    public Order execute() throws InvalidCreateOrderException {
         try{
             this.server = staffManager.findStaffById(serverId);
 
@@ -71,11 +72,11 @@ public class CreateOrderCommand implements ICommand<Void , InvalidCreateOrderExc
 
             int tableNumber = tableManager.getAvailableTable(unavailableTableNos, pax);
 
-            System.out.println("Table Number is :" + tableNumber);
-
             tableManager.occupyTable(tableNumber);
 
             orderManager.createNewOrder(tableNumber,pax,server);
+
+            return orderManager.getOrder(tableNumber);
 
         } catch (InvalidStaffException e){
             throw new InvalidCreateOrderException("There is no staff with that ID.");
@@ -83,6 +84,5 @@ public class CreateOrderCommand implements ICommand<Void , InvalidCreateOrderExc
             throw new InvalidCreateOrderException(e.getMessage());
         }
         
-        return null;
     }
 }

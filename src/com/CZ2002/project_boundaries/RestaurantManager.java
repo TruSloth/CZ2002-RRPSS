@@ -25,8 +25,8 @@ import com.CZ2002.project_utils.DataStore;
 public class RestaurantManager implements IMainManager {
     private Restaurant restaurant;
 
-    // Persists all managers in subManagers to their data files
-    private void saveManagers() {
+    @Override
+    public void saveManagers() {
         for (Manager<?> manager : subManagers.values()) {
             String fileName = manager.getClass().getSimpleName();
             fileName = fileName.substring(0, 1).toLowerCase() + fileName.substring(1).replace("Manager", "") + "Data";

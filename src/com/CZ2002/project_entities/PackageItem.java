@@ -24,12 +24,12 @@ public class PackageItem extends MenuItem {
     /**
      * Prints the name of the AlaCarteItem included in one line
      */
-    public void printItems() {
-        System.out.print("Includes: ");
-        for (AlaCarteItem item: itemsServed) {
-            System.out.print(item.getName() + ", ");
-        }
-    }
+    // public void printItems() {
+    //     System.out.print("Includes: ");
+    //     for (AlaCarteItem item: itemsServed) {
+    //         System.out.print(item.getName() + ", ");
+    //     }
+    // }
 
     /** Gets the ArrayList of AlaCarteItem
      * @return the ArrayList of AlaCarteItem

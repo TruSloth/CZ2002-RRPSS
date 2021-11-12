@@ -5,8 +5,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
 import com.CZ2002.project_entities.RestaurantEntity;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_entities.Reservation;
@@ -19,6 +17,10 @@ import com.CZ2002.project_entities.Reservation;
  * instances and provides the access point to all {@code Reservation} instances
  * in the Restaurant.
  * <p>
+ * The {@code} ReservationManager is set up to cause each {@code Reservation} to expire after
+ * {@code #EXPIRYTIME_MS} and ensure that each {@code Reservation} must be made
+ * 
+ * <p>
  * In most cases, each Restaurant should only have a single {@code ReservationManager}
  * instance, although this is not enforced. In this way, this {@code ReservationManager}
  * provides the only access point to all {@code Reservation} instances.
@@ -26,15 +28,15 @@ import com.CZ2002.project_entities.Reservation;
 public class ReservationManager extends Manager<Reservation> {
     private ArrayList<ScheduledExecutorService> executors;
 
-    final private long EXPIRYTIME_MS = 10; // Time after the start of a reservation upon which reservation will expire - 15 mins
+    final private long EXPIRYTIME_MS = 900000; // Time after the start of a reservation upon which reservation will expire - 15 mins
 
+    final private int ADVANCED_HRS = 24; // Number of hours in advance that a reservation must be made 
     /**
      * Constructs a new {@code ReservationManager} to manage {@link Reservation} instances.
      * <p>
      * Initializes {@code entities} and {@code executors} to be an empty {@link ArrayList}.
      */
     public ReservationManager() {
-        //reservations = new ArrayList<Reservation>();
         entities = new ArrayList<Reservation>();
         executors = new ArrayList<ScheduledExecutorService>();
     }
@@ -77,10 +79,10 @@ public class ReservationManager extends Manager<Reservation> {
          */
 
         Calendar advancedReservationPeriod = Calendar.getInstance();
-        advancedReservationPeriod.add(Calendar.HOUR, 0); // Must make reservation 24 hours in advance
+        advancedReservationPeriod.add(Calendar.HOUR, ADVANCED_HRS); // Must make reservation 24 hours in advance
 
         if (reservationPeriod.before(advancedReservationPeriod)) {
-            throw new InvalidReservationException("A reservation can only be made at least 24 hours in advance.");
+            throw new InvalidReservationException(String.format("A reservation can only be made at least %d hours in advance.", ADVANCED_HRS));
         }
     }
 

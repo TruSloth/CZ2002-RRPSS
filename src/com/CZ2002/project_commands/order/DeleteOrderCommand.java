@@ -3,13 +3,14 @@ package com.CZ2002.project_commands.order;
 import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_boundaries.TableManager;
+import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_exceptions.order.InvalidDeleteOrderException;
 import com.CZ2002.project_interfaces.ICommand;
 
 /**
  * This class implements {@link ICommand} to complete the 'Delete Order' action.
  */
-public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderException> {
+public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderException> {
     private SalesRevenueManager salesRevenueManager;
     private TableManager tableManager;
     private OrderManager orderManager;
@@ -38,14 +39,14 @@ public class DeleteOrderCommand implements ICommand<Void , InvalidDeleteOrderExc
      * @throws InvalidDeleteOrderException If table could not be located
      */
     @Override
-    public Void execute() throws InvalidDeleteOrderException{
+    public Order execute() throws InvalidDeleteOrderException{
         for ( int i  = 0 ; i < orderManager.getNumOfOrders(); i++)
         {
             if ( orderManager.getOrderByIndex(i).getTable() == tableClose ){
                 salesRevenueManager.addOrder(orderManager.getOrderByIndex(i));
                 tableManager.unoccupyTable(tableClose);
-                orderManager.deleteOrder(tableClose);
-                return null;
+                Order o = orderManager.deleteOrder(tableClose);
+                return o;
             }
         }
         throw new InvalidDeleteOrderException("Table not found" );
