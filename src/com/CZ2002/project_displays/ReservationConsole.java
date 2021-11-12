@@ -147,6 +147,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                         name, contact, pax, reservationPeriod);
                 try {
                     addReservationCommand.execute();
+                    System.out.println("Reservation was successfully created!");
                 } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
                 } 
@@ -238,6 +239,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
 
                 try {
                     removeReservationCommand.execute();
+                    System.out.println("Reservation was succesfully removed.");
                 } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
                 }

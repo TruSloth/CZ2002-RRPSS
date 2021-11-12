@@ -296,7 +296,7 @@ public class ReservationManager extends Manager<Reservation> {
         for (Reservation reservation : entities) {
             reservation.getExpiry().cancel(true);
             reservation.setExpiry(null);
-            executors.remove(entities.indexOf(reservation));
         }
+        executors.clear();
     }
 }

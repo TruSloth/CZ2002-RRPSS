@@ -29,4 +29,11 @@ public interface IMainManager {
      * @return The {@code Manager} instance stored in {@code subManagers}
      */
     public <T> T getSubManager(String manager, Class<? extends T> type);
+
+    /**
+     * This method is called when the option to 'quit' is selected.
+     * <p>
+     * The method {@code shutdown()} should initiate all necessary data persistence procedures.
+     */
+    public void shutdown();
 }

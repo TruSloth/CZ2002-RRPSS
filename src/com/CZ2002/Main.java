@@ -12,7 +12,7 @@ import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_exceptions.InvalidStaffException;
 
 public class Main {
-    public static  void main(String[] args) throws InvalidStaffException, ParseException, InvalidSalesRevenueQueryException {
+    public static void main(String[] args) throws InvalidStaffException, ParseException, InvalidSalesRevenueQueryException {
         Scanner sc = new Scanner(System.in);
 
         Restaurant restaurant = new Restaurant("RestaurantA", 40, 5, 10);
