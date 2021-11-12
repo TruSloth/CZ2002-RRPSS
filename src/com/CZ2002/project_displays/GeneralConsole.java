@@ -55,35 +55,59 @@ public class GeneralConsole extends ConsoleDisplay {
             switch (choice) {
                 case 1:
                     // Menu Items
-                    view = MenuView.MENU_ITEMS;
                     do {
-                        menuConsole.displayConsoleOptions();
-                        view = menuConsole.handleConsoleOptions();
+                        try {
+                            view = MenuView.MENU_ITEMS;
+
+                            menuConsole.displayConsoleOptions();
+                            view = menuConsole.handleConsoleOptions();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input!");
+                            sc.nextLine();
+                        } 
                     } while (view != MenuView.PREVIOUS_MENU);
                     break;
                 case 2:
                     // Orders
-                    view = MenuView.ORDERS;
                     do {
-                        orderConsole.displayConsoleOptions();
-                        view = orderConsole.handleConsoleOptions();
+                        try {
+                            view = MenuView.ORDERS;
+
+                            orderConsole.displayConsoleOptions();
+                            view = orderConsole.handleConsoleOptions();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input!");
+                            sc.nextLine();
+                        }   
                     } while (view != MenuView.PREVIOUS_MENU);
                     break;
                 case 3:
                     // Reservations
-                    view = MenuView.RESERVATIONS;
                     do {
-                        reservationConsole.displayConsoleOptions();
-                        view = reservationConsole.handleConsoleOptions();
+                        try {
+                            view = MenuView.RESERVATIONS;
+
+                            reservationConsole.displayConsoleOptions();
+                            view = reservationConsole.handleConsoleOptions();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input!");
+                            sc.nextLine();
+                        }
                     } while (view != MenuView.PREVIOUS_MENU);
 
                     break;
                 case 4:
                     // Sales Revenue Report
-                    view = MenuView.SALES_REVENUE;
                     do {
-                        salesRevenueConsole.displayConsoleOptions();
-                        view = salesRevenueConsole.handleConsoleOptions();
+                        try {
+                            view = MenuView.SALES_REVENUE;
+
+                            salesRevenueConsole.displayConsoleOptions();
+                            view = salesRevenueConsole.handleConsoleOptions();
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input!");
+                            sc.nextLine();
+                        } 
                     } while (view != MenuView.PREVIOUS_MENU);
                     break;
                 case 5:
@@ -91,8 +115,6 @@ public class GeneralConsole extends ConsoleDisplay {
                     view = MenuView.PROGRAM_END;
                     break;
             }
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input!");
         } catch (NoSuchElementException e) {
             view = MenuView.PROGRAM_END; // Scanner has closed.
         }
