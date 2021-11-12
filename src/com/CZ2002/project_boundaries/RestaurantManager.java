@@ -62,7 +62,6 @@ public class RestaurantManager implements IMainManager {
             subManagers.putIfAbsent("menuManager", new MenuManager());
 
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Battered Fish & Chips", "Battered fish fillets lightly seasoned, fried to a crisp golden brown and served with creamy tartar sauce.", 12.5, Type.MAIN);
-            getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Battered Fish & Chips", "Battered fish fillets lightly seasoned, fried to a crisp golden brown and served with creamy tartar sauce.", 12.5, Type.MAIN);
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("BBQ Chicken", "Super tender juicy grilled chicken generously brushed with our in-house guava BBQ sauce.", 12.50, Type.MAIN);
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Grilled Fish Sambal", "Tender fish fillet seasoned with spices for a mildly fiery kick, grilled to perfection.", 13.50, Type.MAIN);
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Lamb Chops", "Cuts of grilled lamb marinated with our homemade herbs and spices.", 14.00, Type.MAIN);
