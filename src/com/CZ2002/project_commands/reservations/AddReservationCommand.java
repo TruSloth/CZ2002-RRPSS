@@ -48,11 +48,6 @@ public class AddReservationCommand implements ICommand<Void, InvalidReservationE
     @Override
     public Void execute() throws InvalidReservationException {
         int[] unavailableTableNos = reservationManager.getUnavailableTables(reservationPeriod);
-
-        for (int i=0; i<unavailableTableNos.length; i++){
-            System.out.print(unavailableTableNos[i] + " ");
-        }
-
         try {
             if (unavailableTableNos.length >= tableManager.getMaxTables()) {
                 throw new InvalidReservationException("Reservations are full at this time.");
