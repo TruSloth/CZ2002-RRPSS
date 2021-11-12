@@ -26,7 +26,7 @@ import com.CZ2002.project_entities.Reservation;
 public class ReservationManager extends Manager<Reservation> {
     private ArrayList<ScheduledExecutorService> executors;
 
-    final private long EXPIRYTIME_MS = 6000; // Time after the start of a reservation upon which reservation will expire - 15 mins
+    final private long EXPIRYTIME_MS = 10; // Time after the start of a reservation upon which reservation will expire - 15 mins
 
     /**
      * Constructs a new {@code ReservationManager} to manage {@link Reservation} instances.
@@ -55,7 +55,7 @@ public class ReservationManager extends Manager<Reservation> {
         long timeDifference = reservation.getReservationPeriod().getTimeInMillis() - System.currentTimeMillis() + EXPIRYTIME_MS;
 
         Callable<Void> removeExpiredReservation = () -> {
-            //System.out.println("Removing reservation at " + new Date());
+            System.out.println("Removing reservation at " + new Date());
             executors.remove(entities.indexOf(reservation));
             entities.remove(reservation);
             return null;
@@ -77,7 +77,7 @@ public class ReservationManager extends Manager<Reservation> {
          */
 
         Calendar advancedReservationPeriod = Calendar.getInstance();
-        advancedReservationPeriod.add(Calendar.HOUR, 24); // Must make reservation 24 hours in advance
+        advancedReservationPeriod.add(Calendar.HOUR, 0); // Must make reservation 24 hours in advance
 
         if (reservationPeriod.before(advancedReservationPeriod)) {
             throw new InvalidReservationException("A reservation can only be made at least 24 hours in advance.");

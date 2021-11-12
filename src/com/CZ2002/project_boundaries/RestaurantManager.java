@@ -71,7 +71,6 @@ public class RestaurantManager implements IMainManager {
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Double Berry", "Strawberry ice cream with layers of blueberry topping.", 3.00, Type.DESSERT);
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Mango Peach Tropics", "Mango and peach flavoured sparkling drink.", 3.00, Type.DRINK);
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Sparkling Pink Lemonade", "Lemon and strawberry flavoured sparkling drink.", 3.00, Type.DRINK);
-            //getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Wagyu Caviar Gold Flakes with Truffle Oil", "Very expensive.", 10000.00, Type.MAIN);
         }
 
         // Load StaffManager
@@ -91,25 +90,6 @@ public class RestaurantManager implements IMainManager {
             subManagers.putIfAbsent("salesRevenueManager", (Manager<SalesRevenue>) DataStore.loadFromFile(salesRevenueDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("salesRevenueManager", new SalesRevenueManager());
-            
-            //FOR MONEY PURPOSES
-            // for (int i = 1; i <= 11; i++) {
-            //     for (int tableNo = 1; tableNo <= 6; tableNo++) {
-            //         Order o1 = new Order(tableNo, 2, getSubManager("staffManager", StaffManager.class).findStaffById(1), i);
-            //         Order o2 = new Order(tableNo, 2, getSubManager("staffManager", StaffManager.class).findStaffById(2), i);
-            //         o1.addItem(getSubManager("menuManager", MenuManager.class).getItem("Ribeye Steak"));
-            //         o1.addItem(getSubManager("menuManager", MenuManager.class).getItem("Sparkling Pink Lemonade"));
-            //         o2.addItem(getSubManager("menuManager", MenuManager.class).getItem("Lamb Chops"));
-            //         o2.addItem(getSubManager("menuManager", MenuManager.class).getItem("Mango Peach Tropics"));
-
-            //         if (i == 3 && tableNo == 2) {
-            //             o2.addItem(getSubManager("menuManager", MenuManager.class).getItem("Wagyu Caviar Gold Flakes with Truffle Oil"));
-            //         }
-
-            //         getSubManager("salesRevenueManager", SalesRevenueManager.class).addOrder(o1);
-            //         getSubManager("salesRevenueManager", SalesRevenueManager.class).addOrder(o2);
-            //     }
-            // }
         }
 
         // Load OrderManager

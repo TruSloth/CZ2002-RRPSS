@@ -69,10 +69,6 @@ public class CreateOrderCommand implements ICommand<Void , InvalidCreateOrderExc
 
             int[] unavailableTableNos = set.stream().mapToInt(Integer::intValue).toArray();
 
-            for (int i : unavailableTableNos) {
-                System.out.printf("%d ", i);
-            }
-
             int tableNumber = tableManager.getAvailableTable(unavailableTableNos, pax);
 
             System.out.println("Table Number is :" + tableNumber);
