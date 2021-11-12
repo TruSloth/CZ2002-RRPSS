@@ -1,14 +1,11 @@
 package com.CZ2002.project_boundaries;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import com.CZ2002.project_entities.RestaurantEntity;
 import com.CZ2002.project_exceptions.InvalidReservationException;
@@ -29,7 +26,7 @@ import com.CZ2002.project_entities.Reservation;
 public class ReservationManager extends Manager<Reservation> {
     private ArrayList<ScheduledExecutorService> executors;
 
-    final private long EXPIRYTIME_MS = 900000; // Time after the start of a reservation upon which reservation will expire - 15 mins
+    final private long EXPIRYTIME_MS = 6000; // Time after the start of a reservation upon which reservation will expire - 15 mins
 
     /**
      * Constructs a new {@code ReservationManager} to manage {@link Reservation} instances.
@@ -109,7 +106,7 @@ public class ReservationManager extends Manager<Reservation> {
 
             boolean clash(GregorianCalendar existingReservationPeriod, GregorianCalendar newReservationPeriod) {
                 return (newReservationPeriod.after(blockedReservationPeriod(existingReservationPeriod, -2))
-                        && newReservationPeriod.before(blockedReservationPeriod(existingReservationPeriod, 2)));
+                        || newReservationPeriod.before(blockedReservationPeriod(existingReservationPeriod, 2)));
             }
         }
 

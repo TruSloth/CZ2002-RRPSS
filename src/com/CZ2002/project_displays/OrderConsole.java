@@ -71,8 +71,8 @@ public class OrderConsole extends ConsoleDisplay{
                 "Create Order",
                 "Add Item to Order",
                 "Remove Item from order",
-                "Print Order",
-                "Close Order",
+                "View Order",
+                "Print Order Invoice",
                 "Set Membership",
                 "Back"
         };
@@ -138,7 +138,7 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     addItemOrder.execute();
-                    System.out.println("Item successfully added.");
+                    System.out.println("Item Successfully Added");
                 } catch (InvalidAddItemOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
@@ -163,7 +163,7 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     removeItemOrder.execute();
-                    System.out.println("Item successfully removed.");
+                    System.out.println("Item Successfully Removed");
                 } catch (InvalidRemoveItemOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
@@ -204,7 +204,7 @@ public class OrderConsole extends ConsoleDisplay{
 
                 try {
                     deleteOrder.execute();
-                    System.out.printf("Order for Table %d has been paid!\n", tableClose);
+                    System.out.printf("Order for Table %d Paid\n", tableClose);
                 } catch (InvalidDeleteOrderException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
@@ -236,7 +236,7 @@ public class OrderConsole extends ConsoleDisplay{
                 view = MenuView.PREVIOUS_MENU;
                 break;
             default:
-                System.out.println("Invalid operation! Please enter again");
+                System.out.println("Invalid Operation! Please Enter Again");
         }
         return view;
     }

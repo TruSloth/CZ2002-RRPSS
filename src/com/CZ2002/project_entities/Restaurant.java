@@ -1,7 +1,7 @@
 package com.CZ2002.project_entities;
 
 public class Restaurant {
-    private final int NUM_OF_TABLES = 40; // Num of tables in restaurant
+    private final int NUM_OF_TABLES = 10; // Num of tables in restaurant
     private String name;
     private int maxCapacity; // Should be a final as well
     private int numStaff;

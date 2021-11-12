@@ -112,7 +112,7 @@ public class GeneralConsole extends ConsoleDisplay {
                 "Orders",
                 "Reservations",
                 "Sales Revenue Report",
-                "Quit"
+                "Back"
         };
         String title = "Restaurant Reservation & Point of Sale System";
 
