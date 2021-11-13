@@ -6,8 +6,11 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.CZ2002.project_boundaries.RestaurantManager;
+import com.CZ2002.project_boundaries.TableManager;
+import com.CZ2002.project_commands.CheckTableAvailabilityCommand;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_exceptions.InvalidStaffException;
+import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_utils.MenuBuilder;
 import com.CZ2002.project_enums.MenuView;
 
@@ -111,6 +114,18 @@ public class GeneralConsole extends ConsoleDisplay {
                     } while (view != MenuView.PREVIOUS_MENU);
                     break;
                 case 5:
+                    // Check Table Availability
+                    ICommand<String[], Exception> checkTableAvailabilityCommand = new CheckTableAvailabilityCommand(
+                        mainManager.getSubManager("tableManager", TableManager.class));
+                    try {
+                        String[] tableStatus = checkTableAvailabilityCommand.execute();
+                        displayTableAvailability(tableStatus);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+                case 6:
                     // Quit
                     view = MenuView.PROGRAM_END;
                     break;
@@ -126,6 +141,27 @@ public class GeneralConsole extends ConsoleDisplay {
         return view;
     }
 
+    /**
+     * Formats and outputs the current occupancy status of tables in the Restaurant.
+     * 
+     * @param tableStatus the String array indicating the occupancy status of the {@code Table} with {@code tableNumber} equal the index position + 1
+     * @return the number of tables
+     */
+    public int displayTableAvailability(String[] tableStatus) {
+        String[] options = new String[tableStatus.length];
+        String[] optionHeaders = new String[tableStatus.length];
+        String title = "Table Availability";
+        int LONGEST_WIDTH = 40;
+
+        for (int i = 0; i < tableStatus.length; i++) {
+            optionHeaders[i] = String.format("%d", i + 1);
+            options[i] = tableStatus[i];
+        }
+
+        System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, LONGEST_WIDTH));
+        return options.length;
+    }
+
 
     /**
      * Formats and outputs the possible actions that can be taken on this {@code GeneralConsole}.
@@ -138,6 +174,7 @@ public class GeneralConsole extends ConsoleDisplay {
                 "Orders",
                 "Reservations",
                 "Sales Revenue Report",
+                "Check Table Availability",
                 "Quit"
         };
         String title = "Restaurant Reservation & Point of Sale System";
