@@ -1,9 +1,9 @@
-package com.CZ2002.project_interfaces;
+package com.CZ2002.interfaces;
 
 import java.text.ParseException;
 
-import com.CZ2002.project_consoles.ConsoleDisplay;
-import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.consoles.ConsoleDisplay;
+import com.CZ2002.exceptions.InvalidSalesRevenueQueryException;
 
 /**
  * The {@code iCommand} interface defines the contract between the boundary and control layers.

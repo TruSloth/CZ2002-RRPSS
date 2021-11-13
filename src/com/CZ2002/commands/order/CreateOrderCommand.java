@@ -1,18 +1,18 @@
-package com.CZ2002.project_commands.order;
+package com.CZ2002.commands.order;
 
 import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 
-import com.CZ2002.project_entities.Order;
-import com.CZ2002.project_entities.Staff;
-import com.CZ2002.project_exceptions.InvalidCreateOrderException;
-import com.CZ2002.project_exceptions.InvalidStaffException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_managers.OrderManager;
-import com.CZ2002.project_managers.ReservationManager;
-import com.CZ2002.project_managers.StaffManager;
-import com.CZ2002.project_managers.TableManager;
+import com.CZ2002.entities.Order;
+import com.CZ2002.entities.Staff;
+import com.CZ2002.exceptions.InvalidCreateOrderException;
+import com.CZ2002.exceptions.InvalidStaffException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.managers.OrderManager;
+import com.CZ2002.managers.ReservationManager;
+import com.CZ2002.managers.StaffManager;
+import com.CZ2002.managers.TableManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'Create a new Order' action.

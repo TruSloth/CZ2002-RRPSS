@@ -1,5 +1,5 @@
-package com.CZ2002.project_entities;
-import com.CZ2002.project_enums.Type;
+package com.CZ2002.entities;
+import com.CZ2002.enums.Type;
 
 /**
  * The {@code AlaCarteItem} class represents a ala carte menu item.

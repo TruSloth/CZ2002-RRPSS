@@ -1,4 +1,4 @@
-package com.CZ2002.project_exceptions;
+package com.CZ2002.exceptions;
 
 public class InvalidMenuItemException extends Exception{
 	public InvalidMenuItemException() {

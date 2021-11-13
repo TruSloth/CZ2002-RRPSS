@@ -1,9 +1,9 @@
-package com.CZ2002.project_managers;
+package com.CZ2002.managers;
 
 import java.io.Serializable;
 import java.util.List;
 
-import com.CZ2002.project_entities.RestaurantEntity;
+import com.CZ2002.entities.RestaurantEntity;
 
 /**
  * The {@code Manager} class is intended to control all logic surrounding a {@link RestaurantEntity}.

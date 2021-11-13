@@ -1,4 +1,4 @@
-package com.CZ2002.project_consoles;
+package com.CZ2002.consoles;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -7,19 +7,19 @@ import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-import com.CZ2002.project_commands.reservations.AddReservationCommand;
-import com.CZ2002.project_commands.reservations.FindReservationCommand;
-import com.CZ2002.project_commands.reservations.RemoveReservationCommand;
-import com.CZ2002.project_commands.reservations.UpdateReservationCommand;
-import com.CZ2002.project_entities.Reservation;
-import com.CZ2002.project_enums.MenuView;
-import com.CZ2002.project_exceptions.InvalidReservationException;
-import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IGregorianCalendarFormattable;
-import com.CZ2002.project_managers.ReservationManager;
-import com.CZ2002.project_managers.RestaurantManager;
-import com.CZ2002.project_managers.TableManager;
+import com.CZ2002.commands.reservations.AddReservationCommand;
+import com.CZ2002.commands.reservations.FindReservationCommand;
+import com.CZ2002.commands.reservations.RemoveReservationCommand;
+import com.CZ2002.commands.reservations.UpdateReservationCommand;
+import com.CZ2002.entities.Reservation;
+import com.CZ2002.enums.MenuView;
+import com.CZ2002.exceptions.InvalidReservationException;
+import com.CZ2002.exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.interfaces.IGregorianCalendarFormattable;
+import com.CZ2002.managers.ReservationManager;
+import com.CZ2002.managers.RestaurantManager;
+import com.CZ2002.managers.TableManager;
 import com.CZ2002.utils.MenuBuilder;
 
 

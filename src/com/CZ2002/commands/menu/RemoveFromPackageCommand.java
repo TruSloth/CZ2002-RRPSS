@@ -1,10 +1,10 @@
-package com.CZ2002.project_commands.menu;
+package com.CZ2002.commands.menu;
 
-import com.CZ2002.project_entities.AlaCarteItem;
-import com.CZ2002.project_entities.PackageItem;
-import com.CZ2002.project_exceptions.InvalidMenuItemException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_managers.MenuManager;
+import com.CZ2002.entities.AlaCarteItem;
+import com.CZ2002.entities.PackageItem;
+import com.CZ2002.exceptions.InvalidMenuItemException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.managers.MenuManager;
 
 /**
  * This class completes the 'Remove ala carte item from package' action.

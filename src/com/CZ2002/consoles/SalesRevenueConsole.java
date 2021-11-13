@@ -1,15 +1,15 @@
-package com.CZ2002.project_consoles;
-import com.CZ2002.project_commands.revenue.PrintRevenueByDayCommand;
-import com.CZ2002.project_commands.revenue.PrintRevenueByMonthCommand;
-import com.CZ2002.project_entities.Order;
-import com.CZ2002.project_entities.PackageItem;
-import com.CZ2002.project_entities.SalesRevenue;
-import com.CZ2002.project_enums.MenuView;
-import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IDateFormattable;
-import com.CZ2002.project_managers.RestaurantManager;
-import com.CZ2002.project_managers.SalesRevenueManager;
+package com.CZ2002.consoles;
+import com.CZ2002.commands.revenue.PrintRevenueByDayCommand;
+import com.CZ2002.commands.revenue.PrintRevenueByMonthCommand;
+import com.CZ2002.entities.Order;
+import com.CZ2002.entities.PackageItem;
+import com.CZ2002.entities.SalesRevenue;
+import com.CZ2002.enums.MenuView;
+import com.CZ2002.exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.interfaces.IDateFormattable;
+import com.CZ2002.managers.RestaurantManager;
+import com.CZ2002.managers.SalesRevenueManager;
 import com.CZ2002.utils.MenuBuilder;
 
 import java.util.ArrayList;

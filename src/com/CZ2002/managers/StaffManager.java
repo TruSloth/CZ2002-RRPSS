@@ -1,13 +1,13 @@
-package com.CZ2002.project_managers;
+package com.CZ2002.managers;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
-import com.CZ2002.project_entities.Staff;
-import com.CZ2002.project_enums.Gender;
-import com.CZ2002.project_exceptions.InvalidStaffException;
+import com.CZ2002.entities.Staff;
+import com.CZ2002.enums.Gender;
+import com.CZ2002.exceptions.InvalidStaffException;
 
 /**
  * The {@link Manager} class that maintains the state of and handles all

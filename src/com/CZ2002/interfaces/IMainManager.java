@@ -1,8 +1,8 @@
-package com.CZ2002.project_interfaces;
+package com.CZ2002.interfaces;
 
 import java.util.HashMap;
 
-import com.CZ2002.project_managers.Manager;
+import com.CZ2002.managers.Manager;
 
 /**
  * This interface provides an access point to all other {@link Manager} classes within the Restaurant.

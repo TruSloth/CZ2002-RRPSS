@@ -1,17 +1,17 @@
-package com.CZ2002.project_consoles;
+package com.CZ2002.consoles;
 
 import java.text.ParseException;
 import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import com.CZ2002.project_commands.table.CheckTableAvailabilityCommand;
-import com.CZ2002.project_enums.MenuView;
-import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
-import com.CZ2002.project_exceptions.InvalidStaffException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_managers.RestaurantManager;
-import com.CZ2002.project_managers.TableManager;
+import com.CZ2002.commands.table.CheckTableAvailabilityCommand;
+import com.CZ2002.enums.MenuView;
+import com.CZ2002.exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.exceptions.InvalidStaffException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.managers.RestaurantManager;
+import com.CZ2002.managers.TableManager;
 import com.CZ2002.utils.MenuBuilder;
 
 /**

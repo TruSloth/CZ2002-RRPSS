@@ -1,10 +1,10 @@
-package com.CZ2002.project_commands.revenue;
+package com.CZ2002.commands.revenue;
 
-import com.CZ2002.project_entities.SalesRevenue;
-import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IDateFormattable;
-import com.CZ2002.project_managers.SalesRevenueManager;
+import com.CZ2002.entities.SalesRevenue;
+import com.CZ2002.exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.interfaces.IDateFormattable;
+import com.CZ2002.managers.SalesRevenueManager;
 
 import java.text.ParseException;
 import java.util.Date;

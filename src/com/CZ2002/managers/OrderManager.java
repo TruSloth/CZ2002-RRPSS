@@ -1,11 +1,11 @@
-package com.CZ2002.project_managers;
+package com.CZ2002.managers;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import com.CZ2002.project_entities.MenuItem;
-import com.CZ2002.project_entities.Order;
-import com.CZ2002.project_entities.Staff;
-import com.CZ2002.project_entities.Table;
+import com.CZ2002.entities.MenuItem;
+import com.CZ2002.entities.Order;
+import com.CZ2002.entities.Staff;
+import com.CZ2002.entities.Table;
 
 /**
  * A Control class to execute the logics of Order - Create Read Update Destruction

@@ -1,4 +1,4 @@
-package com.CZ2002.project_interfaces;
+package com.CZ2002.interfaces;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

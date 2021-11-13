@@ -1,20 +1,20 @@
-package com.CZ2002.project_managers;
+package com.CZ2002.managers;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.CZ2002.project_entities.MenuItem;
-import com.CZ2002.project_entities.Order;
-import com.CZ2002.project_entities.Reservation;
-import com.CZ2002.project_entities.Restaurant;
-import com.CZ2002.project_entities.SalesRevenue;
-import com.CZ2002.project_entities.Staff;
-import com.CZ2002.project_entities.Table;
-import com.CZ2002.project_enums.Gender;
-import com.CZ2002.project_enums.Type;
-import com.CZ2002.project_exceptions.InvalidStaffException;
-import com.CZ2002.project_interfaces.IMainManager;
+import com.CZ2002.entities.MenuItem;
+import com.CZ2002.entities.Order;
+import com.CZ2002.entities.Reservation;
+import com.CZ2002.entities.Restaurant;
+import com.CZ2002.entities.SalesRevenue;
+import com.CZ2002.entities.Staff;
+import com.CZ2002.entities.Table;
+import com.CZ2002.enums.Gender;
+import com.CZ2002.enums.Type;
+import com.CZ2002.exceptions.InvalidStaffException;
+import com.CZ2002.interfaces.IMainManager;
 import com.CZ2002.utils.DataStore;
 
 /**

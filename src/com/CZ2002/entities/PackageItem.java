@@ -1,4 +1,4 @@
-package com.CZ2002.project_entities;
+package com.CZ2002.entities;
 import java.util.ArrayList;
 
 /**

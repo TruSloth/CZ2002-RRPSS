@@ -1,13 +1,13 @@
-package com.CZ2002.project_commands.reservations;
+package com.CZ2002.commands.reservations;
 
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 
-import com.CZ2002.project_entities.Reservation;
-import com.CZ2002.project_exceptions.InvalidReservationException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IGregorianCalendarFormattable;
-import com.CZ2002.project_managers.ReservationManager;
+import com.CZ2002.entities.Reservation;
+import com.CZ2002.exceptions.InvalidReservationException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.interfaces.IGregorianCalendarFormattable;
+import com.CZ2002.managers.ReservationManager;
 
 
 /**

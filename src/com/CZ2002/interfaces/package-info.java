@@ -9,4 +9,4 @@
  * instances through {@link IGregorianCalendarFormattable}
  * and {@link IDateFormattable} respectively.
  */
-package com.CZ2002.project_interfaces;
+package com.CZ2002.interfaces;

@@ -1,10 +1,10 @@
-package com.CZ2002.project_consoles;
-import com.CZ2002.project_commands.order.*;
-import com.CZ2002.project_entities.Order;
-import com.CZ2002.project_enums.MenuView;
-import com.CZ2002.project_exceptions.*;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_managers.*;
+package com.CZ2002.consoles;
+import com.CZ2002.commands.order.*;
+import com.CZ2002.entities.Order;
+import com.CZ2002.enums.MenuView;
+import com.CZ2002.exceptions.*;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.managers.*;
 import com.CZ2002.utils.MenuBuilder;
 
 import java.text.ParseException;

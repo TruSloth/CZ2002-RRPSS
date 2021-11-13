@@ -1,4 +1,4 @@
-package com.CZ2002.project_managers;
+package com.CZ2002.managers;
 
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -6,9 +6,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import com.CZ2002.project_entities.Reservation;
-import com.CZ2002.project_entities.RestaurantEntity;
-import com.CZ2002.project_exceptions.InvalidReservationException;
+import com.CZ2002.entities.Reservation;
+import com.CZ2002.entities.RestaurantEntity;
+import com.CZ2002.exceptions.InvalidReservationException;
 
 /**
  * The {@link Manager} class that maintains the state of and handles all

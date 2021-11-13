@@ -1,9 +1,9 @@
-package com.CZ2002.project_commands.order;
+package com.CZ2002.commands.order;
 
-import com.CZ2002.project_entities.Order;
-import com.CZ2002.project_exceptions.InvalidPrintOrderException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_managers.OrderManager;
+import com.CZ2002.entities.Order;
+import com.CZ2002.exceptions.InvalidPrintOrderException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.managers.OrderManager;
 
 import java.util.NoSuchElementException;
 

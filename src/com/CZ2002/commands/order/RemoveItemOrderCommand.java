@@ -1,10 +1,10 @@
-package com.CZ2002.project_commands.order;
+package com.CZ2002.commands.order;
 
-import com.CZ2002.project_entities.MenuItem;
-import com.CZ2002.project_exceptions.InvalidRemoveItemOrderException;
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_managers.MenuManager;
-import com.CZ2002.project_managers.OrderManager;
+import com.CZ2002.entities.MenuItem;
+import com.CZ2002.exceptions.InvalidRemoveItemOrderException;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.managers.MenuManager;
+import com.CZ2002.managers.OrderManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'Remove item from order' action.

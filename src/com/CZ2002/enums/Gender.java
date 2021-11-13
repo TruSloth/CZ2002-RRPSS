@@ -1,4 +1,4 @@
-package com.CZ2002.project_enums;
+package com.CZ2002.enums;
 
 
 public enum Gender {

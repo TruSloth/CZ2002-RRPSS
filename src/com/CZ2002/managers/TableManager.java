@@ -1,10 +1,10 @@
-package com.CZ2002.project_managers;
+package com.CZ2002.managers;
 
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.CZ2002.project_entities.Table;
+import com.CZ2002.entities.Table;
 
 /**
  * The {@link Manager} class that maintains the state of and handles all

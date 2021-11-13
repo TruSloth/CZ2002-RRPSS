@@ -1,4 +1,4 @@
-package com.CZ2002.project_entities;
+package com.CZ2002.entities;
 
 /**
  * The {@code Table} class represents a dining table at the Restaurant.

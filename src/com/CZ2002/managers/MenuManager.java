@@ -1,11 +1,11 @@
-package com.CZ2002.project_managers;
+package com.CZ2002.managers;
 
 import java.util.ArrayList;
 
-import com.CZ2002.project_entities.AlaCarteItem;
-import com.CZ2002.project_entities.MenuItem;
-import com.CZ2002.project_entities.PackageItem;
-import com.CZ2002.project_enums.Type;
+import com.CZ2002.entities.AlaCarteItem;
+import com.CZ2002.entities.MenuItem;
+import com.CZ2002.entities.PackageItem;
+import com.CZ2002.enums.Type;
 
 /**
  * A Control class to execute the logics of MenuItem objects 

@@ -10,4 +10,4 @@
  * the application and mainly relate to the possible options
  * taken in the consoles.
  */
-package com.CZ2002.project_exceptions;
+package com.CZ2002.exceptions;

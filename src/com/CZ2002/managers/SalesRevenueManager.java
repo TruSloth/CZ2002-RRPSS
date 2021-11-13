@@ -1,13 +1,13 @@
-package com.CZ2002.project_managers;
+package com.CZ2002.managers;
 
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.CZ2002.project_entities.Order;
-import com.CZ2002.project_entities.SalesRevenue;
-import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
+import com.CZ2002.entities.Order;
+import com.CZ2002.entities.SalesRevenue;
+import com.CZ2002.exceptions.InvalidSalesRevenueQueryException;
 
 /**
  * A Control class to execute the logics of SalesRevenue - Print and Calculate

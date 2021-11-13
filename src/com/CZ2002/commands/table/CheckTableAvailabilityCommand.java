@@ -1,11 +1,11 @@
-package com.CZ2002.project_commands.table;
+package com.CZ2002.commands.table;
 
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_managers.TableManager;
+import com.CZ2002.interfaces.ICommand;
+import com.CZ2002.managers.TableManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'check table availability' action.
