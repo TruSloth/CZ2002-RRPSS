@@ -1,4 +1,4 @@
-package com.CZ2002.project_exceptions.order;
+package com.CZ2002.project_exceptions;
 
 public class InvalidCreateOrderException extends Exception{
     public InvalidCreateOrderException() {
