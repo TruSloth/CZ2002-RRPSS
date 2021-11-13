@@ -1,4 +1,5 @@
 package com.CZ2002.project_consoles;
+import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.utils.MenuBuilder;
 import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_boundaries.RestaurantManager;
@@ -147,7 +148,7 @@ public class MenuConsole extends ConsoleDisplay{
                     addAlaCarteCommand.execute();
                     System.out.println("New Ala Carte Item Added!");
                     System.out.println();
-                } catch (InvalidMenuItemException | ParseException e) {
+                } catch (InvalidMenuItemException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 view = MenuView.MENU_ITEMS;
@@ -184,7 +185,7 @@ public class MenuConsole extends ConsoleDisplay{
                     addPackageCommand.execute();
                     System.out.println("Package Added!");
                     System.out.println();
-                } catch (InvalidMenuItemException | ParseException e) {
+                } catch (InvalidMenuItemException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 componentList.clear();
@@ -214,7 +215,7 @@ public class MenuConsole extends ConsoleDisplay{
                     updateMenuItemCommand.execute();
                     System.out.println(name + " Was Updated!");
                     System.out.println();
-                } catch (InvalidMenuItemException | ParseException e) {
+                } catch (InvalidMenuItemException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 view = MenuView.MENU_ITEMS;
@@ -228,7 +229,7 @@ public class MenuConsole extends ConsoleDisplay{
                     removeMenuItemCommand.execute();
                     System.out.println(name + " Was Removed!");
                     System.out.println();
-                } catch (InvalidMenuItemException | ParseException e) {
+                } catch (InvalidMenuItemException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 view = MenuView.MENU_ITEMS;
@@ -244,7 +245,7 @@ public class MenuConsole extends ConsoleDisplay{
                     addToPackageCommand.execute();
                     System.out.println(subName + " Was Added to " + name);
                     System.out.println();
-                } catch (InvalidMenuItemException | ParseException e) {
+                } catch (InvalidMenuItemException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 view = MenuView.MENU_ITEMS;
@@ -260,7 +261,7 @@ public class MenuConsole extends ConsoleDisplay{
                     removeFromPackageCommand.execute();
                     System.out.println(subName + " Was Removed from " + name);
                     System.out.println();
-                } catch (InvalidMenuItemException | ParseException e) {
+                } catch (InvalidMenuItemException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 view = MenuView.MENU_ITEMS;

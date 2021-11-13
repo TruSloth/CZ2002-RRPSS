@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * This class implements {@link ICommand} to complete the 'print revenue by month' action.
  */
-public class PrintRevenueByMonth implements ICommand<ArrayList<SalesRevenue>, InvalidSalesRevenueQueryException>, IDateFormatter {
+public class PrintRevenueByMonthCommand implements ICommand<ArrayList<SalesRevenue>, InvalidSalesRevenueQueryException>, IDateFormatter {
     private SalesRevenueManager salesRevenueManager;
     private Date startDate;
     private Date endDate;
@@ -25,7 +25,7 @@ public class PrintRevenueByMonth implements ICommand<ArrayList<SalesRevenue>, In
      * @param endDate  the Date representing the end date to query for reenue
      */
 
-    public PrintRevenueByMonth(SalesRevenueManager salesRevenueManager, Date startDate, Date endDate){
+    public PrintRevenueByMonthCommand(SalesRevenueManager salesRevenueManager, Date startDate, Date endDate){
         this.salesRevenueManager = salesRevenueManager;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -37,7 +37,12 @@ public class PrintRevenueByMonth implements ICommand<ArrayList<SalesRevenue>, In
      *
      */
     @Override
-    public ArrayList<SalesRevenue> execute() {
-        return salesRevenueManager.getSalesRevenueByMonth(startDate, endDate);
+    public ArrayList<SalesRevenue> execute() throws InvalidSalesRevenueQueryException {
+        if  (startDate.compareTo(endDate) > 0) {
+            throw new InvalidSalesRevenueQueryException("Invalid Start and End Date");
+        }
+        else {
+            return salesRevenueManager.getSalesRevenueByMonth(startDate, endDate);
+        }
     }
 }

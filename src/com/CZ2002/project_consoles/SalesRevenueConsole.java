@@ -1,8 +1,8 @@
 package com.CZ2002.project_consoles;
 import com.CZ2002.project_boundaries.RestaurantManager;
 import com.CZ2002.project_boundaries.SalesRevenueManager;
-import com.CZ2002.project_commands.revenue.PrintRevenueByDay;
-import com.CZ2002.project_commands.revenue.PrintRevenueByMonth;
+import com.CZ2002.project_commands.revenue.PrintRevenueByDayCommand;
+import com.CZ2002.project_commands.revenue.PrintRevenueByMonthCommand;
 import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_entities.PackageItem;
 import com.CZ2002.project_entities.SalesRevenue;
@@ -44,7 +44,7 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
                 // Print by Day
                 sc.nextLine();
                 Date queryD = format(sc, "Query Day");
-                ICommand<SalesRevenue, InvalidSalesRevenueQueryException> printRevenueByDayCommand = new PrintRevenueByDay(mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class), queryD);
+                ICommand<SalesRevenue, InvalidSalesRevenueQueryException> printRevenueByDayCommand = new PrintRevenueByDayCommand(mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class), queryD);
                 try {
                     SalesRevenue revenue = printRevenueByDayCommand.execute();
                     displayDailySalesRevenue(revenue, queryD);
@@ -57,8 +57,8 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
                 sc.nextLine();
                 Date startDate = format(sc, "Start Day");
                 Date endDate = format(sc, "End Day");
-                ICommand<ArrayList<SalesRevenue>, InvalidSalesRevenueQueryException> printRevenueByMonthCommand = new PrintRevenueByMonth(mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class), startDate, endDate);
                 try {
+                    ICommand<ArrayList<SalesRevenue>, InvalidSalesRevenueQueryException> printRevenueByMonthCommand = new PrintRevenueByMonthCommand(mainManager.getSubManager("salesRevenueManager", SalesRevenueManager.class), startDate, endDate);
                     ArrayList<SalesRevenue> monthlySalesRevenue = printRevenueByMonthCommand.execute();
                     displayMonthlySalesRevenue(monthlySalesRevenue, startDate, endDate);
                 } catch(InvalidSalesRevenueQueryException e){

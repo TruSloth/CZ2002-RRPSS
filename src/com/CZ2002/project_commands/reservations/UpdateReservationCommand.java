@@ -80,7 +80,7 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
 
                 try {
                     if (unsuitableTableNos.length >= tableManager.getMaxTables()) {
-                        throw new InvalidReservationException("No reservations available for this number of guests at this time.");
+                        throw new InvalidReservationException("No Reservations Available for This Number of Guests at This Time.");
                     }
 
                     int bookedTableNo = tableManager.getAvailableTable(unsuitableTableNos, newPax);
@@ -88,9 +88,9 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
                     reservationManager.modifyReservationTableNo(reservation, bookedTableNo);
                     reservationManager.modifyReservationPax(reservation, newPax);
                 } catch (IllegalArgumentException e) {
-                    throw new InvalidReservationException(String.format("Unable to change to %d pax.", newPax));
+                    throw new InvalidReservationException(String.format("Unable to Change to %d Pax.", newPax));
                 } catch (NullPointerException e) {
-                    throw new InvalidReservationException("We could not find a suitable table at this time.");
+                    throw new InvalidReservationException("We Could Not Find a Suitable Table at This Time.");
                 }
 
                 break;
@@ -101,7 +101,7 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
                     tableManager.checkTableSuitability(newTableNo, reservation.getPax());
                     reservationManager.modifyReservationTableNo(reservation, newTableNo);
                 } catch (IllegalArgumentException e) {
-                    throw new InvalidReservationException("Unable to change to this table no.");
+                    throw new InvalidReservationException("Unable to Change to This Table No.");
                 }
 
                 break;
@@ -113,7 +113,7 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
 
                 try {
                     if (unavailableTableNos.length >= tableManager.getMaxTables()) {
-                        throw new InvalidReservationException("No reservations Available for this number of guests at this time.");
+                        throw new InvalidReservationException("No Reservations Available for This Number of Guests at This Time.");
                     }
 
                     int bookedTableNo = tableManager.getAvailableTable(unavailableTableNos, reservation.getPax());
@@ -124,7 +124,7 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
 
                     reservationManager.modifyReservationPeriod(reservation, newReservationPeriod);
                 } catch (IllegalArgumentException | NullPointerException e) {
-                    throw new InvalidReservationException("We could not find a suitable table at this time.");
+                    throw new InvalidReservationException("We Could Not Find a Suitable Table at This Time.");
                 }
 
                 break;

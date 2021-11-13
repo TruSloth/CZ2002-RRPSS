@@ -116,7 +116,7 @@ public class OrderConsole extends ConsoleDisplay{
                     Order order = createOrderCommand.execute();
                     System.out.println("New Order for Table " + order.getTable() + " Created");
 
-                } catch (InvalidCreateOrderException | ParseException e) {
+                } catch (InvalidCreateOrderException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -142,7 +142,7 @@ public class OrderConsole extends ConsoleDisplay{
                 try {
                     addItemOrder.execute();
                     System.out.println("Item Successfully Added");
-                } catch (InvalidAddItemOrderException | ParseException e) {
+                } catch (InvalidAddItemOrderException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -167,7 +167,7 @@ public class OrderConsole extends ConsoleDisplay{
                 try {
                     removeItemOrder.execute();
                     System.out.println("Item Successfully Removed");
-                } catch (InvalidRemoveItemOrderException | ParseException e) {
+                } catch (InvalidRemoveItemOrderException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -186,7 +186,7 @@ public class OrderConsole extends ConsoleDisplay{
                 try {
                     Order order = printOrder.execute();
                     displayOrder(order);
-                } catch (InvalidPrintOrderException | ParseException e) {
+                } catch (InvalidPrintOrderException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -209,7 +209,7 @@ public class OrderConsole extends ConsoleDisplay{
                     Order order = deleteOrder.execute();
                     displayOrder(order);
                     System.out.printf("Order for Table %d Paid\n", tableClose);
-                } catch (InvalidDeleteOrderException | ParseException e) {
+                } catch (InvalidDeleteOrderException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 break;
@@ -230,7 +230,7 @@ public class OrderConsole extends ConsoleDisplay{
                 );
                 try {
                     setMembership.execute();
-                } catch (InvalidSetMembership | ParseException e) {
+                } catch (InvalidSetMembership | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
 

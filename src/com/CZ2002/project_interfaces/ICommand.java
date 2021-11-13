@@ -3,6 +3,7 @@ package com.CZ2002.project_interfaces;
 import java.text.ParseException;
 
 import com.CZ2002.project_consoles.ConsoleDisplay;
+import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 
 /**
  * The {@code iCommand} interface defines the contract between the boundary and control layers.
@@ -27,5 +28,5 @@ public interface ICommand<T, E extends Exception> {
      * @return T the type returned by {@code execute()}, {@link Void} if nothing is returned
      * @throws E  if {@code execute()} could not be completed successfully
      */
-    abstract T execute() throws E, ParseException;
+    abstract T execute() throws E, ParseException, InvalidSalesRevenueQueryException;
 }

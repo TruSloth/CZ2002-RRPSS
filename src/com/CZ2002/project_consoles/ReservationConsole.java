@@ -17,6 +17,7 @@ import com.CZ2002.project_commands.reservations.UpdateReservationCommand;
 import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.InvalidReservationException;
+import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_interfaces.ICommand;
 import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
 import com.CZ2002.utils.MenuBuilder;
@@ -136,7 +137,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                 try {
                     addReservationCommand.execute();
                     System.out.println("Reservation Was Successfully Created!");
-                } catch (InvalidReservationException | ParseException e) {
+                } catch (InvalidReservationException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 view = MenuView.RESERVATIONS;
@@ -156,7 +157,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                 try {
                     reservation = findReservationCommand.execute();
                     displayReservationDetails(reservation);
-                } catch (InvalidReservationException | ParseException e) {
+                } catch (InvalidReservationException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 view = MenuView.RESERVATIONS;
@@ -191,7 +192,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                             view = updateReservationCommand.execute();
                         } catch (InvalidReservationException e) {
                             System.out.println(e.getMessage());
-                        } catch (ParseException e) {
+                        } catch (ParseException | InvalidSalesRevenueQueryException e) {
                             e.printStackTrace();
                         }
 
@@ -216,7 +217,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                 try {
                     removeReservationCommand.execute();
                     System.out.println("Reservation Was Successfully Removed!");
-                } catch (InvalidReservationException | ParseException e) {
+                } catch (InvalidReservationException | ParseException | InvalidSalesRevenueQueryException e) {
                     System.out.println(e.getMessage());
                 }
                 view = MenuView.RESERVATIONS;

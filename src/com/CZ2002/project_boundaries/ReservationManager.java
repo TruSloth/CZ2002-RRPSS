@@ -58,7 +58,7 @@ public class ReservationManager extends Manager<Reservation> {
         long timeDifference = reservation.getReservationPeriod().getTimeInMillis() - System.currentTimeMillis() + EXPIRYTIME_MS;
 
         Callable<Void> removeExpiredReservation = () -> {
-            System.out.println("Removing reservation at " + new Date());
+            System.out.println("Removing Reservation At " + new Date());
             executors.remove(entities.indexOf(reservation));
             entities.remove(reservation);
             return null;
@@ -83,7 +83,7 @@ public class ReservationManager extends Manager<Reservation> {
         advancedReservationPeriod.add(Calendar.HOUR, ADVANCED_HRS); // Must make reservation 24 hours in advance
 
         if (reservationPeriod.before(advancedReservationPeriod)) {
-            throw new InvalidReservationException(String.format("Reservation can only be made at least %d hours in advance.", ADVANCED_HRS));
+            throw new InvalidReservationException(String.format("Reservation Can Only Be mMde At Least %d Hours in Advance.", ADVANCED_HRS));
         }
     }
 
@@ -172,7 +172,7 @@ public class ReservationManager extends Manager<Reservation> {
                     .findFirst()
                     .get();
         } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("The requested reservation does not exist!");
+            throw new NoSuchElementException("The Requested Reservation Does Not Exist!");
         }
     }
 
@@ -258,7 +258,7 @@ public class ReservationManager extends Manager<Reservation> {
         // The method should throw an exception if the new tableNo refers to a table that cannot satisfy the reservation requirements
         if (Arrays.stream(getUnavailableTables(reservation.getReservationPeriod()))
                 .anyMatch(unavailableTableNo -> unavailableTableNo == tableNo)) {
-            throw new IllegalArgumentException("This table is already reserved for this time.");
+            throw new IllegalArgumentException("This Table is Already Reserved for This Time.");
         }
         reservation.setTableNo(tableNo);
         return true;

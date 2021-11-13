@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * This class implements {@link ICommand} to complete the 'print revenue by month' action.
  */
-public class PrintRevenueByDay implements ICommand<SalesRevenue, InvalidSalesRevenueQueryException>, IDateFormatter {
+public class PrintRevenueByDayCommand implements ICommand<SalesRevenue, InvalidSalesRevenueQueryException>, IDateFormatter {
     private SalesRevenueManager salesRevenueManager;
     private Date queryDate;
 
@@ -23,7 +23,7 @@ public class PrintRevenueByDay implements ICommand<SalesRevenue, InvalidSalesRev
      * @param queryD  the Date representing the query date to query for revenue
      */
 
-    public PrintRevenueByDay(SalesRevenueManager salesRevenueManager, Date queryD) {
+    public PrintRevenueByDayCommand(SalesRevenueManager salesRevenueManager, Date queryD) {
         this.salesRevenueManager = salesRevenueManager;
         this.queryDate = queryD;
     }
