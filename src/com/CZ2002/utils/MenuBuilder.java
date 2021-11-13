@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A utility class for formatting output intended to
+ * {@link MenuBuilder} is a utility class for formatting output intended to
  * be displayed as a menu in a command line interface.
  */
 public class MenuBuilder {
