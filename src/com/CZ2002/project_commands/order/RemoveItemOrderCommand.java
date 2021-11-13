@@ -45,7 +45,7 @@ public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemO
         int temp;
         temp = orderManager.removeItemOrder( menuItem , tableRemove );
         if (orderManager.removeItemOrder( menuItem , tableRemove ) == -1){
-            throw new InvalidRemoveItemOrderException("Table Not found!");
+            throw new InvalidRemoveItemOrderException("Table Not Found!");
         }
         else if (temp == 0){
             throw new InvalidRemoveItemOrderException("Item Not Found in Order!");

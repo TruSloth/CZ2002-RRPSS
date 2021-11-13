@@ -176,7 +176,7 @@ public class TableManager extends Manager<Table> {
                 startIndex = index10Seater;
                 break;
             default:
-                throw new IllegalArgumentException(String.format("Unable to accommodate %d pax", pax));
+                throw new IllegalArgumentException(String.format("Unable to Accommodate %d Pax", pax));
         }
 
         Set<Integer> set = Arrays.stream(unavailableTableNos).boxed().collect(Collectors.toSet());

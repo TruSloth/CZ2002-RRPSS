@@ -44,7 +44,7 @@ public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderE
             throw new InvalidAddItemOrderException("Item Not Found in Menu!");
         }
         if (orderManager.addItemOrder( menuItem , tableAdd ) == -1 ){
-            throw new InvalidAddItemOrderException("Table Not found!");
+            throw new InvalidAddItemOrderException("Table Not Found!");
         }
         return null;
     }
