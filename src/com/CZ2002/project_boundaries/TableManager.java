@@ -204,7 +204,6 @@ public class TableManager extends Manager<Table> {
         }
     }
 
-
     /**
      * Returns the total number of {@link Table} instances stored in {@code entities}
      *
