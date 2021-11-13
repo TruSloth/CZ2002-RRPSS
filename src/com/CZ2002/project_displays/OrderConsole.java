@@ -176,7 +176,7 @@ public class OrderConsole extends ConsoleDisplay{
                 // Print Order for Table xx
                 sc.nextLine();
                 int tablePrint;
-                System.out.print("Print Order For Table: ");
+                System.out.print("View Order For Table: ");
                 tablePrint = sc.nextInt();
 
                 ICommand<Order, InvalidPrintOrderException> printOrder = new PrintOrderCommand(
@@ -195,7 +195,7 @@ public class OrderConsole extends ConsoleDisplay{
                 // Delete Order
                 sc.nextLine();
                 int tableClose;
-                System.out.print("Close Order For Table: ");
+                System.out.print("Print Order Invoice For Table: ");
                 tableClose = sc.nextInt();
 
                 ICommand<Order , InvalidDeleteOrderException> deleteOrder = new DeleteOrderCommand(

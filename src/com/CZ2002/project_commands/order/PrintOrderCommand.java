@@ -36,7 +36,7 @@ public class PrintOrderCommand implements ICommand<Order , InvalidPrintOrderExce
             Order order = orderManager.getOrder(tablePrint);
             return order;
         } catch (NoSuchElementException e) {
-            throw new InvalidPrintOrderException("This table has no order.");
+            throw new InvalidPrintOrderException("Table Not Found!");
         }
     }
 }

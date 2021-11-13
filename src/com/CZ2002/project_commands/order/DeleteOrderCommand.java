@@ -49,6 +49,6 @@ public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderEx
                 return o;
             }
         }
-        throw new InvalidDeleteOrderException("Table not found" );
+        throw new InvalidDeleteOrderException("Table Not Found!" );
     }
 }
