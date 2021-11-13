@@ -24,15 +24,7 @@ import com.CZ2002.utils.DataStore;
  */
 public class RestaurantManager implements IMainManager {
     private Restaurant restaurant;
-
-    @Override
-    public void saveManagers() {
-        for (Manager<?> manager : subManagers.values()) {
-            String fileName = manager.getClass().getSimpleName();
-            fileName = fileName.substring(0, 1).toLowerCase() + fileName.substring(1).replace("Manager", "") + "Data";
-            DataStore.saveToFile(manager, fileName);
-        }
-    }
+    private DataStore ds;
 
     /**
      * Initialises this {@code RestaurantManager} and the {@link Manager} instances it handles.
@@ -41,8 +33,10 @@ public class RestaurantManager implements IMainManager {
      * Otherwise, the {@code Manager} instances are initialised with default {@code entities}.
      *
      * @param restaurant  the reference to the {@link Restaurant} instance
-     */public RestaurantManager(Restaurant restaurant) throws InvalidStaffException {
+     */public RestaurantManager(Restaurant restaurant, DataStore ds) throws InvalidStaffException {
         this.restaurant = restaurant;
+        this.ds = ds;
+
         int numOfTables = restaurant.getNumOfTables();
 
         // Initializes a Thread with a run method that gets called when option to quit is 
@@ -55,8 +49,8 @@ public class RestaurantManager implements IMainManager {
 
         // Load MenuManager
         try {
-            Path menuDataPath = Paths.get(DataStore.getDataDirPath().toString(), "menuData.txt");
-            subManagers.putIfAbsent("menuManager",(Manager<MenuItem>) DataStore.loadFromFile(menuDataPath));
+            Path menuDataPath = Paths.get(ds.getDataDirPath().toString(), "menuData.txt");
+            subManagers.putIfAbsent("menuManager",(Manager<MenuItem>) ds.loadFromFile(menuDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("menuManager", new MenuManager());
 
@@ -74,8 +68,8 @@ public class RestaurantManager implements IMainManager {
 
         // Load StaffManager
         try {
-            Path staffDataPath = Paths.get(DataStore.getDataDirPath().toString(), "staffData.txt");
-            subManagers.putIfAbsent("staffManager", (Manager<Staff>) DataStore.loadFromFile(staffDataPath));
+            Path staffDataPath = Paths.get(ds.getDataDirPath().toString(), "staffData.txt");
+            subManagers.putIfAbsent("staffManager", (Manager<Staff>) ds.loadFromFile(staffDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("staffManager",  new StaffManager());
 
@@ -86,44 +80,24 @@ public class RestaurantManager implements IMainManager {
 
         // Load SalesRevenueManager
         try {
-            Path salesRevenueDataPath = Paths.get(DataStore.getDataDirPath().toString(), "salesRevenueData.txt");
-            subManagers.putIfAbsent("salesRevenueManager", (Manager<SalesRevenue>) DataStore.loadFromFile(salesRevenueDataPath));
+            Path salesRevenueDataPath = Paths.get(ds.getDataDirPath().toString(), "salesRevenueData.txt");
+            subManagers.putIfAbsent("salesRevenueManager", (Manager<SalesRevenue>) ds.loadFromFile(salesRevenueDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("salesRevenueManager", new SalesRevenueManager());
-
-
-             // FOR MONEY PURPOSES
-             for (int i = 1; i <= 11; i++) {
-                 for (int tableNo = 1; tableNo <= 6; tableNo++) {
-                     Order o1 = new Order(tableNo, 2, getSubManager("staffManager", StaffManager.class).findStaffById(1), i);
-                     Order o2 = new Order(tableNo, 2, getSubManager("staffManager", StaffManager.class).findStaffById(2), i);
-                     o1.addItem(getSubManager("menuManager", MenuManager.class).getItem("Ribeye Steak"));
-                     o1.addItem(getSubManager("menuManager", MenuManager.class).getItem("Sparkling Pink Lemonade"));
-                     o2.addItem(getSubManager("menuManager", MenuManager.class).getItem("Lamb Chops"));
-                     o2.addItem(getSubManager("menuManager", MenuManager.class).getItem("Mango Peach Tropics"));
-
-                     if (i == 3 && tableNo == 2) {
-                         o2.addItem(getSubManager("menuManager", MenuManager.class).getItem("A5 Wagyu Beef"));
-                     }
-
-                     getSubManager("salesRevenueManager", SalesRevenueManager.class).addOrder(o1);
-                     getSubManager("salesRevenueManager", SalesRevenueManager.class).addOrder(o2);
-                 }
-             }
         }
 
         // Load OrderManager
         try {
-            Path orderDataPath = Paths.get(DataStore.getDataDirPath().toString(), "orderData.txt");
-            subManagers.putIfAbsent("orderManager", (Manager<Order>) DataStore.loadFromFile(orderDataPath));
+            Path orderDataPath = Paths.get(ds.getDataDirPath().toString(), "orderData.txt");
+            subManagers.putIfAbsent("orderManager", (Manager<Order>) ds.loadFromFile(orderDataPath));
         } catch (IOException e) {
             subManagers.putIfAbsent("orderManager", new OrderManager());
         }
 
         // Load ReservationManager
         try {
-            Path reservationDataPath = Paths.get(DataStore.getDataDirPath().toString(), "reservationData.txt");
-            subManagers.putIfAbsent("reservationManager", (Manager<Reservation>) DataStore.loadFromFile(reservationDataPath));
+            Path reservationDataPath = Paths.get(ds.getDataDirPath().toString(), "reservationData.txt");
+            subManagers.putIfAbsent("reservationManager", (Manager<Reservation>) ds.loadFromFile(reservationDataPath));
             getSubManager("reservationManager", ReservationManager.class).startAllReservationFutures(); // Restart all Reservation Futures
         } catch (IOException e) {
             subManagers.putIfAbsent("reservationManager", new ReservationManager());
@@ -131,8 +105,8 @@ public class RestaurantManager implements IMainManager {
 
         // Load TableManager
         try {
-            Path tableDataPath = Paths.get(DataStore.getDataDirPath().toString(), "tableData.txt");
-            subManagers.putIfAbsent("tableManager", (Manager<Table>) DataStore.loadFromFile(tableDataPath));
+            Path tableDataPath = Paths.get(ds.getDataDirPath().toString(), "tableData.txt");
+            subManagers.putIfAbsent("tableManager", (Manager<Table>) ds.loadFromFile(tableDataPath));
         } catch (IOException e) {
             // (2,4,6,8,10-seater proportions in 20%, 40%, 20%, 10%, 10%)
             subManagers.putIfAbsent("tableManager",  new TableManager(numOfTables, numOfTables / 5, numOfTables / 5 * 2 , numOfTables / 5, numOfTables / 10, numOfTables / 10));
@@ -148,6 +122,15 @@ public class RestaurantManager implements IMainManager {
     public void shutdown() {
         // Called when option to quit is selected.
         getSubManager("reservationManager", ReservationManager.class).cancelAllReservationFutures();
+    }
+
+    @Override
+    public void saveManagers() {
+        for (Manager<?> manager : subManagers.values()) {
+            String fileName = manager.getClass().getSimpleName();
+            fileName = fileName.substring(0, 1).toLowerCase() + fileName.substring(1).replace("Manager", "") + "Data";
+            ds.saveToFile(manager, fileName);
+        }
     }
 
     @Override

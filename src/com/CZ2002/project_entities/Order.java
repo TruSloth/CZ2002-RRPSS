@@ -25,25 +25,6 @@ public class Order extends RestaurantEntity {
      * @param table The Table Number which diners are seated at
      * @param pax Number of diners seated at table
      * @param server Staff who is/was serving them
-     * @param monthDay Numher day of month
-     */
-    public Order( int table, int pax, Staff server, int monthDay){
-        this.table = table;
-        this.pax = pax;
-        this.server = server;
-        this.membership = false;
-        this.bill= 0.00;
-        this.discountTotal = 0.00;
-        this.tax = 0.00;
-        this.ordered = new ArrayList<>();
-        cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_MONTH, monthDay);
-    }
-
-    /** Creates an Order object with arguments provided
-     * @param table The Table Number which diners are seated at
-     * @param pax Number of diners seated at table
-     * @param server Staff who is/was serving them
      */
     public Order( int table, int pax, Staff server){
         this.table = table;

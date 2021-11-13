@@ -10,9 +10,13 @@ import java.nio.file.Paths;
  * {@link DataStore} is a utility class designed to provided data persistence.
  */
 public class DataStore {
-    private static Path dataDirPath = Paths.get(System.getProperty("user.dir"), "src", "com", "CZ2002", "data");
+    private Path dataDirPath;
 
-    private static Path createDataFile(String fileName) {
+    public DataStore() {
+        dataDirPath = Paths.get(System.getProperty("user.dir"), "src", "com", "CZ2002", "data");
+    }
+
+    private Path createDataFile(String fileName) {
         if (!fileName.endsWith(".txt")) {
             fileName += ".txt";
         }
@@ -39,7 +43,7 @@ public class DataStore {
      * 
      * @see Serializable
      */
-    public static Object loadFromFile(Path filePath) throws FileNotFoundException, IOException {
+    public Object loadFromFile(Path filePath) throws FileNotFoundException, IOException {
         FileInputStream fin = new FileInputStream(filePath.toString());
         try {
             ObjectInputStream ois = new ObjectInputStream(fin);
@@ -56,7 +60,7 @@ public class DataStore {
      * 
      * @return the {@code Path} to the data storage directory
      */
-    public static Path getDataDirPath() {
+    public Path getDataDirPath() {
         return dataDirPath;
     }
 
@@ -73,7 +77,7 @@ public class DataStore {
      * 
      * @see Serializable
      */
-    public static void saveToFile(Object obj, String fileName) {
+    public void saveToFile(Object obj, String fileName) {
         Path filePath = createDataFile(fileName);
     
         try {    
