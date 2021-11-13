@@ -16,7 +16,7 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
     // Constructor
     public SalesRevenueManager(){
         int numDays = Year.of(2021).length();
-        entities = new ArrayList<SalesRevenue>(numDays); //ArrayList revenueList
+        entities = new ArrayList<>(numDays); //ArrayList revenueList
 
         // Prepopulate List of Revenue
         for (int i=0; i<numDays; i++){
@@ -34,8 +34,7 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
         cal.setTime(order.getDate());
         int dayOfYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
         double bill = order.getBill();
-        
-        
+
         // Update Final Bill and Add Order
         double finalTotal = entities.get(dayOfYear).getRevenue() + bill;
         SalesRevenue temp = entities.get(dayOfYear);
@@ -59,7 +58,7 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
         try {
             return entities.get(dayOfYear);
         } catch (IndexOutOfBoundsException e) {
-            throw new InvalidSalesRevenueQueryException("There is no sales revenue data for this date yet.");
+            throw new InvalidSalesRevenueQueryException("No existing sales revenue record for " + date);
         }
     } 
 
@@ -78,7 +77,7 @@ public class SalesRevenueManager extends Manager<SalesRevenue>{
         cal.setTime(endDate);
         int endDayOfTheYear = cal.get(Calendar.DAY_OF_YEAR);
 
-        ArrayList<SalesRevenue> monthlySalesRevenues = new ArrayList<SalesRevenue>();
+        ArrayList<SalesRevenue> monthlySalesRevenues = new ArrayList<>();
 
         for (int i = startDayOfTheYear; i < endDayOfTheYear; i++) {
             monthlySalesRevenues.add(entities.get(i));

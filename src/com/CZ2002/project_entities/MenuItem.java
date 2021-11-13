@@ -1,9 +1,12 @@
 package com.CZ2002.project_entities;
 
 /**
- * An Entity class representing a MenuItem
+ * The {@code MenuItem} class represents a package menu item.
+ * A menu item must be specified by the name, description and price.
+ * <p>
+ * The {@code PackageItem} class is designed to only hold all data related to
+ * a menu item and should not implement any logic in relation to menu item.
  */
-
 public class MenuItem extends RestaurantEntity {
     private String name;
     private String description;

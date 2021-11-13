@@ -26,16 +26,6 @@ import com.CZ2002.project_enums.MenuView;
  * The interface that the user interacts with for {@link Reservation} instances.
  */
 public class ReservationConsole extends ConsoleDisplay implements IGregorianCalendarFormatter {
-    // Declare all available commands here
-
-    private ICommand<Void, InvalidReservationException> addReservationCommand;
-
-    private ICommand<Reservation, InvalidReservationException> findReservationCommand;
-
-    private ICommand<MenuView, InvalidReservationException> updateReservationCommand;
-
-    private ICommand<Boolean, InvalidReservationException> removeReservationCommand;
-
     /**
      * Initalises this {@code ReservationConsole} with the reference to the {@link RestaurantManager}.
      *
@@ -127,76 +117,66 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
         GregorianCalendar reservationPeriod;
 
         switch (choice) {
-            case 1:
+            case 1 -> {
                 // Create Reservation
                 System.out.println("Creating a new Reservation");
                 sc.nextLine(); // Throw away \n in buffer
-                System.out.printf("Name: ");
+                System.out.print("Name: ");
                 name = sc.nextLine();
-                System.out.printf("Contact: ");
+                System.out.print("Contact: ");
                 contact = sc.nextLine();
-                System.out.printf("Pax: ");
+                System.out.print("Pax: ");
                 pax = sc.nextInt();
                 sc.nextLine(); // Throw away \n in buffer
-
                 reservationPeriod = format(sc, "Reservation Period");
-
-                addReservationCommand = new AddReservationCommand(
+                ICommand<Void, InvalidReservationException> addReservationCommand = new AddReservationCommand(
                         mainManager.getSubManager("reservationManager", ReservationManager.class),
                         mainManager.getSubManager("tableManager", TableManager.class),
                         name, contact, pax, reservationPeriod);
                 try {
                     addReservationCommand.execute();
-                    System.out.println("Reservation was successfully created!");
+                    System.out.println("Reservation Was Successfully Created!");
                 } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
-                } 
-
+                }
                 view = MenuView.RESERVATIONS;
-                break;
-            case 2:
+            }
+            case 2 -> {
                 // Check Reservation
-                System.out.println("Which Reservation are you looking for?");
+                System.out.println("Which Reservation Are You Looking For?");
                 sc.nextLine(); // Throw away \n in buffer
-                System.out.printf("Name: ");
+                System.out.print("Name: ");
                 name = sc.nextLine();
-                System.out.printf("Contact: ");
+                System.out.print("Contact: ");
                 contact = sc.nextLine();
-
                 reservationPeriod = format(sc, "Reservation Period");
-
-                findReservationCommand = new FindReservationCommand(
+                ICommand<Reservation, InvalidReservationException> findReservationCommand = new FindReservationCommand(
                         mainManager.getSubManager("reservationManager", ReservationManager.class),
                         name, contact, reservationPeriod);
-
                 try {
                     reservation = findReservationCommand.execute();
                     displayReservationDetails(reservation);
                 } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
-
                 view = MenuView.RESERVATIONS;
-                break;
-            case 3:
+            }
+            case 3 -> {
                 // Update Reservation
-                System.out.println("Which Reservation are you looking for?");
+                System.out.println("Which Reservation Are You Looking For?");
                 sc.nextLine(); // Throw away \n in buffer
-                System.out.printf("Name: ");
+                System.out.print("Name: ");
                 name = sc.nextLine();
-                System.out.printf("Contact: ");
+                System.out.print("Contact: ");
                 contact = sc.nextLine();
-
                 reservationPeriod = format(sc, "Reservation Period");
-
-                findReservationCommand = new FindReservationCommand(
+                FindReservationCommand findReservationCommand = new FindReservationCommand(
                         mainManager.getSubManager("reservationManager", ReservationManager.class),
                         name, contact, reservationPeriod);
-
                 try {
                     reservation = findReservationCommand.execute();
 
-                    updateReservationCommand = new UpdateReservationCommand(
+                    ICommand<MenuView, InvalidReservationException> updateReservationCommand = new UpdateReservationCommand(
                             mainManager.getSubManager("reservationManager", ReservationManager.class),
                             mainManager.getSubManager("tableManager", TableManager.class),
                             reservation, sc);
@@ -206,7 +186,7 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                     do {
                         try {
                             displayReservationDetails(reservation);
-                            System.out.println("What would you like to update?");
+                            System.out.println("What Would You Like to Update?");
                             displayUpdateReservationOptions();
                             view = updateReservationCommand.execute();
                         } catch (InvalidReservationException e) {
@@ -216,42 +196,35 @@ public class ReservationConsole extends ConsoleDisplay implements IGregorianCale
                         }
 
                     } while (view != MenuView.PREVIOUS_MENU);
-                } catch (InvalidReservationException | ParseException e) {
+                } catch (InvalidReservationException e) {
                     System.out.println(e.getMessage());
                 }
-
                 view = MenuView.RESERVATIONS;
-                break;
-            case 4:
+            }
+            case 4 -> {
                 // Remove Reservation
-                System.out.println("Which Reservation would you like to remove?");
+                System.out.println("Which Reservation Would You Like to Delete?");
                 sc.nextLine(); // Throw away \n in buffer
-                System.out.printf("Name: ");
+                System.out.print("Name: ");
                 name = sc.nextLine();
-                System.out.printf("Contact: ");
+                System.out.print("Contact: ");
                 contact = sc.nextLine();
-
                 reservationPeriod = format(sc, "Reservation Period");
-
-                removeReservationCommand = new RemoveReservationCommand(
+                ICommand<Boolean, InvalidReservationException> removeReservationCommand = new RemoveReservationCommand(
                         mainManager.getSubManager("reservationManager", ReservationManager.class),
                         name, contact, reservationPeriod);
-
                 try {
                     removeReservationCommand.execute();
-                    System.out.println("Reservation was succesfully removed.");
+                    System.out.println("Reservation Was Successfully Removed!");
                 } catch (InvalidReservationException | ParseException e) {
                     System.out.println(e.getMessage());
                 }
-
                 view = MenuView.RESERVATIONS;
-                break;
-            case 5:
-                // Back
-                view = MenuView.PREVIOUS_MENU;
-                break;
+            }
+            case 5 ->
+                    // Back
+                    view = MenuView.PREVIOUS_MENU;
         }
-
         return view;
     }
 }

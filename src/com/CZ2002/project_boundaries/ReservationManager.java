@@ -30,7 +30,7 @@ public class ReservationManager extends Manager<Reservation> {
 
     final private long EXPIRYTIME_MS = 900000; // Time after the start of a reservation upon which reservation will expire - 15 mins
 
-    final private int ADVANCED_HRS = 24; // Number of hours in advance that a reservation must be made 
+    final private int ADVANCED_HRS = 24; // Number of hours in advance that a reservation must be made
     /**
      * Constructs a new {@code ReservationManager} to manage {@link Reservation} instances.
      * <p>
@@ -82,7 +82,7 @@ public class ReservationManager extends Manager<Reservation> {
         advancedReservationPeriod.add(Calendar.HOUR, ADVANCED_HRS); // Must make reservation 24 hours in advance
 
         if (reservationPeriod.before(advancedReservationPeriod)) {
-            throw new InvalidReservationException(String.format("A reservation can only be made at least %d hours in advance.", ADVANCED_HRS));
+            throw new InvalidReservationException(String.format("Reservation can only be made at least %d hours in advance.", ADVANCED_HRS));
         }
     }
 
@@ -118,7 +118,7 @@ public class ReservationManager extends Manager<Reservation> {
 
         return entities.stream()
                 .filter(reservation -> (new ReservationPeriod().clash(reservation.getReservationPeriod(), reservationPeriod)))
-                .mapToInt(reservation -> reservation.getTableNo())
+                .mapToInt(Reservation::getTableNo)
                 .toArray();
     }
 

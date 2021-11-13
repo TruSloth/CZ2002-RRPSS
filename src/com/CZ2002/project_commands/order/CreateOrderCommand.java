@@ -64,7 +64,7 @@ public class CreateOrderCommand implements ICommand<Order , InvalidCreateOrderEx
             Integer[] occupiedTables = Arrays.stream(tableManager.getOccupiedTableNos()).boxed().toArray(Integer[]::new);
 
             // Create a set to remove duplicate table numbers
-            HashSet<Integer> set = new HashSet<Integer>();
+            HashSet<Integer> set = new HashSet<>();
             set.addAll(Arrays.asList(reservedTables));
             set.addAll(Arrays.asList(occupiedTables));
 
@@ -79,7 +79,7 @@ public class CreateOrderCommand implements ICommand<Order , InvalidCreateOrderEx
             return orderManager.getOrder(tableNumber);
 
         } catch (InvalidStaffException e){
-            throw new InvalidCreateOrderException("There is no staff with that ID.");
+            throw new InvalidCreateOrderException("Staff Does Not Exist!");
         } catch (IllegalArgumentException e) {
             throw new InvalidCreateOrderException(e.getMessage());
         }

@@ -13,7 +13,6 @@ import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
  */
 public class RemoveReservationCommand implements ICommand<Boolean, InvalidReservationException>, IGregorianCalendarFormatter {
     private ReservationManager reservationManager;
-
     private GregorianCalendar reservationPeriod;
     private String name;
     private String contact;

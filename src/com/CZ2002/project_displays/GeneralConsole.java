@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import com.CZ2002.project_boundaries.RestaurantManager;
 import com.CZ2002.project_boundaries.TableManager;
-import com.CZ2002.project_commands.CheckTableAvailabilityCommand;
+import com.CZ2002.project_commands.table.CheckTableAvailabilityCommand;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_exceptions.InvalidStaffException;
 import com.CZ2002.project_interfaces.ICommand;
@@ -65,7 +65,7 @@ public class GeneralConsole extends ConsoleDisplay {
                             menuConsole.displayConsoleOptions();
                             view = menuConsole.handleConsoleOptions();
                         } catch (InputMismatchException e) {
-                            System.out.println("Invalid input!");
+                            System.out.println("Invalid Input!");
                             sc.nextLine();
                         } 
                     } while (view != MenuView.PREVIOUS_MENU);
@@ -79,7 +79,7 @@ public class GeneralConsole extends ConsoleDisplay {
                             orderConsole.displayConsoleOptions();
                             view = orderConsole.handleConsoleOptions();
                         } catch (InputMismatchException e) {
-                            System.out.println("Invalid input!");
+                            System.out.println("Invalid Input!");
                             sc.nextLine();
                         }   
                     } while (view != MenuView.PREVIOUS_MENU);
@@ -93,7 +93,7 @@ public class GeneralConsole extends ConsoleDisplay {
                             reservationConsole.displayConsoleOptions();
                             view = reservationConsole.handleConsoleOptions();
                         } catch (InputMismatchException e) {
-                            System.out.println("Invalid input!");
+                            System.out.println("Invalid Input!");
                             sc.nextLine();
                         }
                     } while (view != MenuView.PREVIOUS_MENU);
@@ -108,7 +108,7 @@ public class GeneralConsole extends ConsoleDisplay {
                             salesRevenueConsole.displayConsoleOptions();
                             view = salesRevenueConsole.handleConsoleOptions();
                         } catch (InputMismatchException e) {
-                            System.out.println("Invalid input!");
+                            System.out.println("Invalid Input!");
                             sc.nextLine();
                         } 
                     } while (view != MenuView.PREVIOUS_MENU);
@@ -137,7 +137,6 @@ public class GeneralConsole extends ConsoleDisplay {
         catch (NoSuchElementException e) {
             view = MenuView.PROGRAM_END; // Scanner has closed.
         }
-
         return view;
     }
 
@@ -159,6 +158,7 @@ public class GeneralConsole extends ConsoleDisplay {
         }
 
         System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, LONGEST_WIDTH));
+
         return options.length;
     }
 

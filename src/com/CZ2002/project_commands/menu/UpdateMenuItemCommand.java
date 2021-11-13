@@ -38,16 +38,10 @@ public class UpdateMenuItemCommand implements ICommand<Void, InvalidMenuItemExce
      * Completes the 'Update item' action.
      */
     public Void execute() throws InvalidMenuItemException {
-    	try {
-            if(menuManager.getItem(name)==null) {
-    			throw new InvalidMenuItemException("Requested Menu Item does not exist");
-    		}
-    		menuManager.updateItem(name, subName, des, price);
-    		
-    	} finally{
-    		
-    	}
-    	
+        if(menuManager.getItem(name)==null) {
+            throw new InvalidMenuItemException("Requested MenuItem Does Not Exist");
+        }
+        menuManager.updateItem(name, subName, des, price);
     	return null;
         
     }

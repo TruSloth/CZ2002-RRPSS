@@ -2,7 +2,11 @@ package com.CZ2002.project_entities;
 import com.CZ2002.project_enums.Type;
 
 /**
- * An Entity Class representing a unique AlaCarteItem
+ * The {@code AlaCarteItem} class represents a ala carte menu item.
+ * A ala carte item must be specified by the name, description, price and type of item.
+ * <p>
+ * The {@code AlaCarteItem} class is designed to only hold all data related to
+ * a ala carte item and should not implement any logic in relation to ala carte item.
  */
 public class AlaCarteItem extends MenuItem {
     private Type type;
@@ -22,14 +26,14 @@ public class AlaCarteItem extends MenuItem {
 
     }
 
-    /** Gets the type of the AlaCarteItem
+    /** Gets the type of the AlaCarteItem.
      * @returns A Type enum of the AlaCarteItem
      */
     public Type getType() {
         return this.type;
     }
 
-    /** Sets the type of the AlaCarteItem
+    /** Sets the type of the AlaCarteItem.
      * @param type one of three types of AlaCarteItem
      */
     public void setType(Type type) {

@@ -17,11 +17,10 @@ public class MenuManager extends Manager<MenuItem>{
 
     /** Gets the MenuItem object based on its name
      * returns null if no MenuItem with called name exists
-     * @param name name of the wanted MenuItem
-     * @return A MenuItem object with called name
+     * returns A MenuItem object with called name
      */
     public MenuManager() {
-    	entities = new ArrayList<MenuItem>();
+    	entities = new ArrayList<>();
     }
     
     public MenuItem getItem(String name) {
@@ -95,10 +94,8 @@ public class MenuManager extends Manager<MenuItem>{
         }
         if (newItem != null) {
         	for (MenuItem item: entities) {
-            if (item.getName().equals(pName) && item instanceof PackageItem) {
-                PackageItem newPackage = (PackageItem)item;
+            if (item.getName().equals(pName) && item instanceof PackageItem newPackage) {
                 newPackage.addItem(newItem);
-                item = newPackage;
             }
         	}
         }
@@ -117,16 +114,14 @@ public class MenuManager extends Manager<MenuItem>{
             }
         }
         for (MenuItem item: entities) {
-            if (item.getName().equals(pName) && item instanceof PackageItem) {
-                PackageItem newPackage = (PackageItem)item;
+            if (item.getName().equals(pName) && item instanceof PackageItem newPackage) {
                 newPackage.removeItem(newItem);
-                item = newPackage;
             }
         }
     }
 
     /** Returns the menu
-     * @return	the ArryList of MenuItem in menu
+     * @return	the ArrayList of MenuItem in menu
      */
     public ArrayList<MenuItem> getMenu(){
     	return (ArrayList<MenuItem>) entities;

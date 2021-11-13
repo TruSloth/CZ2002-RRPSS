@@ -2,7 +2,12 @@ package com.CZ2002.project_entities;
 import java.util.ArrayList;
 
 /**
- * An Entity class representing a unique PackageItem consisting of AlaCarteItems
+ * The {@code PackageItem} class represents a package menu item.
+ * A package item must be specified by the name, description, price and the
+ * list of items in the package.
+ * <p>
+ * The {@code PackageItem} class is designed to only hold all data related to
+ * a package item and should not implement any logic in relation to package item.
  */
 public class PackageItem extends MenuItem {
     private ArrayList<AlaCarteItem> itemsServed;
@@ -18,18 +23,8 @@ public class PackageItem extends MenuItem {
         this.setName(name);
         this.setDescription(description);
         this.setPrice(price);
-        itemsServed = new ArrayList<AlaCarteItem>(list);
+        itemsServed = new ArrayList<>(list);
     }
-
-    /**
-     * Prints the name of the AlaCarteItem included in one line
-     */
-    // public void printItems() {
-    //     System.out.print("Includes: ");
-    //     for (AlaCarteItem item: itemsServed) {
-    //         System.out.print(item.getName() + ", ");
-    //     }
-    // }
 
     /** Gets the ArrayList of AlaCarteItem
      * @return the ArrayList of AlaCarteItem

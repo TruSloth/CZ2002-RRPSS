@@ -32,8 +32,7 @@ public class Table extends RestaurantEntity {
 
 
     /**
-     * Returns the maximum number of guests that can be seated at this table.
-     *
+     * Gets the maximum number of guests that can be seated at this table.
      * @return the maximum number of guests that can be seated at this table.
      */
     // Default getters & setters
@@ -43,7 +42,7 @@ public class Table extends RestaurantEntity {
 
 
     /**
-     * Returns the unique table number of this table.
+     * Gets the unique table number of this table.
      *
      * @return the table number that identifies this table
      */
@@ -67,7 +66,7 @@ public class Table extends RestaurantEntity {
     }
 
     /**
-     * Returns true if this table is occupied, false otherwise.
+     * Gets true if this table is occupied, false otherwise.
      *
      * @return a boolean representing whether this table is occupied
      */

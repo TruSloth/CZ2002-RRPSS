@@ -12,7 +12,6 @@ import com.CZ2002.project_interfaces.ICommand;
 public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderException> {
     private MenuManager menuManager;
     private String item;
-    private MenuItem menuItem;
     private OrderManager orderManager;
     private int tableAdd;
 
@@ -40,13 +39,11 @@ public class AddItemOrderCommand implements ICommand<Void , InvalidAddItemOrderE
      */
     @Override
     public Void execute() throws InvalidAddItemOrderException{
-        int temp;
-        this.menuItem = menuManager.getItem(item);
-        if ( menuItem == null ){
-            throw new InvalidAddItemOrderException("Item not found in Menu!");
+        MenuItem menuItem = menuManager.getItem(item);
+        if (menuItem == null){
+            throw new InvalidAddItemOrderException("Item Not Found in Menu!");
         }
-        temp = orderManager.addItemOrder( menuItem , tableAdd );
-        if ( temp == -1 ){
+        if (orderManager.addItemOrder( menuItem , tableAdd ) == -1 ){
             throw new InvalidAddItemOrderException("Table Not found!");
         }
         return null;

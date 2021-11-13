@@ -23,7 +23,6 @@ public class Reservation extends RestaurantEntity {
      * Constructs a new reservation that represents the booking made for a particular time.
      * <p>
      * This constructor initialises the expiry of the reservation to null.
-     *
      * @param reservationPeriod  the {@link GregorianCalendar} start time of this reservation
      * @param pax  the number of guests
      * @param name  the String to address the contact person
@@ -41,8 +40,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Returns the start time of this reservation.
-     *
+     * Gets the start time of this reservation.
      * @return the {@link GregorianCalendar} representing the start time of this reservation
      */
     public GregorianCalendar getReservationPeriod() {
@@ -51,8 +49,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Updates the start time of this reservation.
-     *
+     * Sets the start time of this reservation.
      * @param reservationPeriod  the start time of this reservation
      */
     public void setReservationPeriod(GregorianCalendar reservationPeriod) {
@@ -61,8 +58,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Returns the number of guests this reservation has been made for.
-     *
+     * Gets the number of guests this reservation has been made for.
      * @return the number of guests in this reservation
      */
     public int getPax() {
@@ -71,8 +67,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Updates the number of guests in this reservation.
-     *
+     * Sets the number of guests in this reservation.
      * @param pax  the number of guests in this reservation
      */
     public void setPax(int pax) {
@@ -81,8 +76,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Returns the String representation to address the contact person.
-     *
+     * Gets the String representation to address the contact person.
      * @return the string to address the contact person
      */
     public String getName() {
@@ -91,8 +85,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Updates the String representation to address the contact person.
-     *
+     * Sets the String representation to address the contact person.
      * @param name  the string to address the contact person
      */
     public void setName(String name) {
@@ -101,8 +94,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Returns the String representing the phone number of the contact person.
-     *
+     * Gets the String representing the phone number of the contact person.
      * @return the string representing the phone number to contact the guest at
      */
     public String getContactNumber() {
@@ -111,8 +103,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Updates the String representing the phone number of the contact person.
-     *
+     * Sets the String representing the phone number of the contact person.
      * @param contactNumber  the string representing the phone number to contact the guest at
      */
     public void setContactNumber(String contactNumber) {
@@ -121,8 +112,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Returns the table number of the {@link RestaurantClasses.Table} reserved for this reservation.
-     *
+     * Gets the table number of the {@link Table} reserved for this reservation.
      * @return the table number reserved
      */
     public int getTableNo() {
@@ -131,8 +121,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Updates the table number of the {@link Table} reserved for this reservation.
-     *
+     * Sets the table number of the {@link Table} reserved for this reservation.
      * @param tableNo  the table number reserved
      */
     public void setTableNo(int tableNo) {
@@ -141,11 +130,10 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Returns the {@code ScheduledFuture} that triggers this reservation's expiry.
+     * Gets the {@code ScheduledFuture} that triggers this reservation's expiry.
      * The expiry should be cancelled by calling {@link java.util.concurrent.Future#cancel(boolean)}
      * on the {@code ScheduledFuture} returned by this method if this reservation is
      * cancelled or its reservation period has been changed.
-     *
      * @return the {@code ScheduledFuture} representing the pending expiry
      * of a reservation
      */
@@ -155,8 +143,7 @@ public class Reservation extends RestaurantEntity {
 
 
     /**
-     * Updates the reference to the {@code ScheduledFuture} representing this reservation's expiry.
-     *
+     * Sets the reference to the {@code ScheduledFuture} representing this reservation's expiry.
      * @param expiry  the {@code ScheduledFuture} representing the result of this reservation's expiry
      */
     public void setExpiry(ScheduledFuture<Void> expiry) {

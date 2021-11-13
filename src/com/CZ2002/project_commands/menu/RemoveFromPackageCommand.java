@@ -31,18 +31,13 @@ public class RemoveFromPackageCommand implements ICommand<Void, InvalidMenuItemE
      * Completes the 'Remove ala carte item from package' action.
      */
     public Void execute() throws InvalidMenuItemException {
-    	try {
-    		menuManager.removeItemFromPackage(name, subName);
-    		if(!(menuManager.getItem(name) instanceof PackageItem)|| menuManager.getItem(name) ==null) {
-    			throw new InvalidMenuItemException("Requested Package Item does not exist");
-    		}
-    		if (!(menuManager.getItem(subName) instanceof AlaCarteItem)|| menuManager.getItem(subName) ==null) {
-    			throw new InvalidMenuItemException("Requested Ala Carte Item does not exist");
-    		}
-    	} finally{
-    		
-    	}
-    	
+        menuManager.removeItemFromPackage(name, subName);
+        if(!(menuManager.getItem(name) instanceof PackageItem)|| menuManager.getItem(name) ==null) {
+            throw new InvalidMenuItemException("Requested Package Item does not exist");
+        }
+        if (!(menuManager.getItem(subName) instanceof AlaCarteItem)|| menuManager.getItem(subName) ==null) {
+            throw new InvalidMenuItemException("Requested Ala Carte Item does not exist");
+        }
     	return null;
     }
 }

@@ -2,6 +2,7 @@ package com.CZ2002.project_boundaries;
 import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_entities.MenuItem;
 import com.CZ2002.project_entities.Staff;
+import com.CZ2002.project_entities.Table;
 
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -12,7 +13,7 @@ import java.util.NoSuchElementException;
  */
 public class OrderManager extends Manager<Order>{
     public OrderManager() {
-        entities = new ArrayList<Order>();
+        entities = new ArrayList<>();
     }
 
     /** To Create new active Order object to add into the ArrayList of active orders
@@ -20,8 +21,8 @@ public class OrderManager extends Manager<Order>{
      * @param pax Number of diners seated at table
      * @param server Staff who is/was serving them
      */
-    public void createNewOrder( int tableNumber , int pax , Staff server ){
-        Order newOrder = new Order( tableNumber , pax , server );
+    public void createNewOrder( int tableNumber, int pax, Staff server){
+        Order newOrder = new Order( tableNumber, pax, server);
         entities.add(newOrder);
     }
 
@@ -33,30 +34,12 @@ public class OrderManager extends Manager<Order>{
      * @throws NoSuchElementException Throws exception when Table is not found
      */
     public Order getOrder(int tableNumber) throws NoSuchElementException {
-        Order order = entities
+        return entities
                 .stream()
                 .filter(o -> o.getTable() == tableNumber)
                 .findFirst()
                 .get();
-        return order;
     }
-
-    // /** To Read in the Order to show a summary of Order for the table
-    //  * @param tableNumber An integer representing the table number which the Order belongs to
-    //  */
-    // public void printOrder ( int tableNumber ) {
-    //     boolean found = false;
-    //     for ( int i  = 0 ; i < entities.size() ; i++){
-    //         if ( entities.get(i).getTable() == tableNumber ){
-    //             entities.get(i).printOrdered();
-    //             found = true;
-    //             break;
-    //         }
-    //     }
-    //     if (!found) {
-    //         System.out.println("Table Does Not Exist");
-    //     }
-    // }
 
     /**
      * Removes an Item from the Order based on table number
@@ -64,20 +47,19 @@ public class OrderManager extends Manager<Order>{
      * @param tableNumber An integer representing the table number which the Order belongs to
      * @return An Integer value to indicate if Item is successfully added
      */
-    public int addItemOrder ( MenuItem menuItem , int tableNumber )
+    public int addItemOrder ( MenuItem menuItem, int tableNumber)
     {
-        for ( int i  = 0 ; i < entities.size() ; i++) {
-            if (entities.get(i).getTable() == tableNumber) {
+        for (Order entity : entities) {
+            if (entity.getTable() == tableNumber) {
                 if (menuItem != null) {
-                    entities.get(i).addItem(menuItem);
-                    return 1; // item added
-                }
-                else {
-                    return 0; // invalid item , but this will not run since Command will catch it
+                    entity.addItem(menuItem);
+                    return 1;
+                } else {
+                    return 0;
                 }
             }
         }
-        return -1;  // item exist but table not found
+        return -1;
     }
 
     /**
@@ -86,22 +68,22 @@ public class OrderManager extends Manager<Order>{
      * @param tableNumber An integer representing the table number which the Order belongs to
      * @return An Integer value to indicate if an Item is successfully removed
      */
-    public int removeItemOrder ( MenuItem menuItem , int tableNumber )
+    public int removeItemOrder ( MenuItem menuItem, int tableNumber)
     {
         MenuItem temp;
-        for ( int i  = 0 ; i < entities.size() ; i++) {
-            if (entities.get(i).getTable() == tableNumber) {
+        for (Order entity : entities) {
+            if (entity.getTable() == tableNumber) {
                 if (menuItem != null) {
-                    temp = entities.get(i).removeItem(menuItem);
+                    temp = entity.removeItem(menuItem);
                     if (temp == null) {
-                        return 0;  // item exist but not found
+                        return 0;
                     } else {
-                        return 1; // item exist and found
+                        return 1;
                     }
                 }
             }
         }
-        return -1; // item exist and table not found
+        return -1;
     }
 
     /**
@@ -110,14 +92,12 @@ public class OrderManager extends Manager<Order>{
      * @param tableNumber An integer representing the table number which the Order belongs to
      * @return The {@code Order} that was deleted
      */
-    public Order deleteOrder ( int tableNumber ){
-
-        for ( int i  = 0 ; i < entities.size() ; i++ ){
-            if ( entities.get(i).getTable() == tableNumber ){
-                //entities.get(i).printOrdered(); // print the Order before deleting it
-                Order o = entities.get(i);
+    public Order deleteOrder ( int tableNumber){
+        for (int i=0; i < entities.size(); i++){
+            if ( entities.get(i).getTable() == tableNumber){
+                Order order = entities.get(i);
                 entities.remove(i);
-                return o; // deleted
+                return order;
             }
         }
         return null;
@@ -131,8 +111,7 @@ public class OrderManager extends Manager<Order>{
      */ 
     public Order getOrderByIndex(int index) { 
         return entities.get(index); 
-    } 
- 
+    }
     /** 
      * Returns the number of active {@link Order} instances found in {@code entities}. 
      *  
@@ -149,17 +128,16 @@ public class OrderManager extends Manager<Order>{
      * @return An Integer value to indicate if membership is successfully set
      */
     public int setMembership (int tableNumber, int tableSetMembership){
-        for ( int i  = 0 ; i < entities.size() ; i++ ){
-            if ( entities.get(i).getTable() == tableNumber ){
-                if (tableSetMembership == 1){
-                    entities.get(i).setMembership(true);
+        for (Order entity : entities) {
+            if (entity.getTable() == tableNumber) {
+                if (tableSetMembership == 1) {
+                    entity.setMembership(true);
+                } else if (tableSetMembership == 0) {
+                    entity.setMembership(false);
                 }
-                else if (tableSetMembership == 0){
-                    entities.get(i).setMembership(false);
-                }
-                return 1; // table found and value is set
+                return 1;
             }
         }
-        return -1; // table not found
+        return -1;
     }
 }

@@ -94,7 +94,7 @@ public class StaffManager extends Manager<Staff> {
         try {
             staff = entities
                     .stream()
-                    .filter(s -> s.getName() == name)
+                    .filter(s -> s.getName().equals(name))
                     .findFirst()
                     .get();
         } catch (NoSuchElementException e) {

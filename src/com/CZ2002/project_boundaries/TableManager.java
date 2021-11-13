@@ -49,7 +49,6 @@ public class TableManager extends Manager<Table> {
             throw new IllegalArgumentException("Number of tables exceeds maximum tables in Restaurant");
         }
 
-        // Is there a better way to do this?
         int start = 0;
         index2Seater = start;
         int end = numOf2Seater;
@@ -98,7 +97,7 @@ public class TableManager extends Manager<Table> {
         return entities
                 .stream()
                 .filter(Table::isOccupied)
-                .mapToInt(table -> table.getTableNumber())
+                .mapToInt(Table::getTableNumber)
                 .toArray();
     }
 
@@ -112,7 +111,7 @@ public class TableManager extends Manager<Table> {
         return entities
                 .stream()
                 .filter(table -> !table.isOccupied())
-                .mapToInt(table -> table.getTableNumber())
+                .mapToInt(Table::getTableNumber)
                 .toArray();
     }
 

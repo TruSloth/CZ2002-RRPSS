@@ -27,9 +27,7 @@ import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
 public class UpdateReservationCommand implements ICommand<MenuView, InvalidReservationException>, IGregorianCalendarFormatter {
     private ReservationManager reservationManager;
     private TableManager tableManager;
-
     private Reservation reservation;
-
     private Scanner sc;
 
     /**
@@ -63,19 +61,19 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
         int choice = sc.nextInt();
         switch (choice) {
             case 1:
-                System.out.printf("Name: ");
+                System.out.print("Name: ");
                 sc.nextLine(); // Throw away \n in buffer
                 String newName = sc.nextLine();
                 reservationManager.modifyReservationName(reservation, newName);
                 break;
             case 2:
-                System.out.printf("Contact: ");
+                System.out.print("Contact: ");
                 sc.nextLine(); // Throw away \n in buffer
                 String newContact = sc.nextLine();
                 reservationManager.modifyReservationContact(reservation, newContact);
                 break;
             case 3:
-                System.out.printf("Pax: ");
+                System.out.print("Pax: ");
                 int newPax = sc.nextInt();
 
                 int[] unsuitableTableNos = reservationManager.getUnavailableTables(reservation.getReservationPeriod());
@@ -97,7 +95,7 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
 
                 break;
             case 4:
-                System.out.printf("Table No: ");
+                System.out.print("Table No: ");
                 int newTableNo = sc.nextInt();
                 try {
                     tableManager.checkTableSuitability(newTableNo, reservation.getPax());
@@ -115,7 +113,7 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
 
                 try {
                     if (unavailableTableNos.length >= tableManager.getMaxTables()) {
-                        throw new InvalidReservationException("No reservations available for this number of guests at this time.");
+                        throw new InvalidReservationException("No reservations Available for this number of guests at this time.");
                     }
 
                     int bookedTableNo = tableManager.getAvailableTable(unavailableTableNos, reservation.getPax());
@@ -125,9 +123,7 @@ public class UpdateReservationCommand implements ICommand<MenuView, InvalidReser
                     }
 
                     reservationManager.modifyReservationPeriod(reservation, newReservationPeriod);
-                } catch (IllegalArgumentException e) {
-                    throw new InvalidReservationException("We could not find a suitable table at this time.");
-                } catch (NullPointerException e) {
+                } catch (IllegalArgumentException | NullPointerException e) {
                     throw new InvalidReservationException("We could not find a suitable table at this time.");
                 }
 

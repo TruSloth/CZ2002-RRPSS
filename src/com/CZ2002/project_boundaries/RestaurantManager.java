@@ -41,9 +41,7 @@ public class RestaurantManager implements IMainManager {
      * Otherwise, the {@code Manager} instances are initialised with default {@code entities}.
      *
      * @param restaurant  the reference to the {@link Restaurant} instance
-     */
-    @SuppressWarnings("unchecked")
-    public RestaurantManager(Restaurant restaurant) throws InvalidStaffException {
+     */public RestaurantManager(Restaurant restaurant) throws InvalidStaffException {
         this.restaurant = restaurant;
         int numOfTables = restaurant.getNumOfTables();
 
@@ -62,6 +60,7 @@ public class RestaurantManager implements IMainManager {
         } catch (IOException e) {
             subManagers.putIfAbsent("menuManager", new MenuManager());
 
+            // Populate MenuItems from Data Files
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Battered Fish & Chips", "Battered fish fillets lightly seasoned, fried to a crisp golden brown and served with creamy tartar sauce.", 12.5, Type.MAIN);
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("BBQ Chicken", "Super tender juicy grilled chicken generously brushed with our in-house guava BBQ sauce.", 12.50, Type.MAIN);
             getSubManager("menuManager", MenuManager.class).addAlaCarteItem("Grilled Fish Sambal", "Tender fish fillet seasoned with spices for a mildly fiery kick, grilled to perfection.", 13.50, Type.MAIN);
@@ -80,6 +79,7 @@ public class RestaurantManager implements IMainManager {
         } catch (IOException e) {
             subManagers.putIfAbsent("staffManager",  new StaffManager());
 
+            // Populate Staff from Data Files
             getSubManager("staffManager", StaffManager.class).addStaff("Cindy", Gender.FEMALE, "Waiter");
             getSubManager("staffManager", StaffManager.class).addStaff("John", Gender.MALE, "Waiter");
         }

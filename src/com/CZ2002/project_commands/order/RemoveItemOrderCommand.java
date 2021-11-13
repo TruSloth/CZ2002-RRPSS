@@ -12,7 +12,6 @@ import com.CZ2002.project_interfaces.ICommand;
 public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemOrderException> {
     private MenuManager menuManager;
     private String item;
-    private MenuItem menuItem;
     private OrderManager orderManager;
     private int tableRemove;
 
@@ -39,17 +38,17 @@ public class RemoveItemOrderCommand implements ICommand<Void, InvalidRemoveItemO
      */
     @Override
     public Void execute() throws InvalidRemoveItemOrderException{
-        this.menuItem = menuManager.getItem(item);
+        MenuItem menuItem = menuManager.getItem(item);
         if ( menuItem == null ){
-            throw new InvalidRemoveItemOrderException("Item not found in Menu!");
+            throw new InvalidRemoveItemOrderException("Item Not Found in Menu!");
         }
         int temp;
         temp = orderManager.removeItemOrder( menuItem , tableRemove );
-        if ( temp == -1 ){
+        if (orderManager.removeItemOrder( menuItem , tableRemove ) == -1){
             throw new InvalidRemoveItemOrderException("Table Not found!");
         }
-        else if ( temp == 0 ){
-            throw new InvalidRemoveItemOrderException("Item not found in Order!");
+        else if (temp == 0){
+            throw new InvalidRemoveItemOrderException("Item Not Found in Order!");
         }
         return null;
     }

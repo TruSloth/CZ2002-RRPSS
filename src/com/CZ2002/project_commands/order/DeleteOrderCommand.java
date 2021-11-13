@@ -45,8 +45,7 @@ public class DeleteOrderCommand implements ICommand<Order , InvalidDeleteOrderEx
             if ( orderManager.getOrderByIndex(i).getTable() == tableClose ){
                 salesRevenueManager.addOrder(orderManager.getOrderByIndex(i));
                 tableManager.unoccupyTable(tableClose);
-                Order o = orderManager.deleteOrder(tableClose);
-                return o;
+                return orderManager.deleteOrder(tableClose);
             }
         }
         throw new InvalidDeleteOrderException("Table Not Found!" );

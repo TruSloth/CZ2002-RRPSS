@@ -97,30 +97,29 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
         String title = "Daily Revenue Report";
         ArrayList<String> options = new ArrayList<String>();
         ArrayList<String> optionHeaders = new ArrayList<String>();
-        String[] optionsArr = new String[options.size()];
-        String[] optionHeadersArr = new String[optionHeaders.size()];
+        String[] optionsArr;
+        String[] optionHeadersArr;
         int LONGEST_WIDTH = 40;
 
-        System.out.printf(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
+        System.out.print(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
         options.add(dateAsString);
         optionHeaders.add("Date");
         optionsArr = new String[options.size()];
         optionHeadersArr = new String[optionHeaders.size()];
         System.out.println(MenuBuilder.buildMenu(LONGEST_WIDTH, options.toArray(optionsArr), optionHeaders.toArray(optionHeadersArr), "-"));
 
-        for (int i=0; i<tempOrderList.size(); i++){
+        for (Order order : tempOrderList) {
             options.clear();
             optionHeaders.clear();
-            Order tempOrder = tempOrderList.get(i);
+            Order tempOrder = order;
             optionHeaders.add("ORDER");
             options.add(String.format("#%d", count++));
             optionHeaders.add(""); // For Formatting
             options.add(""); // For Formatting
-            for (int j=0; j<tempOrder.getOrdered().size(); j++){
-                if(tempOrder.getOrdered().get(j) instanceof PackageItem){
+            for (int j = 0; j < tempOrder.getOrdered().size(); j++) {
+                if (tempOrder.getOrdered().get(j) instanceof PackageItem) {
                     options.add("Package");
-                }
-                else {
+                } else {
                     options.add("Ala Carte");
                 }
                 optionHeaders.add(tempOrder.getOrdered().get(j).getName());
@@ -151,7 +150,7 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
         int startDayOfTheYear = cal.get(Calendar.DAY_OF_YEAR) - 1;
 
         String title = "Monthly Revenue Report";
-        System.out.printf(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
+        System.out.print(MenuBuilder.buildMenu(title, LONGEST_WIDTH));
         
         String[] spacerOption = {""};
         String[] spacerOptionHeader = {""};
@@ -159,12 +158,12 @@ public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatte
         double tabulatedBill = 0;
         for(int i=startDayOfTheYear; i<endDayOfTheYear; i++){
             tabulatedBill += monthlySalesRevenue.get(i - startDayOfTheYear).getRevenue();
-            System.out.printf(MenuBuilder.buildMenu(LONGEST_WIDTH, spacerOption, spacerOptionHeader, ""));
+            System.out.print(MenuBuilder.buildMenu(LONGEST_WIDTH, spacerOption, spacerOptionHeader, ""));
             displayDailySalesRevenue(monthlySalesRevenue.get(i - startDayOfTheYear), cal.getTime());
             cal.add(Calendar.DAY_OF_YEAR, 1);
         }
         
-        System.out.printf(MenuBuilder.buildMenu(LONGEST_WIDTH, spacerOption, spacerOptionHeader, ""));
+        System.out.print(MenuBuilder.buildMenu(LONGEST_WIDTH, spacerOption, spacerOptionHeader, ""));
         System.out.println("=".repeat(LONGEST_WIDTH + 5));
         String[] revenue = {String.format("%.2f", tabulatedBill)};
         String[] revenueHeader = {"Total Revenue"};

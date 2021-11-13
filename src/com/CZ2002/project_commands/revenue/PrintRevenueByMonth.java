@@ -33,9 +33,8 @@ public class PrintRevenueByMonth implements ICommand<ArrayList<SalesRevenue>, In
 
     /**
      * Completes the 'print revenue by month' action.
-     *
      * @return  the requested {@code Reservation} instance
-     * @throws InvalidSalesRevenueQueryException  if an error is reached while parsing
+     *
      */
     @Override
     public ArrayList<SalesRevenue> execute() {

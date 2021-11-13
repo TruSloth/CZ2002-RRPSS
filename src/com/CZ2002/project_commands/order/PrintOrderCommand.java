@@ -33,8 +33,7 @@ public class PrintOrderCommand implements ICommand<Order , InvalidPrintOrderExce
     @Override
     public Order execute() throws InvalidPrintOrderException{
         try {
-            Order order = orderManager.getOrder(tablePrint);
-            return order;
+            return orderManager.getOrder(tablePrint);
         } catch (NoSuchElementException e) {
             throw new InvalidPrintOrderException("Table Not Found!");
         }

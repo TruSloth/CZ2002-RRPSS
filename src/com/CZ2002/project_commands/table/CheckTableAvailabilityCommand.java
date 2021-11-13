@@ -1,4 +1,4 @@
-package com.CZ2002.project_commands;
+package com.CZ2002.project_commands.table;
 
 import java.text.ParseException;
 import java.util.Arrays;
@@ -47,8 +47,6 @@ public class CheckTableAvailabilityCommand implements ICommand<String[], Excepti
         } catch (NullPointerException e) {
             throw new Exception("An error occurred while checking table availability.");
         }
-        
-
         return tableStatus;
     }
     

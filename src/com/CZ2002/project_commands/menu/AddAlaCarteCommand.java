@@ -37,16 +37,10 @@ public class AddAlaCarteCommand implements ICommand<Void, InvalidMenuItemExcepti
      * Completes the 'Add an ala carte item' action.
      */
     public Void execute() throws InvalidMenuItemException {
-    	try {    		
-    		if(menuManager.getItem(name) != null) {
-    			throw new InvalidMenuItemException("Menu Item of the same name already exists");		
-    		}
-    		menuManager.addAlaCarteItem(name, des, price, type);
-    		
-    	} finally{
-    		
-    	}
-    	
-    	return null;
+        if(menuManager.getItem(name) != null) {
+            throw new InvalidMenuItemException("Menu Item of the same name already exists");
+        }
+        menuManager.addAlaCarteItem(name, des, price, type);
+        return null;
     }
 }

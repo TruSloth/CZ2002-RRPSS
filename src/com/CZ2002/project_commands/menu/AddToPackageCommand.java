@@ -31,18 +31,13 @@ public class AddToPackageCommand implements ICommand<Void, InvalidMenuItemExcept
      * Completes the 'Add ala carte item to package' action.
      */
     public Void execute() throws InvalidMenuItemException {
-    	try {
-    		menuManager.addItemToPackage(name, subName);
-    		if(!(menuManager.getItem(name) instanceof PackageItem) || menuManager.getItem(name) ==null) {
-    			throw new InvalidMenuItemException("Requested Package Item does not exist");
-    		}
-    		if (!(menuManager.getItem(subName) instanceof AlaCarteItem) || menuManager.getItem(subName) ==null) {
-    			throw new InvalidMenuItemException("Requested Ala Carte Item does not exist");
-    		}
-    	} finally{
-    		
-    	}
-    	
-    	return null;
+        menuManager.addItemToPackage(name, subName);
+        if(!(menuManager.getItem(name) instanceof PackageItem) || menuManager.getItem(name) ==null) {
+            throw new InvalidMenuItemException("Requested Package Item does not exist");
+        }
+        if (!(menuManager.getItem(subName) instanceof AlaCarteItem) || menuManager.getItem(subName) ==null) {
+            throw new InvalidMenuItemException("Requested Ala Carte Item does not exist");
+        }
+        return null;
     }
 }

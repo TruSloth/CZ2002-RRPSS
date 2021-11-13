@@ -52,13 +52,12 @@ public class AddReservationCommand implements ICommand<Void, InvalidReservationE
             if (unavailableTableNos.length >= tableManager.getMaxTables()) {
                 throw new InvalidReservationException("Reservations are full at this time.");
             }
-
             int bookedTableNo = tableManager.getAvailableTable(unavailableTableNos, pax);
             reservationManager.createNewReservation(reservationPeriod, pax, name, contact, bookedTableNo); 
         } catch (IllegalArgumentException e) {
             throw new InvalidReservationException(e.getMessage());
         } catch (NullPointerException e) {
-            throw new InvalidReservationException("There are no suitable tables available at this time");
+            throw new InvalidReservationException("There are no suitable tables available at this time.");
         }
 
         return null;

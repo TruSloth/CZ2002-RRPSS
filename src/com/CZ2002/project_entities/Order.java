@@ -25,8 +25,9 @@ public class Order extends RestaurantEntity {
      * @param table The Table Number which diners are seated at
      * @param pax Number of diners seated at table
      * @param server Staff who is/was serving them
+     * @param monthDay Numher day of month
      */
-    public Order( int table , int pax , Staff server, int monthDay ){
+    public Order( int table, int pax, Staff server, int monthDay){
         this.table = table;
         this.pax = pax;
         this.server = server;
@@ -34,13 +35,17 @@ public class Order extends RestaurantEntity {
         this.bill= 0.00;
         this.discountTotal = 0.00;
         this.tax = 0.00;
-        this.ordered = new ArrayList<MenuItem>();
+        this.ordered = new ArrayList<>();
         cal = Calendar.getInstance();
         cal.set(Calendar.DAY_OF_MONTH, monthDay);
     }
 
-    //ORIGINAL
-    public Order( int table , int pax , Staff server){
+    /** Creates an Order object with arguments provided
+     * @param table The Table Number which diners are seated at
+     * @param pax Number of diners seated at table
+     * @param server Staff who is/was serving them
+     */
+    public Order( int table, int pax, Staff server){
         this.table = table;
         this.pax = pax;
         this.server = server;
@@ -48,8 +53,8 @@ public class Order extends RestaurantEntity {
         this.bill= 0.00;
         this.discountTotal = 0.00;
         this.tax = 0.00;
-        this.ordered = new ArrayList<MenuItem>();
-        cal = Calendar.getInstance();
+        this.ordered = new ArrayList<>();
+        this.cal = Calendar.getInstance();
     }
 
     /** Gets the Order's dateTime
@@ -63,21 +68,21 @@ public class Order extends RestaurantEntity {
      * @return An integer value of the table number which this Order belongs to
      */
     public int getTable() {
-        return table;
+        return this.table;
     }
 
     /** Gets number of diners at the table which this order belongs to
      * @return An integer value of the number of diners at the table which this order belongs to
      */
     public int getPax() {
-        return pax;
+        return this.pax;
     }
 
     /** Gets if the diners have membership
      * @return A boolean value if diners have membership
      */
     public boolean getMembership(){
-        return membership;
+        return this.membership;
     }
 
     /**
@@ -85,7 +90,7 @@ public class Order extends RestaurantEntity {
      * @return A double value of actual discount from membership
      */
     public double getDiscountTotal() {
-        return discountTotal;
+        return this.discountTotal;
     }
 
     /**
@@ -93,7 +98,7 @@ public class Order extends RestaurantEntity {
      * @return A double value of tax of bill
      */
     public double getTax(){
-        return tax;
+        return this.tax;
     }
 
     /** Gets the Staff object who is/was serving the diners
@@ -116,24 +121,21 @@ public class Order extends RestaurantEntity {
      * Updates the total bill of the Order whenever a modification(add/remove MenuItem) is done
      */
     private void updateBill() {
-        bill = 0.00;
-        discountTotal = 0.00;
-        tax = 0.00;
+        this.bill = 0.00;
+        this.discountTotal = 0.00;
+        this.tax = 0.00;
 
-        for ( int i = 0 ; i < ordered.size() ; i++ ){
-            bill += ordered.get(i).getPrice();
+        for (MenuItem menuItem : ordered) {
+            this.bill += menuItem.getPrice();
         }
-        if (membership){
+        if (this.membership){
             double temp = 0.1 * bill;
             df.setRoundingMode(RoundingMode.UP);
-            df.setRoundingMode(RoundingMode.UP);
-            discountTotal = Double.parseDouble(df.format(temp));
-            bill -= discountTotal;
-            temp = 0.17* bill;
+            this.discountTotal = Double.parseDouble(df.format(temp));
+            this.bill -= this.discountTotal;
         }
-        double temp1 = 0.17* bill;
-        tax = Double.parseDouble(df.format(temp1));
-        bill += tax;
+        this.tax = Double.parseDouble(df.format(0.17* bill));
+        this.bill += tax;
     }
 
     /** Gets the total bill of the Order
@@ -176,20 +178,19 @@ public class Order extends RestaurantEntity {
 
     /** Add a new item to the Order
      * @param item The MenuItem object that would be added to the Order
-     * @return A MenuItem object that is added to Order , otherwise Null is returned
+     * @returns A MenuItem object that is added to Order , otherwise Null is returned
      */
     public void addItem (MenuItem item){
-        ordered.add(item);
+        this.ordered.add(item);
         this.updateBill();
     }
 
     /** Removing an item from the Order
      * @param item The MenuItem object that would be removed from the Order
-     * @return A MenuItem object that is removed from Order , otherwise Null is returned
+     * @returns A MenuItem object that is removed from Order , otherwise Null is returned
      */
     public MenuItem removeItem ( MenuItem item){
-
-        if ( ordered.remove(item) ) {
+        if (this.ordered.remove(item)) {
             this.updateBill();
             return item;
         }
@@ -197,29 +198,4 @@ public class Order extends RestaurantEntity {
             return null;
         }
     }
-
-    // /**
-    //  * Printing out the Table's Bill with information such as Item ordered and its price
-    //  */
-    // public void printOrdered(){
-    //     String title = "Bill";
-    //     int longestWidth = 40;
-    //     String[] optionHeaders = new String[ordered.size() + 4];
-    //     String[] options = new String[ordered.size() + 4];
-    //     optionHeaders[0] = "Table";
-    //     options[0] = String.format("%d", table);
-
-    //     for ( int i = 1 ;  i < ordered.size() + 1 ; i++ ){
-    //         optionHeaders[i] = ordered.get(i - 1).getName();
-    //         options[i] = String.valueOf(ordered.get(i - 1).getPrice());
-    //     }
-
-    //     optionHeaders[ordered.size()+1] = "Total Discount Applied: ";
-    //     options[ordered.size()+1] = String.valueOf(this.getDiscountTotal());
-    //     optionHeaders[ordered.size()+2] = "Tax: ";
-    //     options[ordered.size()+2] = String.valueOf(this.getTax());
-    //     optionHeaders[ordered.size()+3] = "Total Bill: ";
-    //     options[ordered.size()+3] = String.valueOf(this.getBill());
-    //     System.out.println(MenuBuilder.buildMenu(title, optionHeaders, options, longestWidth));
-    // }
 }
