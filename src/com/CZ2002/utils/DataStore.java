@@ -34,7 +34,6 @@ public class DataStore {
 
     /**
      * Loads the serialized {@link Object} instance from {@link Path} specified by {@code filePath}.
-     * <p>
      * 
      * @param filePath the {@code Path} to deserialize the {@code Object} instance from
      * @return the {@code Object} after deserialization, null otherwise
