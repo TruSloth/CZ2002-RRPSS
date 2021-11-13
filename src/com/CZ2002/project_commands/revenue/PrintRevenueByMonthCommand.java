@@ -39,7 +39,7 @@ public class PrintRevenueByMonthCommand implements ICommand<ArrayList<SalesReven
     @Override
     public ArrayList<SalesRevenue> execute() throws InvalidSalesRevenueQueryException {
         if  (startDate.compareTo(endDate) > 0) {
-            throw new InvalidSalesRevenueQueryException("Invalid Start and End Date");
+            throw new InvalidSalesRevenueQueryException("Invalid Start and End Date!");
         }
         else {
             return salesRevenueManager.getSalesRevenueByMonth(startDate, endDate);

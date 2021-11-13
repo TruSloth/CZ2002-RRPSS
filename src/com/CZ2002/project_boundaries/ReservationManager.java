@@ -83,7 +83,7 @@ public class ReservationManager extends Manager<Reservation> {
         advancedReservationPeriod.add(Calendar.HOUR, ADVANCED_HRS); // Must make reservation 24 hours in advance
 
         if (reservationPeriod.before(advancedReservationPeriod)) {
-            throw new InvalidReservationException(String.format("Reservation Can Only Be mMde At Least %d Hours in Advance.", ADVANCED_HRS));
+            throw new InvalidReservationException(String.format("Reservation Can Only Be Made At Least %d Hours in Advance.", ADVANCED_HRS));
         }
     }
 

@@ -50,7 +50,7 @@ public class RemoveReservationCommand implements ICommand<Boolean, InvalidReserv
             Reservation reservation = reservationManager.findReservation(name, contact, reservationPeriod);
             reservationManager.deleteReservation(reservation);
         } catch (NoSuchElementException e) {
-            throw new InvalidReservationException("The Requested Reservation Does Not Exist.");
+            throw new InvalidReservationException("The Requested Reservation Does Not Exist!");
         }
 
         return true;

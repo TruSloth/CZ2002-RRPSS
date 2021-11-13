@@ -40,7 +40,7 @@ public class AddPackageCommand implements ICommand<Void, InvalidMenuItemExceptio
      */ 
     public Void execute() throws InvalidMenuItemException {
         if(menuManager.getItem(name) != null) {
-            throw new InvalidMenuItemException("Menu Item of the same name already exists");
+            throw new InvalidMenuItemException("Menu Item of the Same Name Already Exists!");
         }
         menuManager.addPackageItem(name, des, price, componentList);
         return null;

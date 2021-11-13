@@ -33,10 +33,10 @@ public class RemoveFromPackageCommand implements ICommand<Void, InvalidMenuItemE
     public Void execute() throws InvalidMenuItemException {
         menuManager.removeItemFromPackage(name, subName);
         if(!(menuManager.getItem(name) instanceof PackageItem)|| menuManager.getItem(name) ==null) {
-            throw new InvalidMenuItemException("Requested Package Item does not exist");
+            throw new InvalidMenuItemException("Requested Package Item Does Not Exist!");
         }
         if (!(menuManager.getItem(subName) instanceof AlaCarteItem)|| menuManager.getItem(subName) ==null) {
-            throw new InvalidMenuItemException("Requested Ala Carte Item does not exist");
+            throw new InvalidMenuItemException("Requested Ala Carte Item Does Not Exist!");
         }
     	return null;
     }

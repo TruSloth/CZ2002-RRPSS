@@ -41,7 +41,7 @@ public class MenuConsole extends ConsoleDisplay{
                 "Add New Ala Carte Item",
                 "Add New Package",
                 "Update Item/Package",
-                "Remove Ala Carte Item",
+                "Remove Item/Package",
                 "Add Ala Carte Item To Package",
                 "Remove Ala Carte Item From Package",
                 "Print Menu",

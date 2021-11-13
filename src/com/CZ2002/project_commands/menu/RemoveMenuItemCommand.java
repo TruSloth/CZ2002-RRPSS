@@ -27,7 +27,7 @@ public class RemoveMenuItemCommand implements ICommand<Void, InvalidMenuItemExce
      */
     public Void execute() throws InvalidMenuItemException {
         if(menuManager.getItem(name)==null) {
-            throw new InvalidMenuItemException("Requested MenuItem Does Not Exist");
+            throw new InvalidMenuItemException("Requested MenuItem Does Not Exist!");
         }
         menuManager.removeItem(name);
     	return null;

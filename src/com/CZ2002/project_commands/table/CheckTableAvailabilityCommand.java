@@ -44,7 +44,7 @@ public class CheckTableAvailabilityCommand implements ICommand<String[], Excepti
                 }
             }
         } catch (NullPointerException e) {
-            throw new Exception("An error occurred while checking table availability.");
+            throw new Exception("An Error Occurred While Checking Table Availability!");
         }
         return tableStatus;
     }

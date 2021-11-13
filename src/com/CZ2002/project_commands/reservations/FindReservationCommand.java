@@ -51,7 +51,7 @@ public class FindReservationCommand implements ICommand<Reservation, InvalidRese
         try {
             reservation = reservationManager.findReservation(name, contact, reservationPeriod);
         } catch (NoSuchElementException e) {
-            throw new InvalidReservationException("The Requested Reservation Does Not Exist.");
+            throw new InvalidReservationException("The Requested Reservation Does Not Exist!");
         }
 
         return reservation;
