@@ -277,7 +277,7 @@ public class MenuBuilder {
      * | since   1966.  Tender |
      * | eye   fillet   topped |
      * | with  white asparagus |
-     * | &    black   mushroom |
+     * | and   black  mushroom |
      * | sauce                 |
      * =========================
      * </pre>
