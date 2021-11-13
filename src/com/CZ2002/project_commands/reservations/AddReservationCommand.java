@@ -2,16 +2,16 @@ package com.CZ2002.project_commands.reservations;
 
 import java.util.GregorianCalendar;
 
-import com.CZ2002.project_boundaries.ReservationManager;
-import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
+import com.CZ2002.project_interfaces.IGregorianCalendarFormattable;
+import com.CZ2002.project_managers.ReservationManager;
+import com.CZ2002.project_managers.TableManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'add reservation' action.
  */
-public class AddReservationCommand implements ICommand<Void, InvalidReservationException>, IGregorianCalendarFormatter {
+public class AddReservationCommand implements ICommand<Void, InvalidReservationException>, IGregorianCalendarFormattable {
     private ReservationManager reservationManager;
     private TableManager tableManager;
     private GregorianCalendar reservationPeriod;

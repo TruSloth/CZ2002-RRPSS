@@ -9,7 +9,7 @@ package com.CZ2002.project_entities;
  * the one and only restaurant and should not implement any logic in relation to restaurant.
  */
 public class Restaurant {
-    private final int NUM_OF_TABLES = 40; // TODO: CHANGE BACK TO 40
+    private final int NUM_OF_TABLES = 40;
     private String name;
     private int maxCapacity;
     private int numStaff;

@@ -159,7 +159,6 @@ public class Order extends RestaurantEntity {
 
     /** Add a new item to the Order
      * @param item The MenuItem object that would be added to the Order
-     * @returns A MenuItem object that is added to Order , otherwise Null is returned
      */
     public void addItem (MenuItem item){
         this.ordered.add(item);
@@ -168,7 +167,7 @@ public class Order extends RestaurantEntity {
 
     /** Removing an item from the Order
      * @param item The MenuItem object that would be removed from the Order
-     * @returns A MenuItem object that is removed from Order , otherwise Null is returned
+     * @return A MenuItem object that is removed from Order , otherwise Null is returned
      */
     public MenuItem removeItem ( MenuItem item){
         if (this.ordered.remove(item)) {

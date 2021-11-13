@@ -2,8 +2,8 @@ package com.CZ2002.project_commands.menu;
 
 import java.util.ArrayList;
 
-import com.CZ2002.project_boundaries.MenuManager;
 import com.CZ2002.project_entities.MenuItem;
+import com.CZ2002.project_managers.MenuManager;
 
 /**
  * This class completes the 'print menu' action.

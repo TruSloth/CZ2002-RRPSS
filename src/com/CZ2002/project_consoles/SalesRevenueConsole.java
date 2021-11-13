@@ -1,6 +1,4 @@
 package com.CZ2002.project_consoles;
-import com.CZ2002.project_boundaries.RestaurantManager;
-import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_commands.revenue.PrintRevenueByDayCommand;
 import com.CZ2002.project_commands.revenue.PrintRevenueByMonthCommand;
 import com.CZ2002.project_entities.Order;
@@ -9,7 +7,9 @@ import com.CZ2002.project_entities.SalesRevenue;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IDateFormatter;
+import com.CZ2002.project_interfaces.IDateFormattable;
+import com.CZ2002.project_managers.RestaurantManager;
+import com.CZ2002.project_managers.SalesRevenueManager;
 import com.CZ2002.utils.MenuBuilder;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 /**
  * A boundary class that takes in inputs from the user
  */
-public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormatter {
+public class SalesRevenueConsole extends ConsoleDisplay implements IDateFormattable {
     public SalesRevenueConsole(RestaurantManager restaurantManager, Scanner sc){
         super.mainManager = restaurantManager;
         super.sc = sc;

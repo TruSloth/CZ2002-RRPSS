@@ -1,8 +1,6 @@
 package com.CZ2002.project_consoles;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.utils.MenuBuilder;
-import com.CZ2002.project_boundaries.MenuManager;
-import com.CZ2002.project_boundaries.RestaurantManager;
 import com.CZ2002.project_commands.menu.*;
 import com.CZ2002.project_entities.AlaCarteItem;
 import com.CZ2002.project_entities.MenuItem;
@@ -11,6 +9,8 @@ import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_enums.Type;
 import com.CZ2002.project_exceptions.InvalidMenuItemException;
 import com.CZ2002.project_interfaces.ICommand;
+import com.CZ2002.project_managers.MenuManager;
+import com.CZ2002.project_managers.RestaurantManager;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -107,7 +107,7 @@ public class MenuConsole extends ConsoleDisplay{
 
     /**
      * Accepts input from the user surrounding the possible actions the user can take
-     * in relation to {@link MenuItem,AlaCarteItem, PackageItem} instances.
+     * in relation to {@link MenuItem} {@link AlaCarteItem} {@link PackageItem} instances.
      */
     @Override
     public MenuView handleConsoleOptions() {

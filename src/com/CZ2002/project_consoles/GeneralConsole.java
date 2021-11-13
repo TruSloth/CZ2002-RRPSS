@@ -5,13 +5,13 @@ import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import com.CZ2002.project_boundaries.RestaurantManager;
-import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_commands.table.CheckTableAvailabilityCommand;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_exceptions.InvalidStaffException;
 import com.CZ2002.project_interfaces.ICommand;
+import com.CZ2002.project_managers.RestaurantManager;
+import com.CZ2002.project_managers.TableManager;
 import com.CZ2002.utils.MenuBuilder;
 
 /**

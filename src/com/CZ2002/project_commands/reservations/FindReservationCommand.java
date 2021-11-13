@@ -3,17 +3,17 @@ package com.CZ2002.project_commands.reservations;
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 
-import com.CZ2002.project_boundaries.ReservationManager;
 import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
+import com.CZ2002.project_interfaces.IGregorianCalendarFormattable;
+import com.CZ2002.project_managers.ReservationManager;
 
 
 /**
  * This class implements {@link ICommand} to complete the 'find reservation' action.
  */
-public class FindReservationCommand implements ICommand<Reservation, InvalidReservationException>, IGregorianCalendarFormatter {
+public class FindReservationCommand implements ICommand<Reservation, InvalidReservationException>, IGregorianCalendarFormattable {
     private ReservationManager reservationManager;
 
     private String name;

@@ -1,0 +1,14 @@
+com.CZ2002
+com.CZ2002.project_commands.menu
+com.CZ2002.project_commands.order
+com.CZ2002.project_commands.reservations
+com.CZ2002.project_commands.revenue
+com.CZ2002.project_commands.table
+com.CZ2002.project_consoles
+com.CZ2002.project_entities
+com.CZ2002.project_enums
+com.CZ2002.project_exceptions
+com.CZ2002.project_exceptions.order
+com.CZ2002.project_interfaces
+com.CZ2002.project_managers
+com.CZ2002.utils

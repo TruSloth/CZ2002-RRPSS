@@ -1,11 +1,11 @@
 package com.CZ2002.project_commands.order;
 
-import com.CZ2002.project_boundaries.OrderManager;
-import com.CZ2002.project_boundaries.SalesRevenueManager;
-import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_entities.Order;
 import com.CZ2002.project_exceptions.order.InvalidDeleteOrderException;
 import com.CZ2002.project_interfaces.ICommand;
+import com.CZ2002.project_managers.OrderManager;
+import com.CZ2002.project_managers.SalesRevenueManager;
+import com.CZ2002.project_managers.TableManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'Delete Order' action.

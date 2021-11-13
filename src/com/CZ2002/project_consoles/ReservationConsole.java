@@ -7,9 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-import com.CZ2002.project_boundaries.ReservationManager;
-import com.CZ2002.project_boundaries.RestaurantManager;
-import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_commands.reservations.AddReservationCommand;
 import com.CZ2002.project_commands.reservations.FindReservationCommand;
 import com.CZ2002.project_commands.reservations.RemoveReservationCommand;
@@ -19,14 +16,17 @@ import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
+import com.CZ2002.project_interfaces.IGregorianCalendarFormattable;
+import com.CZ2002.project_managers.ReservationManager;
+import com.CZ2002.project_managers.RestaurantManager;
+import com.CZ2002.project_managers.TableManager;
 import com.CZ2002.utils.MenuBuilder;
 
 
 /**
  * The interface that the user interacts with for {@link Reservation} instances.
  */
-public class ReservationConsole extends ConsoleDisplay implements IGregorianCalendarFormatter {
+public class ReservationConsole extends ConsoleDisplay implements IGregorianCalendarFormattable {
     /**
      * Initalises this {@code ReservationConsole} with the reference to the {@link RestaurantManager}.
      *

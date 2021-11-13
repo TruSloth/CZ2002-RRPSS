@@ -3,13 +3,13 @@ package com.CZ2002.project_commands.reservations;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
-import com.CZ2002.project_boundaries.ReservationManager;
-import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_enums.MenuView;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
+import com.CZ2002.project_interfaces.IGregorianCalendarFormattable;
+import com.CZ2002.project_managers.ReservationManager;
+import com.CZ2002.project_managers.TableManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'update reservation' action.
@@ -24,7 +24,7 @@ import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
  * </ul>
  * This class handles each one seperately and so must accept input to decide which field to update.
  */
-public class UpdateReservationCommand implements ICommand<MenuView, InvalidReservationException>, IGregorianCalendarFormatter {
+public class UpdateReservationCommand implements ICommand<MenuView, InvalidReservationException>, IGregorianCalendarFormattable {
     private ReservationManager reservationManager;
     private TableManager tableManager;
     private Reservation reservation;

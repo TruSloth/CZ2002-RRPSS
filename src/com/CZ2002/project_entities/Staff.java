@@ -1,6 +1,6 @@
 package com.CZ2002.project_entities;
-import com.CZ2002.project_boundaries.StaffManager;
 import com.CZ2002.project_enums.Gender;
+import com.CZ2002.project_managers.StaffManager;
 
 
 /**

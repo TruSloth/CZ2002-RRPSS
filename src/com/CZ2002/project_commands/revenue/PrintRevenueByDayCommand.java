@@ -1,10 +1,10 @@
 package com.CZ2002.project_commands.revenue;
 
-import com.CZ2002.project_boundaries.SalesRevenueManager;
 import com.CZ2002.project_entities.SalesRevenue;
 import com.CZ2002.project_exceptions.InvalidSalesRevenueQueryException;
 import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IDateFormatter;
+import com.CZ2002.project_interfaces.IDateFormattable;
+import com.CZ2002.project_managers.SalesRevenueManager;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Date;
 /**
  * This class implements {@link ICommand} to complete the 'print revenue by month' action.
  */
-public class PrintRevenueByDayCommand implements ICommand<SalesRevenue, InvalidSalesRevenueQueryException>, IDateFormatter {
+public class PrintRevenueByDayCommand implements ICommand<SalesRevenue, InvalidSalesRevenueQueryException>, IDateFormattable {
     private SalesRevenueManager salesRevenueManager;
     private Date queryDate;
 

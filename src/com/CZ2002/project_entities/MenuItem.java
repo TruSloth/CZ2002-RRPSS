@@ -21,7 +21,7 @@ public class MenuItem extends RestaurantEntity {
     }
 
     /** Gets the name of the item
-     * @returns A String object of the items' name
+     * @return A String object of the items' name
      */
     public String getName() {
         return name;
@@ -35,7 +35,7 @@ public class MenuItem extends RestaurantEntity {
     }
 
     /** Gets the description of the item
-     * @returns A String of the item's description
+     * @return A String of the item's description
      */
     public String getDescription() {
         return description;
@@ -49,7 +49,7 @@ public class MenuItem extends RestaurantEntity {
     }
 
     /** Gets the price of the item
-     * @returns A double value of the item's price
+     * @return A double value of the item's price
      */
     public double getPrice() {
         return price;

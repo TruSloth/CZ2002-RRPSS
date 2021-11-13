@@ -3,16 +3,16 @@ package com.CZ2002.project_commands.reservations;
 import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 
-import com.CZ2002.project_boundaries.ReservationManager;
 import com.CZ2002.project_entities.Reservation;
 import com.CZ2002.project_exceptions.InvalidReservationException;
 import com.CZ2002.project_interfaces.ICommand;
-import com.CZ2002.project_interfaces.IGregorianCalendarFormatter;
+import com.CZ2002.project_interfaces.IGregorianCalendarFormattable;
+import com.CZ2002.project_managers.ReservationManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'remove reservation' action.
  */
-public class RemoveReservationCommand implements ICommand<Boolean, InvalidReservationException>, IGregorianCalendarFormatter {
+public class RemoveReservationCommand implements ICommand<Boolean, InvalidReservationException>, IGregorianCalendarFormattable {
     private ReservationManager reservationManager;
     private GregorianCalendar reservationPeriod;
     private String name;

@@ -1,8 +1,8 @@
 package com.CZ2002.project_commands.order;
 
-import com.CZ2002.project_boundaries.OrderManager;
 import com.CZ2002.project_exceptions.order.InvalidSetMembership;
 import com.CZ2002.project_interfaces.ICommand;
+import com.CZ2002.project_managers.OrderManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'Set Membership' action.

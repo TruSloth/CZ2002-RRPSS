@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.CZ2002.project_boundaries.TableManager;
 import com.CZ2002.project_interfaces.ICommand;
+import com.CZ2002.project_managers.TableManager;
 
 /**
  * This class implements {@link ICommand} to complete the 'check table availability' action.

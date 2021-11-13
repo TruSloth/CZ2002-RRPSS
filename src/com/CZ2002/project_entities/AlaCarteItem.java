@@ -27,7 +27,7 @@ public class AlaCarteItem extends MenuItem {
     }
 
     /** Gets the type of the AlaCarteItem.
-     * @returns A Type enum of the AlaCarteItem
+     * @return A Type enum of the AlaCarteItem
      */
     public Type getType() {
         return this.type;
