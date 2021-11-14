@@ -3,12 +3,14 @@ package com.CZ2002.commands.menu;
 import java.util.ArrayList;
 
 import com.CZ2002.entities.MenuItem;
+import com.CZ2002.exceptions.InvalidAddItemOrderException;
+import com.CZ2002.interfaces.ICommand;
 import com.CZ2002.managers.MenuManager;
 
 /**
  * This class completes the 'print menu' action.
  */
-public class GetMenuCommand {
+public class GetMenuCommand implements ICommand<ArrayList<MenuItem>, InvalidAddItemOrderException> {
 	private MenuManager menuManager;
 	
 	 /**
