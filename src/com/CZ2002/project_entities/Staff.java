@@ -70,7 +70,6 @@ public class Staff extends RestaurantEntity {
         return jobTitle;
     }
 
-
     /**
      * Sets the String representation of the occupation of this staff at the restaurant.
      * @param jobTitle  the String that represents the new role or occupation that this staff holds

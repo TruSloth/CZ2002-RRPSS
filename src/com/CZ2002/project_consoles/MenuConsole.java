@@ -21,7 +21,6 @@ import java.util.Scanner;
  * A boundary class that takes in inputs from user to interact with MenuItem
  */
 public class MenuConsole extends ConsoleDisplay{
-    private GetMenuCommand getMenuCommand;
 
     /**
      * Function to print out the console
@@ -268,7 +267,7 @@ public class MenuConsole extends ConsoleDisplay{
             }
             case 7 -> {
                 //Print Menu
-                getMenuCommand = new GetMenuCommand(mainManager.getSubManager("menuManager", MenuManager.class));
+                GetMenuCommand getMenuCommand = new GetMenuCommand(mainManager.getSubManager("menuManager", MenuManager.class));
                 ArrayList<MenuItem> menu = getMenuCommand.execute();
                 displayMenu(menu);
                 view = MenuView.MENU_ITEMS;
